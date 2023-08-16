@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
         // },
         orderid: {
             type: DataTypes.INTEGER(11),
-            
         },
         rowNo: {
             type: DataTypes.STRING(),

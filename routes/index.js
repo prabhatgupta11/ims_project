@@ -537,8 +537,42 @@ router.get('/billing', checkUser, async function (req, res) {
 //   res.redirect('/billing');
 // });
 
-router.post('/submit', orderController.addOrder);
 
+
+const Order = db.order;
+const OrderItems = db.orderItems;
+
+router.post("/submit", async (req, res) => {
+  try {
+    const { customerName, customerMobile, customerEmail, products } = req.body;
+
+    // Create an order with customer details
+    const order = await Order.create({
+      customerName,
+      customerMobile,
+      customerEmail,
+      // ... Other customer details
+    });
+
+    // Create order items for each product
+    const orderItems = products.map(product => ({
+      orderPK: order.id,
+      itemId: product.itemId,
+      itemName: product.itemName,
+      quantity: product.quantity,
+      salePrice: product.price,
+      discountPercentage: product.discount
+      // ... Other product details
+    }));
+
+    // Bulk create order items
+    await OrderItems.bulkCreate(orderItems);
+    return res.status(200).json({ success: true, message: "Order items added successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
 
 
 module.exports = router;

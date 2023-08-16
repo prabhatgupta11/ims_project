@@ -167,6 +167,60 @@
 
     // Update the grand total wherever you want to display it
   }
+
+
+  document.getElementById("billing-form").addEventListener("submit", async (event) => {
+    alert("clicked")
+  event.preventDefault();
+
+  // Collect customer details
+  const customerName = document.getElementById("customer-name").value;
+  const customerMobile = document.getElementById("customer-mobile").value;
+  const customerEmail = document.getElementById("email").value;
+  
+  // ... Collect other customer details
+
+  // Collect product details
+  const productRows = Array.from(document.querySelectorAll("#product-list tr"));
+  const products = productRows.map(row => {
+    const productSelect = row.querySelector(".product-select");
+    const quantityInput = row.querySelector(".quantity-input");
+    const priceInput = row.querySelector(".price-input");
+    const discountInput = row.querySelector(".discount-input");
+
+    return {
+      itemId: productSelect.value,
+      itemName: productSelect.options[productSelect.selectedIndex].text,
+      quantity: quantityInput.value,
+      price: priceInput.value,
+      discount: discountInput.value
+      // ... Collect other product details
+    };
+  });
+
+  // Prepare data to send
+  const dataToSend = {
+    customerName,
+    customerMobile,
+    customerEmail,
+    // ... Other customer details
+    products // Send products as an array
+  };
+
+  // Send data to the server
+  const response = await fetch("/submit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(dataToSend)
+  });
+
+  // Handle response
+  const responseData = await response.json();
+  // ... Handle response as needed
+});
+
 </script>
 
 
