@@ -544,13 +544,18 @@ const OrderItems = db.orderItems;
 
 router.post("/submit", async (req, res) => {
   try {
-    const { customerName, customerMobile, customerEmail, products } = req.body;
+  // const customerPincode=document.getElementById("pincode").value;
+  const { customerName, customerMobile, customerEmail,customerCity,customerState,customerPincode,customerPayment,products } = req.body;
 
     // Create an order with customer details
     const order = await Order.create({
       customerName,
       customerMobile,
       customerEmail,
+      customerCity,
+      customerState,
+      customerPincode,
+      customerPayment
       // ... Other customer details
     });
 

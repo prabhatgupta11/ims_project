@@ -177,7 +177,10 @@
   const customerName = document.getElementById("customer-name").value;
   const customerMobile = document.getElementById("customer-mobile").value;
   const customerEmail = document.getElementById("email").value;
-  
+  const customerCity=document.getElementById("city").value;
+  const customerState=document.getElementById("state").value;
+  const customerPincode=document.getElementById("pincode").value;
+  const customerPayment=document.getElementById("payment").value;
   // ... Collect other customer details
 
   // Collect product details
@@ -203,6 +206,10 @@
     customerName,
     customerMobile,
     customerEmail,
+    customerCity,
+    customerState,
+    customerPincode,
+    customerPayment,
     // ... Other customer details
     products // Send products as an array
   };
