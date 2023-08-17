@@ -21,13 +21,19 @@ module.exports = (sequelize, DataTypes) => {
         itemName : {
             type : DataTypes.STRING()
         },
-        itemReferenceCode : {
+        storeName : {
             type : DataTypes.STRING()
         },
         salePrice : {
             type : DataTypes.STRING()
         },
         quantity : {
+            type : DataTypes.STRING()
+        },
+        orderPK : {
+            type : DataTypes.STRING()
+        },
+        itemReferenceCode : {
             type : DataTypes.STRING()
         },
         suppliedQty : {
@@ -57,18 +63,16 @@ module.exports = (sequelize, DataTypes) => {
         freeQty : {
             type : DataTypes.STRING()
         },
-        orderPK : {
-            type : DataTypes.STRING()
-        },
+        
         aggregatorPaid : {
             type : DataTypes.STRING()
         },
-        created_at : {
-            type : DataTypes.DATE
-        },
-        updated_at : {
-            type : DataTypes.DATE
-        },
+        // created_at : {
+        //     type : DataTypes.DATE
+        // },
+        // updated_at : {
+        //     type : DataTypes.DATE
+        // },
     })
 
     OrderItems.associate = (models) => {

@@ -528,8 +528,9 @@ router.post('/updateCategory/:id', categoryController.updateCategory)
 
 router.get('/billing', checkUser, async function (req, res) {
   const product = await Product.findAll()
+  const store=await Store.findAll()
  const productStock = await ProductStock.findAll()
-  res.render('billing2', { title: 'Express', message: req.flash('message'), product, productStock});
+  res.render('billing2', { title: 'Express', message: req.flash('message'), product, productStock,store});
 });
 
 // router.post('/submit', (req, res) => {
@@ -562,6 +563,8 @@ router.post("/submit", async (req, res) => {
     // Create order items for each product
     const orderItems = products.map(product => ({
       orderPK: order.id,
+      storeId:product.storeId,
+      storeName:product.storeName,
       itemId: product.itemId,
       itemName: product.itemName,
       quantity: product.quantity,

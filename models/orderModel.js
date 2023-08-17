@@ -11,6 +11,21 @@ module.exports = (sequelize, DataTypes) => {
         orderPK: {
             type: DataTypes.STRING(),
         },
+        customerName : {
+            type : DataTypes.STRING()
+        },
+        customerEmail : {
+            type : DataTypes.STRING()
+        },
+        customerMobile : {
+            type : DataTypes.STRING()
+        },
+        customerCity : {
+            type : DataTypes.STRING()
+        },
+        customerState : {
+            type : DataTypes.STRING()
+        },
         onlineReferenceNo: {
             type: DataTypes.STRING(),
         },
@@ -148,9 +163,7 @@ module.exports = (sequelize, DataTypes) => {
         customerId : {
             type : DataTypes.STRING()
         },
-        customerName : {
-            type : DataTypes.STRING()
-        },
+       
         customerType : {
             type : DataTypes.STRING()
         },
@@ -166,12 +179,7 @@ module.exports = (sequelize, DataTypes) => {
         customerArea : {
             type : DataTypes.STRING()
         },
-        customerCity : {
-            type : DataTypes.STRING()
-        },
-        customerState : {
-            type : DataTypes.STRING()
-        },
+      
         customerCountry : {
             type : DataTypes.STRING()
         },
@@ -179,12 +187,6 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.STRING()
         },
         customerPhone : {
-            type : DataTypes.STRING()
-        },
-        customerMobile : {
-            type : DataTypes.STRING()
-        },
-        customerEmail : {
             type : DataTypes.STRING()
         },
         ordTimestamp : {
