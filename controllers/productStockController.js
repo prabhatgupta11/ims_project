@@ -1,6 +1,7 @@
 const db = require ("../models")
 const Product = db.products
 const ProductStock = db.productStock
+const Store = db.store
 
 // Add Product into ProductStock
 
@@ -55,6 +56,9 @@ const addProductStock = async (req, res) => {
             pack: req.body.pack,
             flatOffer: req.body.flatOffer,
             aliasCode: req.body.aliasCode,
+            approve_b:req.body.approve_b,
+            approve_by:req.body.approve_by,
+            approve_date:req.body.approve_date
         }
         const productStock = await ProductStock.create(info)
         return res.status(200).send({
@@ -73,6 +77,42 @@ const addProductStock = async (req, res) => {
 }
 
 
+// fetch all store and products
+
+const getAllStoreAndProducts = async (req, res) => {
+   
+// Fetch all stores and products
+Store.findAll().then(stores => {
+    Product.findAll().then(products => {
+        // For each store and product combination, fetch the stock quantity
+        const results = [];
+        stores.forEach(store => {
+            products.forEach(product => {
+                ProductStock.findOne({
+                    where: { outletId: store.outletId, itemId: product.itemId }
+                }).then(stock => {
+                    results.push({
+                        storeName: store.storeName,
+                        itemName: product.itemName,
+                        stock: stock ? stock.quantity : 0
+                    });
+                    if (results.length === stores.length * products.length) {
+                        // Render your HBS template with the 'results' array
+                        res.render('storeProductStock', { results });
+                    }
+                });
+            });
+        });
+    });
+});
+
+
+}
+
+
+
+
 module.exports = {
-    addProductStock
+    addProductStock,
+    getAllStoreAndProducts
 }

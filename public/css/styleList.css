@@ -5,7 +5,25 @@
     font-family: 'Poppins', sans-serif;
 }
 
-
+.nav_submenu {
+    display: none;
+    padding-left: 0.6rem;
+  }
+  
+  .nav_link.active + .nav_submenu {
+    display: block;
+  }
+  
+  .arrow {
+    font-size: 0.75rem;
+    margin-left: auto;
+    transition: transform 0.3s;
+  }
+  
+  .nav_link.active .arrow {
+    transform: rotate(180deg);
+  }
+  
 
 body {
     user-select: none;
@@ -26,11 +44,7 @@ body {
    
 }
 
-.btn-light {
-    border: none;
-    color: white;
-    background-color: transparent;
-}
+
 
 .sidebar-menu li :hover {
     color: orange;

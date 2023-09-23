@@ -12,6 +12,8 @@ const sequelize = new Sequelize(
    }
 );
 
+
+
 sequelize.authenticate().then(() => {
    console.log('Connection has been established successfully.');
 }).catch((error) => {
@@ -32,14 +34,22 @@ db.stockInOut = require('./stockInOutModel')(sequelize, DataTypes)
 db.manufacturer = require('./manufacturerMasterModel')(sequelize, DataTypes)
 db.category = require('./categoryMasterModel')(sequelize, DataTypes)
 db.productCategoryMapping = require('./productCategoryMappingModel')(sequelize, DataTypes)
+db.userStoreMapping = require('./userStoreMapping')(sequelize, DataTypes)
+db.storeCategoryMapping = require('./storeCategoryMapping')(sequelize, DataTypes)
 db.order = require('./orderModel')(sequelize, DataTypes)
 db.orderItems = require('./orderItemsModel')(sequelize, DataTypes)
+db.productMapping = require('./productMappingModel')(sequelize, DataTypes)
+db.supplier = require('./supplierMaster')(sequelize, DataTypes)
 
 // db.products.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
 db.productStock.belongsTo(db.products, { sourceKey: "itemId", foreignKey: "itemId" });
 db.productStock.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
-// db.products.hasOne(db.productStock, { sourceKey: "id", foreignKey: "itemId" });s
-
+db.products.belongsTo(db.manufacturer, { sourceKey: "manufacturerId", foreignKey: "manufacturerId" } )
+db.user.belongsToMany(db.store, { through: db.userStoreMapping, foreignKey: 'userFk', as: 'selectedStores' });
+db.store.belongsToMany(db.user, { through: db.userStoreMapping, foreignKey: 'storeFk' });
+db.order.belongsTo(db.orderItems, { sourceKey: 'orderPK', foreignKey: 'orderId' });
+db.store.belongsToMany(db.category, { through: db.storeCategoryMapping, foreignKey: 'storeFk', as: 'selectedCategories' });
+db.category.belongsToMany(db.store, { through: db.storeCategoryMapping, foreignKey: 'categoryFk' });
 
 
 db.sequelize.sync({ force: false })

@@ -18,6 +18,16 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.TEXT,
             
         },
+        approve_b : {
+            type : DataTypes.STRING,
+            defaultValue:'pending'
+        },
+        approve_by : {
+            type : DataTypes.STRING,
+        },
+        approve_date : {
+            type : DataTypes.DATE,
+        }
     
     })
 

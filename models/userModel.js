@@ -4,7 +4,12 @@ const { sequelize, user } = require(".");
 module.exports = (sequelize, DataTypes) => {
     
     const User = sequelize.define('users', {
-
+        id: {
+            type: DataTypes.BIGINT(20),
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement : true
+        },
         firstName : {
             type: DataTypes.STRING(255),
             allowNull : false,
@@ -25,10 +30,14 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.STRING(20),
             allowNull : false
         },
+        managerFk : {
+            type : DataTypes.BIGINT(20),
+            defaultValue : -1
+        },
         role : {
             type : DataTypes.STRING,
-            default : "user"
-        }
+            defaultValue : 'user'
+        },
     })
 
     return User

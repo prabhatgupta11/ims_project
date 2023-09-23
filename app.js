@@ -20,6 +20,7 @@ const templatespath = path.join(__dirname,"./templates/views");
 const partialpath = path.join(__dirname,"./templates/partials");
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(staticpath));
+
 app.set("view engine","hbs");
 app.set("views", templatespath);
 hbs.registerPartials(partialpath);
@@ -28,6 +29,17 @@ hbs.registerPartials(partialpath);
 hbs.registerHelper('ifEquals', function (arg1, arg2, options) {
   return arg1 === arg2 ? options.fn(this) : options.inverse(this);
 });
+
+// hbs.registerHelper('isSelectedStore', function(selectedStores, storeId) {
+//   console.log("here")
+//   console.log(selectedStores,storeId)
+//   return selectedStores.includes(storeId);
+// });
+hbs.registerHelper('isEqual', function (value1, value2, options) {
+  return value1 === value2 ? options.fn(this) : options.inverse(this);
+});
+
+
 
 app.use(logger('dev'));
 app.use(express.json());

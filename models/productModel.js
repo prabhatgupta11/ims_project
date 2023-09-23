@@ -92,14 +92,24 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.STRING(255)
         },
         manufacturerId : {
-            type: DataTypes.BIGINT(20),  
+            type: DataTypes.BIGINT(20)
         },
         pageN : {
             type : DataTypes.INTEGER(11)
         },
         isDeleted : {
             type : DataTypes.BOOLEAN,
-            default : false
+            defaultValue : false
+        },
+        approve_b : {
+            type : DataTypes.STRING,
+            defaultValue:'pending'
+        },
+        approve_by : {
+            type : DataTypes.STRING,
+        },
+        approve_date : {
+            type : DataTypes.DATE,
         }
     })
 

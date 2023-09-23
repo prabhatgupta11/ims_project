@@ -1,143 +1,146 @@
 const db = require("../models")
+const { v4: uuidv4 } = require('uuid');
 const Order = db.order;
-const OrderItems = db.orderItems;
-const addOrder = async (req, res) => {
-// console.log(123)
-// console.log(req.body)
+const OrderItems = db.orderItems
+
+
+
+ // Function to generate a unique order item ID
+ function generateUniqueOrderId() {
+    return uuidv4();
+  }
+
+// Create order
+
+const createOrderBill = async (req, res) => {
+
     try {
-        const info = {
-         
-          orderPK:req.body.orderPK,
-        onlineReferenceNo: req.body.onlineReferenceNo,
-        onlineChildReferenceNo : req.body.onlineChildReferenceNo,
-        status : req.body.status,
-        orderRemarks : req.body.orderRemarks,
-        Channel : req.body.Channel,
-        totalQuantity : req.body.totalQuantity,
-        totalFreeQty : req.body.totalFreeQty,
-        totalAmount : req.body.totalAmount,
-        paymentMode : req.body.paymentMode,
-        paymentMethod:req.body.paymentMethod,
-        totalTaxAmount : req.body.totalTaxAmount,
-        totalDiscountAmount : req.body.totalDiscountAmount,
-        orderDiscPerc : req.body.orderDiscPerc,
-        orderDiscAmt : req.body.orderDiscAmt,
-        courierPartner : req.body.courierPartner,
-        shippingId : req.body.shippingId,
-        shippingName : req.body.shippingName,
-        shippingAddress1 : req.body.shippingAddress1,
-        shippingAddress2 : req.body.shippingAddress2,
-        shippingPlace : req.body.shippingPlace,
-        shippingState : req.body.shippingState,
-        shippingStateCode : req.body.shippingStateCode,
-        shippingCountry : req.body.shippingCountry,
-        shippingPinCode : req.body.shippingPinCode,
-        shippingPhone : req.body.shippingPhone,
-        shippingMobile : req.body.shippingMobile,
-        shippingEmail : req.body.shippingEmail,
-        shippingCharge : req.body.shippingCharge,
-        packingCharge : req.body.packingCharge,
-        shippingMethod : req.body.shippingMethod,
-        ShipmentPointsUsed : req.body.ShipmentPointsUsed,
-        shipmentItems : req.body.shipmentItems,
-        shipmentABN : req.body.shipmentABN,
-        shipmentWeight : req.body.shipmentWeight,
-        latitude : req.body.latitude,
-        longitude : req.body.longitude,
-        customeLatitude : req.body.customeLatitude,
-        customeLongitude : req.body.customeLongitude,
-        discountCoupon: req.body.discountCoupon,
-        deliveryDate : req.body.deliveryDate,
-        locationId : req.body.locationId,
-        userId : req.body.userId,
-        appUserName : req.body.appUserName,
-        customerCode : req.body.customerCode,
-        customerId : req.body.customerId,
-        customerName : req.body.customerName,
-        customerType : req.body.customerType,
-        customerAddressLine1 : req.body.customerAddressLine1,
-        customerAddressLine2 : req.body.customerAddressLine2,
-        customerAddressLine3 : req.body.customerAddressLine3,
-        customerArea : req.body.customerArea,
-        customerCity : req.body.customerCity,
-        customerState : req.body.customerState,
-        customerCountry : req.body.customerCity,
-        customerPinCode : req.body.customerPinCode,
-        customerPhone : req.body.customerPhone,
-        customerMobile : req.body.customerMobile,
-        customerEmail : req.body.customerEmail,
-        ordTimestamp : req.body.ordTimestamp,
-        outletId : req.body.outletId,
-        isOfflineOrder : req.body.isOfflineOrder,
-        invoiceNo : req.body.invoiceNo,
-        deliveryBoy : req.body.deliveryBoy,
-        deilveryBoyMobileNo : req.body.deilveryBoyMobileNo,
-        otherChargesTaxAmount : req.body.otherChargesTaxAmount,
-        otherChargesTaxPercentage : req.body.otherChargesTaxPercentage,
-        otherChargesTaxInclusive : req.body.otherChargesTaxInclusive,
-        serviceTaxAmount : req.body.serviceTaxAmount
-        
-    }
+        const { customerName,
+            customerMobile,
+            customerEmail,
+            customerCity,
+            customerState,
+            customerPinCode,
+            paymentMode,
+            totalAmount,
+            products
+        } = req.body; 
 
-
-    console.log(info)
-    const orderbill = await Order.create(info)
-
-
-    const info2= [{
-      //   orderid: req.body.orderid,
-        rowNo: req.body.rowNo,
-      //   id :req.body.id,
-        itemId :req.body.itemId,
-        itemName : req.body.product,
-        itemReferenceCode : req.body.itemReferenceCode,
-        salePrice : req.body.price,
-        quantity : req.body.quantity,
-        suppliedQty : req.body.suppliedQty,
-        itemAmount : req.body.total,
-        iBarU :req.body.iBarU,
-        taxPercentage : req.body.taxPercentage,
-        itemTaxType : req.body.itemTaxType,
-        discountPercentage : req.body.discount,
-        itemRemarks : req.body.itemRemarks,
-        itemMarketPrice : req.body.itemMarketPrice,
-        freeQty :req.body.freeQty,
-        orderPK : req.body.orderPK,
-        aggregatorPaid :req.body.aggregatorPaid,
-        // created_at :req.body.created_at,
-        // updated_at : req.body.updated_at, 
-    }, ]
-    
-  
-   
- 
-
-
-    console.log("this is data",info2)
-    
-    const orderItemsWithPK = info2.map((item) => ({
-      ...item,
-      orderPK: orderbill.orderPK,
-    }));
-
-    await OrderItems.bulkCreate(orderItemsWithPK);
-
-    // const orderbill2 = await OrderItems.create(info2)
-
-          req.flash('message', 'Billing information added successfully');
-        return res.redirect('/billing');
-      } catch (err) {
-        console.error(err);
-        res.status(500).send({
-          success: false,
-          message: err.message
+        // Create an order with customer details
+        const order = await Order.create({
+            customerName,
+            customerMobile,
+            customerEmail,
+            customerCity,
+            customerState,
+            customerPinCode,
+            paymentMode,
+            totalAmount,
         });
-      }
-    };
+
+        // Create order items for each product
+        const orderItems = products.map(product => ({
+            orderItemId: generateUniqueOrderId(),
+            orderPK: order.orderId,
+            outletId: product.outletId,
+            storeName: product.storeName,
+            itemId: product.itemId,
+            itemName: product.itemName,
+            quantity: product.quantity,
+            salePrice: product.price,
+            discountPercentage: product.discount,
+            itemAmount: product.itemAmount,
+            taxPercentage:product.taxPercentage
+
+        }));
+          
+        // Bulk create order items
+        await OrderItems.bulkCreate(orderItems);
+        req.flash('message', 'Order Bill created successfully');
+        return res.redirect('/orderList')
+
+    } catch (err) {
+        console.log(err);
+        req.flash('message', 'Something went wrong');
+        return res.redirect('/order')
+    }
+}
+
+// Update Order Details
+
+const updateOrderItems = async (req, res) => {
+    const orderId = req.params.orderId;
+    // console.log(22222222222222,req.body)
+
+    try {
+        // Extract order and product details from the request body
+        const {
+            customerName,
+            customerMobile,
+            customerEmail,
+            customerCity,
+            customerState,
+            customerPinCode,
+            paymentMode,
+            totalAmount,
+            products
+        } = req.body;
+
+        // Update the order details
+        await Order.update({
+            customerName,
+            customerMobile,
+            customerEmail,
+            customerCity,
+            customerState,
+            customerPinCode,
+            paymentMode,
+            totalAmount
+        }, {
+            where: { orderId }
+        });
+
+        // Update the associated product details
+        for (const product of products) {
+            console.log('Updating order item with orderItemId:', product.orderItemId);
+
+            // Use findOne to find the specific order item by orderItemId
+            const orderItem = await OrderItems.findOne({
+                where: {
+                    orderItemId: product.orderItemId
+                }
+            });
+
+            if (orderItem) {
+                // Update the found order item with the new data
+                await orderItem.update({
+                    outletId: product.outletId,
+                    storeName: product.storeName,
+                    itemId: product.itemId,
+                    itemName: product.itemName,
+                    quantity: product.quantity,
+                    salePrice: product.price,
+                    discountPercentage: product.discount,
+                    itemAmount: product.itemAmount,
+                    taxPercentage: product.taxPercentage
+                });
+                console.log('Order item updated successfully');
+            } else {
+                console.log('Order item not found with orderItemId:', product.orderItemId);
+            }
+        }
+
+        req.flash('message', 'Order details updated successfully');
+        return res.redirect('/orderList');
+    } catch (err) {
+        console.log(err.message);
+        req.flash('message', 'Something went wrong');
+        return res.redirect(`/orderList`);
+    }
+};
 
 
-
-
-    module.exports = {
-        addOrder
-    };
+module.exports = {
+    updateOrderItems,
+    createOrderBill
+};

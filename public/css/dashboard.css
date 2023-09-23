@@ -23,7 +23,6 @@ body {
     padding: 0 1rem;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
-    transition: .5s
 }
 
 a {
@@ -42,7 +41,6 @@ a {
     padding: 0 1rem;
     background-color: var(--white-color);
     z-index: var(--z-fixed);
-    transition: .5s
 }
 
 .header_toggle {
@@ -86,7 +84,6 @@ a {
     height: 100vh;
     background-color: var(--first-color);
     padding: .5rem 1rem 0 0;
-    transition: .5s;
     z-index: var(--z-fixed)
 }
 
@@ -125,7 +122,6 @@ a {
     position: relative;
     color: var(--first-color-light);
     margin-bottom: 1.5rem;
-    transition: .3s
 }
 
 .nav_link:hover {
@@ -256,21 +252,29 @@ body {
     color: #ffa000;
 }
 
-.active-pink-textarea-2 textarea.md-textarea {
+/* .active-pink-textarea-2 textarea.md-textarea {
     border-bottom: 1px solid #0329e6;
     font-weight: 700;
     box-shadow: 0 1px 0 0 black;
-}
+} */
 
 .active-pink-textarea-2.md-form label.active {
     color: #0329e6;
 }
 
 .active-pink-textarea-2.md-form label {
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 300;
+    font-size: 16px;
     letter-spacing: 0.2px;
-    color: #0329e6;
+    color: #4a4d50;
+    margin-bottom:10px;
+    padding-right:25px;
+}
+
+.active-pink-textarea-2{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .active-pink-textarea-2.md-form textarea.md-textarea:focus:not([readonly])+label {
@@ -294,15 +298,10 @@ body {
     color: #ffa000;
 }
 
-#form17 {
+/* #form17 {
     width: 80% !important;
     border: 0px !important;
-}
-
-.formlabel {
-    color: blue;
-}
-/* Search bar */
+} */
 
 .search-bar {
     border-radius: 20px !important;
@@ -350,27 +349,52 @@ body {
     justify-content: start;
     align-items: center;
     text-align: center;
-    padding: 10px;
+    padding: 10px 0px;
     margin-top: 20px;
     cursor: pointer;
+    /* margin-left:38px; */
 }
+
+
 
 .subtitle h5 {
     margin-left: 30px;
-    border: 2px solid rgb(255, 255, 255, 0.2);
+    /* border: 2px solid rgb(255, 255, 255, 0.2); */
+    font-weight: 500;
+}
+
+.subtitle h5:first-child{
+    margin-left: 0px !important;
+}
+
+
+.subtitle .active{
+    font-weight: 600;
+    border-bottom: 2px solid #3B71CA;
 }
 
 .subtitle h5:hover {
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
+    font-weight: 600;
+    border-bottom: 2px solid #3B71CA;
 }
 /* General */
 
 .main-table-data {
     border-radius: 20px;
+    /* padding: 35px 0px 0px 85px; */
+
 }
 
 .main-table-data h3 {
-    padding: 15px;
+    /* padding: 35px 0px 0px 85px; */
+    font-weight: 400;
+    display:inline-block;
+}
+
+.main-table-data i{
+    float:right;
+    padding:15px 20px 0px 0px;
 }
 
 .handler-container {
@@ -381,18 +405,18 @@ body {
 
 .button-34 {
     background: #5E5DF0;
-    border-radius: 999px;
+    border-radius: 5px;
     box-shadow: #5E5DF0 0 10px 20px -10px;
     box-sizing: border-box;
     color: #FFFFFF;
     cursor: pointer;
     font-family: Inter, Helvetica, "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 100;
     line-height: 24px;
     opacity: 1;
     outline: 0 solid transparent;
-    padding: 8px 18px;
+    padding: 8px 20px;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;

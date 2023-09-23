@@ -1,14 +1,17 @@
 const db = require("../models")
 const Product = db.products
 const fs = require('fs');
+const xlsx = require('xlsx');
+const Manufacturer = db.manufacturer
 
-// Create Product
+
+
+// Create Product 
+
 const createProduct = async (req, res) => {
-console.log(req.body.manufacturerId)
     try {
         if (req.file) {
             const tmp_path = req.file.path;
-            console.log(tmp_path)
             req.body.newFileName = `${new Date().getTime()}_${req.file.originalname}`
             /** The original name of the uploaded file
                 stored in the variable "originalname". **/
@@ -51,58 +54,27 @@ console.log(req.body.manufacturerId)
             iBarU: req.body.iBarU,
             manufacturerId: req.body.manufacturerId,
             pageN: req.body.pageN,
-            isDeleted: req.body.isDeleted
+            isDeleted: req.body.isDeleted,
+            approve_b: req.body.approve_b,
+            approve_by: req.body.approve_by,
+            approve_date: req.body.approve_date
+
         }
-
-        // const productStock = await productStock.create()
-
         const product = await Product.create(info)
-        req.flash('message', 'Product Sucessfully Created.');
+        req.flash('message', 'Product sucessfully created wait for Approval');
         return res.redirect('/productMasterList')
     }
     catch (err) {
         console.log(err.message)
-        res.status(500).send({
-            success: false,
-            message: "something went wrong"
-        })
+        req.flash('message', 'Something went wrong');
+        return res.redirect('/product')
     }
 }
 
-
-// Get All Product Details
-const getAllProduct = async (req, res) => {
-    const page = req.query.page ? req.query.page : 1
-    const size = req.query.size ? req.query.size : 3
-    const products = await Product.findAndCountAll({
-        limit: size,
-        offset: (page - 1) * size
-    })
-
-    return res.status(200).send({
-        success: true,
-        products
-    })
-}
-
-// Get Single Product Details
-const getSingleProduct = async (req, res) => {
-    const product = await Product.findOne({ where: { id: req.params.id } })
-    if (!product) {
-        res.status(200).send({
-            success: false,
-            message: "Product Not Found"
-        })
-    }
-    res.status(200).send({
-        success: true,
-        product
-    })
-}
 
 // Update Product Details
+
 const updateProduct = async (req, res) => {
-    console.log(123)
     try {
         if (req.file) {
             const tmp_path = req.file.path;
@@ -119,42 +91,162 @@ const updateProduct = async (req, res) => {
             src.on('error', function (err) { });
         }
 
-        const product = await Product.update( { ...req.body, imageUrl: req.body.newFileName }, { where: { itemId: req.params.id } })
+        const product = await Product.update({ ...req.body, approve_b: 'pending', imageUrl: req.body.newFileName }, { where: { itemId: req.params.id } })
 
         if (!product) {
-            res.status(200).send({
-                success: false,
-                message: "Product Not Found"
-            })
+            req.flash('message', 'Product not found');
         }
 
-        req.flash('message', 'Product Details updated sucessfully');
+        req.flash('message', 'Product Details updated sucessfully wait for approval');
         return res.redirect('/productMasterList')
 
     } catch (err) {
         console.log(err.message)
-        res.status(500).send({
-            success: false,
-            message: "something went wrong"
-        })
+        req.flash('message', 'Something went wrong');
+        return res.redirect('/updateProduct/:id')
     }
 
 
 }
 
-// Delete Product Details
-const deleteProduct = async (req, res) => {
-    const product = await Product.destroy({ where: { id: req.params.id } })
-    if (!product) {
-        res.status(200).send({
-            success: false,
-            message: "Product Not Found"
-        })
+
+
+// upload bulk products
+
+const uploadBulkProducts = async function (req, res) {
+    try {
+        if (req.file) {
+            const filePath = req.file.path;
+            const fileData = fs.readFileSync(filePath);
+            const workbook = xlsx.read(fileData, { type: 'buffer' });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const productsInJson = xlsx.utils.sheet_to_json(sheet);
+
+            for (const productData of productsInJson) {
+                // console.log(productData)
+
+                const newFileName = `${new Date().getTime()}_${productData.imageUrl}`
+                const target_path = `public/uploads/${newFileName}`;
+                /** A better way to copy the uploaded file. **/
+                // const src = fs.createReadStream(tmp_path);
+                const dest = fs.createWriteStream(target_path);
+                // src.pipe(dest);
+                // src.on('end', function () { });
+                // src.on('error', function (err) { });
+
+                let manufacturer = await Manufacturer.findOne({ where: { shortDescription: productData.manufacturer } });
+
+                if (!manufacturer) {
+                    manufacturer = await Manufacturer.create({ shortDescription: productData.manufacturer });
+                }
+
+                // Create the product with the manufacturer ID
+                await Product.create({
+                    externalitemId: productData.externalitemId,
+                    itemName: productData.itemName,
+                    shortName: productData.shortName,
+                    length: productData.length,
+                    breadth: productData.breadth,
+                    height: productData.height,
+                    weight: productData.weight,
+                    width: productData.width,
+                    box: productData.box,
+                    rack: productData.rack,
+                    foodType: productData.foodType,
+                    taxId: productData.taxId,
+                    imageUrl: newFileName,
+                    decimalsAllowed: productData.decimalsAllowed,
+                    status: productData.status,
+                    itemProductTaxType: productData.itemProductTaxType,
+                    fulfilmentMode: productData.fulfilmentMode,
+                    isReturnable: productData.isReturnable,
+                    isCancellable: productData.isCancellable,
+                    returnPeriod: productData.returnPeriod,
+                    description: productData.description,
+                    detailedDescription: productData.detailedDescription,
+                    weightGrams: productData.weightGrams,
+                    appliesOnline: productData.appliesOnline,
+                    itemProductType: productData.itemProductType,
+                    itemTaxType: productData.itemTaxType,
+                    iBarU: productData.iBarU,
+                    manufacturerId: manufacturer.manufacturerId,
+                    pageN: productData.pageN,
+                    // isDeleted: productData.isDeleted,
+                    // approve_b: productData.approve_b,
+                    // approve_by: productData.approve_by,
+                    // approve_date: productData.approve_date,
+                });
+            }
+
+            req.flash('message', 'Products Successfully Uploaded.');
+            return res.redirect('/productMasterList');
+        }
+    } catch (err) {
+        console.log(err.message);
+        req.flash('message', 'Something went wrong');
+        return res.redirect('/uploadBulkProducts');
     }
-    res.status(200).send({
-        message: "Product Deleted Sucessfully"
-    })
+};
+
+
+
+
+// product approval list
+
+const productApprovalList = async function (req, res) {
+
+    const approvalStatus = req.query.approvalStatus; // Get the approval status from query parameter
+
+    let whereClause = {};
+
+    if (approvalStatus === 'pending') {
+        whereClause = { approve_b: 'pending' };
+    } else if (approvalStatus === 'approved') {
+        whereClause = { approve_b: "approved" };
+    } else if (approvalStatus === 'rejected') {
+        whereClause = { approve_b: "rejected" };
+    }
+
+    const product = await Product.findAll({ where: whereClause });
+
+    res.render('approval/productApprovalList', { title: 'Express', message: req.flash('message'), product });
 }
+
+const updateProductApprovalStatus = async (req, res) => {
+    const { action, selectedItemIds } = req.body;
+    const flashMessages = [];
+
+    if (action === 'approved' || action === 'rejected') {
+        try {
+            for (const itemId of selectedItemIds) {
+
+                const product = await Product.findOne({ where: { itemId: itemId } });
+
+                if (product) {
+                    await Product.update({ approve_b: action }, { where: { itemId: itemId } });
+                    flashMessages.push(`Item ID ${itemId} ${action}`);
+                }
+            }
+
+            if (flashMessages.length > 0) {
+                req.flash('message', flashMessages.join(', '));
+            } else {
+                req.flash('message', 'No approval requests were updated.');
+            }
+
+            return res.redirect('/productApprovalList');
+        } catch (err) {
+            console.error(err.message);
+            req.flash('message', 'Something went wrong');
+            return res.redirect('/productApprovalList');
+        }
+    }
+}
+
+
+
+
+
 
 
 
@@ -162,8 +254,9 @@ const deleteProduct = async (req, res) => {
 module.exports = {
     updateProduct,
     createProduct,
-    getAllProduct,
-    getSingleProduct,
     updateProduct,
-    deleteProduct
+    productApprovalList,
+    updateProductApprovalStatus,
+    uploadBulkProducts
+
 }

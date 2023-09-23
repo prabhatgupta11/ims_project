@@ -25,6 +25,16 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.FLOAT(10,2),
             allowNull : false,
         },
+        approve_b : {
+            type : DataTypes.STRING,
+            defaultValue:'pending'
+        },
+        approve_by : {
+            type : DataTypes.STRING,
+        },
+        approve_date : {
+            type : DataTypes.DATE,
+        }
     
     })
 

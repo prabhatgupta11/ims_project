@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.BIGINT(11),
         },
         stock : {
-            type : DataTypes.STRING(100)
+            type : DataTypes.INTEGER
         },
         bufferStock : {
             type : DataTypes.STRING(100)
@@ -127,6 +127,16 @@ module.exports = (sequelize, DataTypes) => {
         aliasCode : {
             type : DataTypes.STRING(150)
         },
+        approve_b : {
+            type : DataTypes.STRING,
+            defaultValue:'pending'
+        },
+        approve_by : {
+            type : DataTypes.STRING,
+        },
+        approve_date : {
+            type : DataTypes.DATE,
+        }
     })
 
     return ProductStock
