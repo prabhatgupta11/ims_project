@@ -18,7 +18,7 @@
     }
    
     .sup-int[type='text']{
-      padding-left: 30px;
+      /*padding-left: 30px;*/
     }
 
     .table-custom tbody tr:nth-child(even) {
@@ -192,7 +192,7 @@
         <label for="Code" class="label-block">Code:</label>
         
         <input type="text" id="Code" name="Code" class="sup-int"  placeholder="Enter Supplier Code" value="{{supplier.Code}}" required>
-        <div class="sup-icon" style="position:absolute; left:10px;top:15%">
+        <div class="sup-icon">
         
         </div>
      
@@ -236,7 +236,7 @@
 
           <label for="PAN">PAN:</label>
         <input type="text" id="PAN" name="PAN" placeholder="&#9751; Enter PAN" value="{{supplier.PAN}}" oninput="convertToUpperCase(this)"
-         minlength="10"  maxlength="10" pattern="\d{10}" title="Please enter a 10-digit PAN Number" >
+         minlength="10"  maxlength="10"  title="Please enter a 10-digit PAN Number" >
 
 
   <label for="CreditLimit">Credit Limit:</label>
@@ -250,7 +250,7 @@
 <label for="Status" class="label-block">Status:</label>
     <select id="Status" name="Status">
         <option>{{supplier.Status}}</option>
-      <option value="Active" selected>Active</option>
+      <option value="Active">Active</option>
       <option value="Inactive">Inactive</option>
     </select>
 
@@ -276,7 +276,7 @@
 
 
 </body>
-<script>
+{{!-- <script>
   document.getElementById("supplierForm").addEventListener("submit", function () {
     //e.preventDefault();
 
@@ -324,6 +324,7 @@
 
 
 ////contact,addhar number validation
+/*
  const contactNoInput = document.getElementById('ContactNo');
   const AadharNoInput = document.getElementById('AadharNo');
   const GSTNoInput = document.getElementById('GSTNo');
@@ -383,6 +384,7 @@ PinCodeNoInput.addEventListener('input', () => {
  function convertToUpperCase(input) {
         input.value = input.value.toUpperCase();
     }
+    
 
 // Ensure Credit Limit and Credit Days default to 0 on page load
 /*document.addEventListener("DOMContentLoaded", () => {
@@ -391,4 +393,4 @@ PinCodeNoInput.addEventListener('input', () => {
 });
 */
 
-</script>
+</script> --}}

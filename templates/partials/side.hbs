@@ -48,6 +48,10 @@
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
                 <div class="nav_list" id="dashboard-submenu">
+                    <a style="font-size: small;" href="/userList" class="nav_link">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav_name">User List </span>
+                    </a>
                     <a style="font-size: small;" href="/uploadBulkProducts" class="nav_link">
                         <i class="fa-solid fa-upload"></i>
                         <span class="nav_name">Upload Products</span>
@@ -64,9 +68,9 @@
                         <i class="fa-solid fa-list"></i>
                         <span class="nav_name">Manufacturer List </span>
                     </a>
-                    <a style="font-size: small;" href="/newStore" class="nav_link">
+                    <a style="font-size: small;" href="/newStoreList" class="nav_link">
                         <i class="fa-solid fa-list"></i>
-                        <span class="nav_name">New Store</span>
+                        <span class="nav_name">New Store List</span>
                     </a>
                     <a style="font-size: small;" href="/storeList" class="nav_link">
                         <i class="fa-solid fa-list"></i>
@@ -88,14 +92,10 @@
                         <i class="fa-solid fa-people-carry-box"></i>
                         <span class="nav_name">Stock In/Out</span>
                     </a>
-                    <a style="font-size: small;" href="/userList" class="nav_link">
-                        <i class="fa-solid fa-users"></i>
-                        <span class="nav_name">User List </span>
-                    </a>
-                    <a style="font-size: small;" href="/userStoreMapping" class="nav_link">
+                    {{!-- <a style="font-size: small;" href="/userStoreMapping" class="nav_link">
                         <i class="fa-solid fa-sitemap"></i>
                         <span class="nav_name">User-Store Mapping</span>
-                    </a>
+                    </a> --}}
                     <a style="font-size: small;" href="/storeCategoryMapping" class="nav_link">
                         <i class="fa-solid fa-sitemap"></i>
                         <span class="nav_name">Store-Category Mapping</span>
@@ -177,7 +177,13 @@
                 <div class="nav_link order-toggle">
                     <i class="fa-regular fa-rectangle-list"></i>
                     <span class="nav_name"> <a href="/suppliersMasterList"
-                            style="text-decoration: none;color: var(--first-color-light);">Supplier MasterList</a></span>
+                            style="text-decoration: none;color: var(--first-color-light);">Supplier Master
+                            List</a></span>
+                </div>
+                <div class="nav_link order-toggle">
+                    <i class="fa-regular fa-rectangle-list"></i>
+                    <span class="nav_name"> <a href="/stateMasterList"
+                            style="text-decoration: none;color: var(--first-color-light);">State Master List</a></span>
                 </div>
             </div>
             <a href="/logout" class="nav_link">

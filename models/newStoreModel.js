@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull : false,
         },
         pincode : {
-            type : DataTypes.NUMBER(6),
+            type : DataTypes.STRING(20),
             allowNull : false,
         },
         contactPersonName : {
@@ -43,19 +43,19 @@ module.exports = (sequelize, DataTypes) => {
             allowNull : false,
         },
         contactNo1 : {
-            type : DataTypes.NUMBER(11),
+            type : DataTypes.STRING(20),
             allowNull : false,
         },
         contactNo2 : {
-            type : DataTypes.NUMBER(11),
+            type : DataTypes.STRING(20),
             allowNull : false,
         },
         GSTNo : {
-            type : DataTypes.STRING(15),
+            type : DataTypes.STRING(255),
             allowNull : false,
         },
         panNo : {
-            type : DataTypes.STRING(10),
+            type : DataTypes.STRING(255),
             allowNull : false,
         },
         taxState : {
@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue : 'active',
         },
         displayOrder : {
-            type : DataTypes.STRING(255),
+            type : DataTypes.INTEGER,
             allowNull : false,
         },
         edit_by : {
@@ -83,9 +83,9 @@ module.exports = (sequelize, DataTypes) => {
         approve_by : {
             type : DataTypes.STRING,
         },
-        rowguid : {
-            type : DataTypes.UUID,
-            defaultValue : DataTypes.UUIDV4
+        rowguid: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4
         }
     
     })

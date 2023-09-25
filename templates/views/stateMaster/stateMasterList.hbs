@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>State Master List</title>
     <link rel="stylesheet" href="css/newStyle.css">
     {{!--
     <link rel="stylesheet" href="css/newStyle.css"> --}}
@@ -91,19 +91,13 @@
 <body id="body-pd">
 
     {{>side}}
-    {{#if message}}
-    <div class="alert alert-info opacity-0">{{message}}</div>
-    {{/if}}
-    {{#if message}}
-    <div class="alert alert-info">{{message}}</div>
-    {{/if}}
     <div class="col-md-12 row-md-5 mx-0 main_container " style="padding-right:0px; margin-top:70px">
         <div class="row-md-4 subtitle d-flex justify-content-between align-items-center" style="margin-top: 60px;">
             <div class="row-md-4 subtitle d-flex justify-content-start align-items-center w-75"
                 style="margin-top: 5px;">
                 <div class="block">
                     <h4 class="flex-grow-1 " style="font-size: 29px     color: #1e293b;
-    font-weight:800;">SupplierMaster List
+    font-weight:800;">State Master List
                 </div>
                 <div id="line">
                     <span id="line-content"></span> <!-- Content inside the div -->
@@ -112,15 +106,15 @@
                     <ul class="breadcrumb">
                         <li><a href="#">Home</a></li>
                         <li><a href="#">Master</a></li>
-                        <li><a href="#">SupplierMaster List</a></li>
+                        <li><a href="#">State Master List</a></li>
 
                     </ul>
                 </div>
             </div>
 
             <button type="button" class="btn btn-light btn-md  text-light h-25"
-                style="background-color: #ff9f43;font-weight:500"><a href="/supplierMaster"
-                    style="text-decoration: none;color:white">+ Add Supplier Master</a></button>
+                style="background-color: #ff9f43;font-weight:500"><a href="/stateMaster"
+                    style="text-decoration: none;color:white">+ Add State Master</a></button>
         </div>
 
 
@@ -135,13 +129,13 @@
 
             <div class="container-table pt-2 p-0 mt-4 table-responsive">
                 <form style="overflow-x: hidden;">
-                    <table class="table table-custom" id="order_table">
+                    <table class="table table-custom" id="state_table">
                         <thead>
                             <tr>
 
-                                <th scope="col ">Supplier Code</th>
-                                <th scope="col ">Supplier Name</th>
-                                <th scope="col ">Email</th>
+                                <th scope="col ">State Code</th>
+                                <th scope="col ">State Name</th>
+                                <th scope="col ">Status</th>
                                 <th scope="col ">Action</th>
                             </tr>
                         </thead>
@@ -171,21 +165,21 @@
 
     <script>
         $(document).ready(function () {
-            const dataTable = $('#order_table').DataTable({
+            const dataTable = $('#state_table').DataTable({
                 'processing': true,
                 'serverSide': true,
                 'ajax': {
-                    'url': '/supplierDetailsList',
+                    'url': '/stateDetailsList',
                     'type': 'GET'
                 },
                 'columns': [
                     { data: 'Code' },
                     { data: 'Name' },
-                    { data: 'Email' },
+                    { data: 'Status' },
                     {
                         data: 'rowguid',
                         'render': function (data, type, row) {
-                            return "<a href='/updateSupplierMaster/" + data + "'>EDIT</a>";
+                            return "<a href='/updateStateMaster/" + data + "'>EDIT</a>";
                         }
                     },
                 ],
@@ -198,7 +192,7 @@
             const tableBody = document.getElementById("tablebody");
 
             // Fetch supplier data
-            fetch(`/getAllsupplierdata`)
+            fetch(/getAllsupplierdata)
                 .then(response => response.json())
                 .then(data => {
                     data.forEach(supplier => {
@@ -219,10 +213,10 @@
                        for(let i=0;i<alleditbtn.length;i++)
                        {
                           alleditbtn[i].addEventListener("click", () => {
-                              alert(`button is clicked ${alleditbtn[i].value}`)
+                              alert(button is clicked ${alleditbtn[i].value})
                           const supplierUuid = alleditbtn[i].value;
                           // Assuming you want to navigate to the edit page with the supplierId as a parameter
-                          window.location.href = `/supplierMasterUpdate/${supplierUuid}`;
+                          window.location.href = /supplierMasterUpdate/${supplierUuid};
                       });
                        }*/
                 })

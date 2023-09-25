@@ -1,5 +1,6 @@
 const db = require("../models")
 const Store = db.store;
+const NewStore = db.newStore
 
 
 const createStore = async (req, res) => {
@@ -140,24 +141,51 @@ const createNewStore = async function (req, res) {
       approve_by,
       rowguid
     } = req.body
-return console.log(req.body)
+
      await NewStore.create(info)
 
+     const store = await Store.findByPk(selectedStoreId);
+
     req.flash('message', 'Store added Successfully and Sent for Approval');
-    return res.redirect('/storeList')
+    return res.redirect('/newStoreList')
 
   }
 
   catch (err) {
+    console.log(err)
     req.flash('message', 'Something Went Wrong');
-    return res.redirect('/storeMaster')
+    return res.redirect('/newStore')
   }
 
 }
 
+const updateNewStore = async (req, res) => {
+
+  try {
+
+    const newStore = await NewStore.update({ ...req.body, approve_b: 'pending' }, { where: { rowguid: req.params.id } })
+
+    if (!newStore) {
+      res.status(200).send({
+        success: false,
+        message: "Store Not Found"
+      })
+    }
+
+    req.flash('message', 'Store updated successfully and sent for Approval');
+    return res.redirect('/newStoreList')
+
+  } catch (err) {
+    console.log(err)
+    req.flash('message', 'Something Went Wrong');
+    return res.redirect(`/updateNewStore/${req.params.id}`)
+  }
+
+}
 
 module.exports = {
   createNewStore,
+  updateNewStore,
   createStore,
   getAllStoreDetails,
   updateStore,

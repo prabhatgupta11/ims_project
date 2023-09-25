@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="css/newStyle.css">
+  <link rel="stylesheet" href="/public/css/newStyle.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
@@ -195,7 +195,7 @@
       </div> --}}
       <div class="me-two d-flex justify-content-center align-items-center">
         <div class="block">
-          <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px;">Create Store
+          <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px;">Update Store
         </div>
         <div id="line">
           <span id="line-content"></span> <!-- Content inside the div -->
@@ -204,7 +204,7 @@
           <ul class="breadcrumb">
             <li><a href="#"> Home</a></li>
             <li><a href="#">Master</a></li>
-            <li><a href="#">Create Store</a></li>
+            <li><a href="#">Update Store</a></li>
 
           </ul>
         </div>
@@ -216,14 +216,14 @@
           class="fa fa-xmark text-dark fa-2x"></i></a>
     </div>
 
-    <form action="/createNewStore" method="post" class="form-form">
+    <form action="/updateNewStore/{{newStore.rowguid}}" method="post" class="form-form">
       <div class="col-md-6 main-table-data container main-table-box" style="margin-top:8px;">
         <div class="col-md-12 title-title">
-          <h3 class="pt-4 h4-title">Add Store Details</h3>
+          <h3 class="pt-4 h4-title">Update Store Details</h3>
         </div>
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">Code</label>
-          <input class="form-control input-field " placeholder="Enter Your Code" name="code" id="code" required>
+          <input class="form-control input-field " placeholder="Enter Your Code" name="code" id="code" value="{{newStore.code}}" required>
           <div class="icon-context input-field">
             <i class="fa-solid fa-code icons-icons"></i>
           </div>
@@ -231,7 +231,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">Store Name</label>
           <input class="form-control input-field" placeholder="Enter Your Store Name " type="text" name="storeName" id="name"
-            required></input>
+           value="{{newStore.storeName}}" required></input>
           <div class="icon-context input-field">
             <i class="fa-solid fa-user icons-icons"></i>
           </div>
@@ -240,7 +240,7 @@
           <label for="exampleFormControlSelect1">Business Type</label>
           <select id="businessType" name="businessType" class="form-control input-field"
             style="padding-left:30px !important" required>
-            <option value="" disabled selected>Select Business Type</option>
+            <option value="{{newStore.businessType}}" disabled selected>{{newStore.businessType}}</option>
             <option value="franchise">FRANCHISE</option>
             <option value="distribution center">DISTRIBUTION CENTER</option>
             <option value="branch">BRANCH</option>
@@ -253,7 +253,7 @@
           <label for="exampleFormControlTextarea1">Address1</label>
 
           <textarea class="form-control input-field px-1" cols="" rows="" type="text"
-            placeholder="&#9751; Enter Your Address " name="address1" id="address1" required></textarea>
+            placeholder="&#9751; Enter Your Address " name="address1" id="address1" required>{{newStore.address1}}</textarea>
           {{!-- <div class="icon-context input-field">
             <i class="fa-solid fa-envelope icons-icons"></i>
           </div> --}}
@@ -262,7 +262,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">Address2</label>
           <textarea class="form-control input-field px-1" type="text" placeholder="&#9751; Enter Your Address "
-            name="address2" id="address2" required></textarea>
+            name="address2" id="address2" required>{{newStore.address2}}</textarea>
           {{!-- <div class="icon-context input-field">
             <i class="fa-solid fa-envelope icons-icons"></i>
           </div> --}}
@@ -270,7 +270,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlSelect1">State</label>
           <select id="state" name="state" class="form-control input-field" style="padding-left:30px !important" required>
-            <option value="" disabled selected>Select State</option>
+            <option value="{{newStore.state}}" disabled selected>{{newStore.state}}</option>
             <option value="rajasthan">Rajasthan</option>
           </select>
           <div class="icon-context input-field">
@@ -280,15 +280,15 @@
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">Pin Code</label>
           <input class="form-control input-field" type="text" placeholder="Enter Your Pin Code here " name="pincode"
-            id="pinCode" maxlength="6" required></input>
+            id="pinCode" maxlength="6" value="{{newStore.pincode}}" required></input>
           <div class="icon-context input-field">
             <i class="fa-solid fa-location-dot icons-icons"></i>
           </div>
         </div>
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">Contact Person Name</label>
-          <input class="form-control input-field" type="text" placeholder="Enter Your Name " name="contactPersonName"
-            id="contactPersonName" required></input>
+          <input class="form-control input-field" type="text" placeholder="Enter Your Name " name="ContactPersonName"
+            id="contactPersonName" value="{{newStore.contactPersonName}}" required></input>
           <div class="icon-context input-field">
             <i class="fa-solid fa-id-card icons-icons"></i>
           </div>
@@ -297,7 +297,7 @@
           <label for="contactNo">Contact No 1</label>
           <input class="form-control input-field validateContact1" type="tel" placeholder="0-987-654-321" name="contactNo1"
             id="contactNo" title="Please enter a 10-digit contact number" onblur="validateContact1(this)"
-            maxlength="10" required></input>
+            maxlength="10" value="{{newStore.contactNo1}}" required></input>
           <div class="icon-context input-field">
             <i class="fa-solid fa-mobile-screen-button icons-icons"></i>
           </div>
@@ -306,7 +306,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">Contact No 2</label>
           <input class="form-control input-field validateContact2" type="text" placeholder="0-987-654-321 " name="contactNo2"
-            id="contactNo" maxlength="10" onblur="validateContact2(this)" required></input>
+            id="contactNo" maxlength="10" onblur="validateContact2(this)" value="{{newStore.contactNo2}}" required></input>
           <div class="icon-context input-field">
             <i class="fa-solid fa-mobile-screen-button icons-icons"></i>
           </div>
@@ -315,7 +315,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">GST No</label>
           <input class="form-control input-field " type="text" placeholder="Enter Your GST number " name="GSTNo"
-            id="gstNo" maxlength="15" oninput="convertToUpperCase(this)" required></input>
+            id="gstNo" maxlength="15" oninput="convertToUpperCase(this)" value="{{newStore.GSTNo}}" required></input>
           <div class="icon-context input-field">
             <i class="fa-regular fa-money-bill-1 icons-icons"></i>
           </div>
@@ -323,7 +323,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">PAN No</label>
           <input class="form-control input-field" type="text" placeholder="Enter Your Contact number " name="panNo"
-            id="panNo" maxlength="10" oninput="convertToUpperCase(this)" required></input>
+            id="panNo" maxlength="10" oninput="convertToUpperCase(this)" value="{{newStore.panNo}}" required></input>
           <div class="icon-context input-field">
             <i class="fa-solid fa-id-card icons-icons"></i>
           </div>
@@ -331,7 +331,6 @@
         <div class="form-group py-2">
           <label for="exampleFormControlSelect1">Category</label>
           <select id="category" name="category" class="form-control input-field" style="padding-left:30px !important" required>
-            <option value="" disabled selected>Select Category</option>
             <option value="grocery">Grocery</option>
             <option value="electronics">Electronics</option>
           </select>
@@ -342,7 +341,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlSelect1">Tax State</label>
           <select id="taxState" name="taxState" class="form-control input-field" style="padding-left:30px !important" required>
-            <option value="" disabled selected>Select State</option>
+            <option value="{{newStore.taxState}}" disabled selected>{{newStore.taxState}}</option>
             <option value="rajasthan">Rajasthan</option>
           </select>
           <div class="icon-context input-field">
@@ -352,6 +351,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlSelect1">Status</label>
           <select id="status" name="status" class="form-control input-field" style="padding-left:30px !important">
+            <option value="{{newStore.status}}">{{newStore.status}}</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
           </select>
@@ -362,7 +362,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">Display Order</label>
           <input class="form-control input-field" type="number" placeholder="Display Order " name="displayOrder"
-            id="displayOrder" required></input>
+            id="displayOrder" value="{{newStore.displayOrder}}" required></input>
           <div class="icon-context input-field">
             <i class="fa-solid fa-arrow-down-short-wide icons-icons"></i>
           </div>

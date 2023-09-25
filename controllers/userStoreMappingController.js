@@ -62,7 +62,7 @@ const getUserStoreData = async (req, res) => {
       }
 
       if (flag == true) {
-        arr.push({ ...store[i].dataValues, checked: true })
+        arr.push({ ...store[i].dataValues, checked: false })
       }
       else {
         arr.push({ ...store[i].dataValues, checked: false })

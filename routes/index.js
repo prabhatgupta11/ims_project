@@ -16,9 +16,11 @@ const userStoreMapping = require("../controllers/userStoreMappingController")
 const storeCategoryMapping = require("../controllers/storeCategoryMapping")
 const orderController = require("../controllers/orderController")
 const supplierMasterController = require("../controllers/suplierMasterController")
+const stateMasterController=require("../controllers/stateMasterController")
 const checkUser = require("../middleware/checkUser")
 // const checkRole = require("../middleware/checkRole")
 const db = require("../models");
+const NewStore = db.newStore
 const Store = db.store
 const Product = db.products
 const Manufacturer = db.manufacturer
@@ -29,6 +31,7 @@ const UserStoreMapping = db.userStoreMapping
 const Order = db.order;
 const OrderItems = db.orderItems
 const SupplierMaster = db.supplier
+const StateMaster = db.stateMaster
 let multer = require('multer');
 const upload = multer({ dest: 'public/' })
 const bulkUpload = multer({ dest: 'public/' })
@@ -455,6 +458,65 @@ router.get('/storemasterList', async function (req, res) {
   res.json(output)
 })
 
+router.get('/newStoreList', async function (req, res) {
+  res.render('store/newStoreList', { title: 'Express', message: req.flash('message') });
+})
+
+router.get('/newStoremasterList', async function (req, res) {  
+
+  let draw = req.query.draw;
+
+  let start = parseInt(req.query.start);
+
+  let length = parseInt(req.query.length);
+
+  let where = {}
+
+
+  if (req.query.search.value) {
+    where[Op.or] = [
+      { code: { [Op.like]: `%${req.query.search.value}%` } },
+      { storeName: { [Op.like]: `%${req.query.search.value}%` } },
+      { businessType: { [Op.like]: `%${req.query.search.value}%` } },
+      { address1: { [Op.like]: `%${req.query.search.value}%` } },
+      { contactPersonName: { [Op.like]: `%${req.query.search.value}%` } },
+      { contactNo1: { [Op.like]: `%${req.query.search.value}%` } },
+      { status: { [Op.like]: `%${req.query.search.value}%` } },
+    ];
+  }
+  const store = await NewStore.findAll({
+    where: {
+      ...where, // Your initial where conditions, I assume
+      approve_b: ["approved", "pending"]
+    },
+    limit: length,
+    offset: start
+  });
+
+  const count = await NewStore.count()
+
+  let data_arr = []
+  for (let i = 0; i < store.length; i++) {
+    data_arr.push({
+      'code': store[i].code,
+      'storeName': store[i].storeName,
+      'businessType': store[i].businessType,
+      'address1': store[i].address1,
+      'contactPersonName': store[i].contactPersonName,
+      'contactNo1': store[i].contactNo1,
+      'status': store[i].status,
+      'rowguid': store[i].rowguid
+    });
+  }
+  let output = {
+    'draw': draw,
+    'iTotalRecords': count,
+    'iTotalDisplayRecords': count,
+    'aaData': data_arr
+  };
+  res.json(output)
+})
+
 
 // Update Store Master Api
 
@@ -467,6 +529,15 @@ router.get('/updateStoreMaster/:id', checkUser, async function (req, res) {
 
 router.post("/updateStore/:id", storeController.updateStore);
 
+
+router.get('/updateNewStore/:id', async function (req, res) {
+console.log(req.params.id,123456)
+  let newStore = await NewStore.findOne({ where: { rowguid: req.params.id } })
+
+  res.render('store/newStoreUpdate', { title: 'Express', message: req.flash('message'), newStore });
+});
+
+router.post("/updateNewStore/:id", storeController.updateNewStore);
 
 // Product Rate Api 
 
@@ -875,65 +946,65 @@ router.post('/uploadBulkProducts', bulkUpload.single('file'), productController.
 
 
 
-// product wise store wise stock quantity
+// // product wise store wise stock quantity
 
-router.get('/getProductWiseStoreWiseStockQuantity', function (req,res) {
+// router.get('/getProductWiseStoreWiseStockQuantity', function (req,res) {
  
-  // Fetch all stores and products
-Store.findAll().then(stores => {
-  Product.findAll().then(products => {
-      // For each store and product combination, fetch the stock quantity
-      const results = [];
-      stores.forEach(store => {
-          products.forEach(product => {
-              ProductStock.findOne({
-                  where: { outletId: store.outletId, itemId: product.itemId }
-              }).then(stock => {
-                  results.push({
-                      storeName: store.storeName,
-                      itemName: product.itemName,
-                      stock: stock ? stock.stock : 0
-                  });
-                  if (results.length === stores.length * products.length) {
-                      // Render your HBS template with the 'results' array
-                      res.render('productWiseStoreWiseStockQuantity', { results });
-                  }
-              });
-          });
-      });
-  });
-});
-})
+//   // Fetch all stores and products
+// Store.findAll().then(stores => {
+//   Product.findAll().then(products => {
+//       // For each store and product combination, fetch the stock quantity
+//       const results = [];
+//       stores.forEach(store => {
+//           products.forEach(product => {
+//               ProductStock.findOne({
+//                   where: { outletId: store.outletId, itemId: product.itemId }
+//               }).then(stock => {
+//                   results.push({
+//                       storeName: store.storeName,
+//                       itemName: product.itemName,
+//                       stock: stock ? stock.stock : 0
+//                   });
+//                   if (results.length === stores.length * products.length) {
+//                       // Render your HBS template with the 'results' array
+//                       res.render('productWiseStoreWiseStockQuantity', { results });
+//                   }
+//               });
+//           });
+//       });
+//   });
+// });
+// })
 
-// store wise product wise stock quantity
+// // store wise product wise stock quantity
 
-router.get('/getStoreWiseProductWiseStockQuantity', function (req,res) {
+// router.get('/getStoreWiseProductWiseStockQuantity', function (req,res) {
   
-  // Fetch all stores and products
-  Store.findAll().then(stores => {
-      Product.findAll().then(products => {
-          // For each store and product combination, fetch the stock quantity
-          const results = [];
-          stores.forEach(store => {
-              products.forEach(product => {
-                  ProductStock.findOne({
-                      where: { outletId: store.outletId, itemId: product.itemId }
-                  }).then(stock => {
-                      results.push({
-                        storeName: store.storeName,
-                        itemName: product.itemName,
-                        stock: stock ? stock.stock : 0
-                      });
-                      if (results.length === stores.length * products.length) {
-                          // Render your HBS template with the 'results' array
-                          res.render('storeWiseProductWiseStockQuantity', { results });
-                      }
-                  });
-              });
-          });
-      });
-  });
-})
+//   // Fetch all stores and products
+//   Store.findAll().then(stores => {
+//       Product.findAll().then(products => {
+//           // For each store and product combination, fetch the stock quantity
+//           const results = [];
+//           stores.forEach(store => {
+//               products.forEach(product => {
+//                   ProductStock.findOne({
+//                       where: { outletId: store.outletId, itemId: product.itemId }
+//                   }).then(stock => {
+//                       results.push({
+//                         storeName: store.storeName,
+//                         itemName: product.itemName,
+//                         stock: stock ? stock.stock : 0
+//                       });
+//                       if (results.length === stores.length * products.length) {
+//                           // Render your HBS template with the 'results' array
+//                           res.render('storeWiseProductWiseStockQuantity', { results });
+//                       }
+//                   });
+//               });
+//           });
+//       });
+//   });
+// })
 
 
 
@@ -1162,6 +1233,8 @@ router.get('/updateSupplierMaster/:uuid', async function (req, res) {
   const supplier = await SupplierMaster.findOne({ where: { rowguid: req.params.uuid } })
   res.render('supplierMaster/supplierMasterUpdate', { title: 'Express', supplier });
 });
+
+
 //get route for getting all the data of supplier
 
 router.get("/getAllsupplierdata",  supplierMasterController.supplierData)
@@ -1169,5 +1242,80 @@ router.get("/getAllsupplierdata",  supplierMasterController.supplierData)
 router.post("/supplierMasterUpdate/:uuid",supplierMasterController.updateSuplier)
 
 
+
+/********************************State Master*********************************** */
+router.get("/stateMaster",(req,res)=>{
+  res.render("stateMaster/stateMaster",{title:'Express'});
+  })
+  
+  
+  router.post("/createStateMaster",stateMasterController.createStateMaster)
+  
+  //state master listing
+  router.get('/stateMasterList', async function (req, res) {
+    res.render('stateMaster/stateMasterList', { title: 'Express', message: req.flash('message') });
+  });
+  
+  
+  router.get('/stateDetailsList', async function (req, res) {
+    let draw = req.query.draw;
+  
+    let start = parseInt(req.query.start);
+  
+    let length = parseInt(req.query.length);
+  
+    let where = {}
+  
+    if (req.query.search.value) {
+      where[Op.or] = [
+        { Code: { [Op.like]: `%${req.query.search.value}%` } },
+        { Name: { [Op.like]: `%${req.query.search.value}%` } },
+        { Status: { [Op.like]: `%${req.query.search.value}%` } },
+      ];
+    }
+  
+    const state = await StateMaster.findAll({
+      limit: length,
+      offset: start,
+      where: where
+    })
+  
+    const count = await StateMaster.count()
+  
+    let data_arr = []
+    for (let i = 0; i < state.length; i++) {
+  
+  
+      data_arr.push({
+        'Code': state[i].Code,
+        'Name': state[i].Name,
+        'Status': state[i].Status,
+        'rowguid':state[i].rowguid
+      });
+    }
+  
+    let output = {
+      'draw': draw,
+      'iTotalRecords': count,
+      'iTotalDisplayRecords': count,
+      'aaData': data_arr
+    };
+  
+    res.json(output)
+  });
+  
+  
+  
+  //state master update
+  
+  router.get("/updateStateMaster/:uuid", async(req,res)=>{
+    const state= await StateMaster.findOne({where:{rowguid:req.params.uuid}})
+  
+    res.render("stateMaster/stateMasterUpdate",{title:'Express',state});
+    })
+    
+    router.post("/stateMasterUpdate/:uuid",stateMasterController.updateStateMaster)
+  
+  /********************************State Master*********************************** */
 
 module.exports = router;

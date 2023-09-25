@@ -29,6 +29,7 @@ db.products = require("./productModel")(sequelize, DataTypes)
 db.productStock = require("./productStockModel")(sequelize, DataTypes)
 db.user = require("./userModel")(sequelize, DataTypes)
 db.store = require('./storeModel')(sequelize, DataTypes)
+db.newStore = require('./newStoreModel')(sequelize, DataTypes)
 db.productRaise = require('./productRaiseModel')(sequelize, DataTypes)
 db.stockInOut = require('./stockInOutModel')(sequelize, DataTypes)
 db.manufacturer = require('./manufacturerMasterModel')(sequelize, DataTypes)
@@ -40,6 +41,7 @@ db.order = require('./orderModel')(sequelize, DataTypes)
 db.orderItems = require('./orderItemsModel')(sequelize, DataTypes)
 db.productMapping = require('./productMappingModel')(sequelize, DataTypes)
 db.supplier = require('./supplierMaster')(sequelize, DataTypes)
+db.stateMaster=require('./stateMasterModel')(sequelize, DataTypes)
 
 // db.products.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
 db.productStock.belongsTo(db.products, { sourceKey: "itemId", foreignKey: "itemId" });

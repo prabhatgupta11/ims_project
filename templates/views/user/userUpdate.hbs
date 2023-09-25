@@ -648,5 +648,112 @@ $(document).ready(function () {
 });
 </script>
 
+{{!-- <script>
+$(document).ready(function () {
+    const roleSelect = $('#roleSelect');
+    const managerSelect = $('#managerSelect');
+    const storeList = $('#storeList');
+    const userId = {{ user.id }}; // Make sure {{ user.id }} is properly defined
+
+    // Function to populate stores in checkboxes
+    function populateStores(stores) {
+        storeList.empty();
+
+        stores.forEach(function (store) {
+            const checkbox = $('<input>').prop({
+                id: 'myCheckBox_' + store.outletId,
+                name: 'outletId',
+                value: store.outletId,
+                type: 'checkbox',
+                checked: store.checked,
+            });
+
+            checkbox.on('change', function () {
+                const isChecked = $(this).prop('checked');
+                if (!isChecked) {
+                    // Handle deselection here
+                    // Remove the store from the user's selection on the server-side
+                    $.post(`/deselectStore/${userId}/${store.outletId}`, function (response) {
+                        console.log(response);
+                    });
+                }
+            });
+
+            const label = $('<label>').prop({
+                for: 'myCheckBox_' + store.outletId,
+            }).html(store.storeName);
+
+            storeList.append(checkbox)
+                .append(label)
+                .append($('<br>'));
+        });
+    }
+
+    // Load initial data when the page loads
+    const initialRole = roleSelect.val();
+    if (initialRole) {
+        if (initialRole === 'super admin') {
+            managerSelect.hide();
+           console.log(123,populateStores([])) 
+           populateStores(); // Show no stores for super admin
+        } else if (initialRole === 'admin' || initialRole === 'user') {
+            managerSelect.show();
+
+            // Populate manager options based on the selected role
+            populateManagerOptions(initialRole);
+
+            // When the page loads, get and populate the manager's stores
+            const selectedManagerId = managerSelect.val();
+            if (selectedManagerId) {
+                $.get(`/getSelectedStores/${selectedManagerId}`, function (managerStores) {
+                    console.log(123,managerStores)
+                    // When the manager's stores are loaded, get and populate the user's selected stores
+                    $.get(`/getSelectedStores/${userId}`, function (userStores) {
+                        console.log(456,userStores)
+                        // Merge the two lists and mark the selected ones
+                        managerStores.forEach(function (managerStore) {
+                            const userStore = userStores.find(function (userStore) {
+                                return userStore.outletId === managerStore.outletId;
+                            });
+                            if (userStore) {
+                                managerStore.checked = true;
+                            }
+                        });
+                        populateStores(managerStores);
+                    });
+                });
+            }
+        }
+    }
+
+    // Handle manager selection change
+    managerSelect.on('change', function () {
+        const selectedManagerId = managerSelect.val();
+console.log(selectedManagerId)
+        if (selectedManagerId) {
+            // Get and populate the selected manager's stores
+            $.get(`/getSelectedStores/${selectedManagerId}`, function (managerStores) {
+                // When the manager changes, reset the checkboxes
+                populateStores(managerStores);
+            });
+        } else {
+            // If no manager is selected, clear the checkboxes
+            storeList.empty();
+        }
+    });
+
+    // Function to populate manager options based on role
+    function populateManagerOptions(role) {
+        // Use an API endpoint to fetch the managers based on role
+        $.get(`/getManagers/${role}`, function (managers) {
+            managerSelect.empty();
+            managers.forEach(function (manager) {
+                managerSelect.append($('<option>').val(manager.id).text(manager.email));
+            });
+        });
+    }
+});
+</script> --}}
+
 
 </html>
