@@ -179,7 +179,7 @@
 
             {{!-- <a href="/supplierMasterList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
                     class="fa fa-xmark text-dark fa-2x"></i></a> --}}
-            <a href="/stateMasterList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
+            <a href="/taxMasterList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
                     class="fa fa-xmark text-dark fa-2x"></i></a>
         </div>
     </div>
@@ -194,7 +194,8 @@
                 <h4>Tax Details</h4>
                 <label for="Tax_Code" class="label-block">Tax Code:</label>
                 <div class="sup-containe" style="position: relative;">
-                    <input type="text" id="Tax_Code" name="Tax_Code" class="sup-int" placeholder="Enter Tax Code" required>
+                    <input type="text" id="Tax_Code" name="Tax_Code" class="sup-int" placeholder="Enter Tax Code"
+                        required>
                     <div class="sup-icon" style="position:absolute; left:10px;top:15%">
                         <i style='font-size:12px' class='fas'>&#xf121;</i>
                     </div>
@@ -206,10 +207,12 @@
                 <input type="text" id="HSN_Code" name="HSN_Code" placeholder="&#128100; Enter HSN Code">
 
                 <label for="State_Code" class="label-block">State Code:</label>
-                <select id="State_Code" name="State_Code">
-                    <option value="Active" selected>Active</option>
-                    <option value="Inactive">Inactive</option>
-                </select>
+
+                    <select id="State_Code" name="State_Code">
+                        <option value="">Select State Code</option>
+                    </select>
+
+
 
 
                 <label for="Tax_percentage">Tax percentage:</label>
@@ -248,8 +251,44 @@
 
 </body>
 <script>
-    document.getElementById("taxMasterform").addEventListener("submit", function (e) {
-        e.preventDefault();
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const stateSelect = document.getElementById("State_Code");
+
+
+        stateSelect.innerHTML = '<option value="">Select State Code</option>';
+
+
+        fetch("/allState")
+            .then((res) => {
+                return res.json();
+            })
+
+            .then((data) => {
+
+
+                data.forEach((ele) => {
+                    const option = document.createElement("option");
+                    option.value = ele.id;
+                    option.textContent = ele.Name;
+                    stateSelect.appendChild(option);
+                })
+
+                console.log(5588, option)
+
+
+
+            })
+            .then((err) => {
+                console.log(err.message)
+            })
+
+    });
+
+    document.getElementById("taxMasterform").addEventListener("submit", function () {
+ 
+
 
         // Collect form data
         const formData = {
@@ -261,8 +300,8 @@
             State_Code: document.getElementById("State_Code").value,
         };
 
-       console.log(55555,formData)
-    
+        console.log(55555, formData)
+
 
 
         fetch('/createTaxMaster', {
@@ -280,6 +319,9 @@
             .catch(error => {
                 console.error('Error:', error);
             });
+
+
+
     });
 
 

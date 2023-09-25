@@ -18,6 +18,7 @@ const orderController = require("../controllers/orderController")
 const supplierMasterController = require("../controllers/suplierMasterController")
 const stateMasterController=require("../controllers/stateMasterController")
 const taxMasterController=require("../controllers/taxMasterController")
+const customerMasterController=require("../controllers/customerMasterController")
 const checkUser = require("../middleware/checkUser")
 // const checkRole = require("../middleware/checkRole")
 const db = require("../models");
@@ -33,6 +34,8 @@ const Order = db.order;
 const OrderItems = db.orderItems
 const SupplierMaster = db.supplier
 const StateMaster = db.stateMaster
+const TaxMaster = db.tax
+const CustomerMaster = db.customer
 let multer = require('multer');
 const upload = multer({ dest: 'public/' })
 const bulkUpload = multer({ dest: 'public/' })
@@ -1329,5 +1332,165 @@ router.get("/stateMaster",(req,res)=>{
     //post the taxMaster
     router.post("/createTaxMaster",taxMasterController.createTax)
   
+    //fetching all the state 
 
+    router.get("/allState", async (req, res) => {
+      try {
+        const Allstate = await StateMaster.findAll({
+          attributes: ['id', 'Code',"Name"], 
+        });
+        console.log(555555, Allstate);
+        res.status(200).json(Allstate);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+    });
+  
+    // tax master listing
+  router.get('/taxMasterList', async function (req, res) {
+    res.render('TaxMaster/taxMasterList', { title: 'Express', message: req.flash('message') });
+  });
+
+    
+  router.get('/taxDetailsList', async function (req, res) {
+    let draw = req.query.draw;
+  
+    let start = parseInt(req.query.start);
+  
+    let length = parseInt(req.query.length);
+  
+    let where = {}
+  
+    if (req.query.search.value) {
+      where[Op.or] = [
+        { Tax_Code: { [Op.like]: `%${req.query.search.value}%` } },
+        { HSN_Code: { [Op.like]: `%${req.query.search.value}%` } },
+        { State_Code: { [Op.like]: `%${req.query.search.value}%` } },
+        { Status: { [Op.like]: `%${req.query.search.value}%` } },
+      ];
+    }
+  
+    const taxval = await TaxMaster.findAll({
+      limit: length,
+      offset: start,
+      where: where
+    })
+  
+    const count = await TaxMaster.count()
+  
+    let data_arr = []
+    for (let i = 0; i < taxval.length; i++) {
+  
+  
+      data_arr.push({
+        'Tax_Code': taxval[i].Tax_Code,
+        'HSN_Code': taxval[i].HSN_Code,
+        'State_Code': taxval[i].State_Code,
+        'Status': taxval[i].Status,
+        'rowguid':taxval[i].rowguid
+      });
+    }
+  
+    let output = {
+      'draw': draw,
+      'iTotalRecords': count,
+      'iTotalDisplayRecords': count,
+      'aaData': data_arr
+    };
+  
+    res.json(output)
+  });
+
+    
+  //tax master update
+  
+  router.get("/updateTaxMaster/:uuid", async(req,res)=>{
+    const tax= await TaxMaster.findOne({where:{rowguid:req.params.uuid}})
+   
+
+    const stateNameById=await StateMaster.findOne({where:{id:tax.id}})
+    console.log(3333333333333333,stateNameById)
+
+    res.render("TaxMaster/taxMasterUpdate",{title:'Express',tax,stateNameById});
+    })
+  
+    router.post("/taxMasterUpdate/:uuid",taxMasterController.updateTax)
+  
+ /********************************Customer Master*********************************** */
+
+ router.get("/customerMaster",(req,res)=>{
+  res.render("CustomerMaster/customerMaster",{title:'Express'});
+  })
+
+    //post the taxMaster
+    router.post("/createCustomerMaster",customerMasterController.createCustomer)
+
+    router.get('/customerMasterList', async function (req, res) {
+      res.render('CustomerMaster/customerMasterList', { title: 'Express', message: req.flash('message') });
+    });
+  
+
+    ///////listing
+    router.get('/customerDetailsList', async function (req, res) {
+      let draw = req.query.draw;
+    
+      let start = parseInt(req.query.start);
+    
+      let length = parseInt(req.query.length);
+    
+      let where = {}
+    
+      if (req.query.search.value) {
+        where[Op.or] = [
+          { Code: { [Op.like]: `%${req.query.search.value}%` } },
+          { Name: { [Op.like]: `%${req.query.search.value}%` } },
+          { Email: { [Op.like]: `%${req.query.search.value}%` } },
+        ];
+      }
+    
+      const customer = await CustomerMaster.findAll({
+        limit: length,
+        offset: start,
+        where: where
+      })
+    
+      const count = await CustomerMaster.count()
+    
+      let data_arr = []
+      for (let i = 0; i < customer.length; i++) {
+    
+    
+        data_arr.push({
+          'Code': customer[i].Code,
+          'Name': customer[i].Name,
+          'Email': customer[i].Email,
+          'rowguid':customer[i].rowguid
+        });
+      }
+    
+      let output = {
+        'draw': draw,
+        'iTotalRecords': count,
+        'iTotalDisplayRecords': count,
+        'aaData': data_arr
+      };
+    
+      res.json(output)
+    });
+
+
+    //updating
+
+    router.get('/updateCustomerMaster/:uuid', async function (req, res) {
+      const customer = await CustomerMaster.findOne({ where: { rowguid: req.params.uuid } })
+      res.render('CustomerMaster/CustomerMasterUpdate', { title: 'Express', customer });
+    });
+
+    router.post("/customerMasterUpdate/:uuid",customerMasterController.updateCustomer)
+
+
+
+    
+    
 module.exports = router;

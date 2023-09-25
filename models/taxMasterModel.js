@@ -29,9 +29,9 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 'Active',
         },
         State_Code: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.INTEGER,
             allowNull: false,
-        },
+        },        
         Tax_Type:
         {
             type: DataTypes.STRING(255),

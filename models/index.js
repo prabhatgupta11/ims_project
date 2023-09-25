@@ -43,6 +43,7 @@ db.productMapping = require('./productMappingModel')(sequelize, DataTypes)
 db.supplier = require('./supplierMaster')(sequelize, DataTypes)
 db.stateMaster=require('./stateMasterModel')(sequelize, DataTypes)
 db.tax = require('./taxMasterModel')(sequelize, DataTypes)
+db.customer= require('./customerMasterModel')(sequelize, DataTypes)
 
 // db.products.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
 db.productStock.belongsTo(db.products, { sourceKey: "itemId", foreignKey: "itemId" });
