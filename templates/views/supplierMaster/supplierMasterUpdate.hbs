@@ -214,12 +214,12 @@
         <input type="number" id="ContactNo" name="ContactNo" placeholder="&#x260E; Enter Contact Number" value="{{supplier.ContactNo}}" required   maxlength="10" title="Please enter a 10-digit phone number">
 
         <label for="AadharNo">Aadhar No:</label>
-        <input type="number" id="AadharNo" name="AadharNo"  placeholder="&#9751;  Enter Aadhar Number" value="{{supplier.AadharNo}}" required   minlength="10" maxlength="12" title="Please enter a 12-digit Aadhar Number">
+        <input type="number" id="AadharNo" name="AadharNo"  placeholder="&#9751;  Enter Aadhar Number" value="{{supplier.AadharNo}}"   minlength="10" maxlength="12" title="Please enter a 12-digit Aadhar Number">
 
 
 
           <label for="Pincode">Pincode:</label>
-        <input type="number" id="Pincode" name="Pincode" placeholder="&#9951;  Enter Pincode" value="{{supplier.Pincode}}" required  maxlength="6" title="Please enter a 6-digit Pin Code Number">
+        <input type="number" id="Pincode" name="Pincode" placeholder="&#9951;  Enter Pincode" value="{{supplier.Pincode}}"   maxlength="6" title="Please enter a 6-digit Pin Code Number">
 
 
 
@@ -228,7 +228,7 @@
         <input type="email" id="Email" name="Email" placeholder="&#x2709;  Enter Email" value="{{supplier.Email}}" required >
 
  <label for="GSTNo">GST No:</label>
-        <input type="text" id="GSTNo" name="GSTNo" placeholder="&#9951; Enter GST No." value="{{supplier.GSTNo}}" required oninput="convertToUpperCase(this)"
+        <input type="text" id="GSTNo" name="GSTNo" placeholder="&#9951; Enter GST No." value="{{supplier.GSTNo}}"  oninput="convertToUpperCase(this)"
         minlength="15"  maxlength="15" title="Please enter a 15-digit GST Number"
         >
 
@@ -241,10 +241,10 @@
 
   <label for="CreditLimit">Credit Limit:</label>
         <input type="number" id="CreditLimit" name="CreditLimit" placeholder="Enter Credit Limit" value="{{supplier.CreditLimit}}" step="0.01"
-          required min="0">
+           min="0">
 
             <label for="CreditDays">Credit Days:</label>
-        <input type="number" id="CreditDays" name="CreditDays" placeholder="Enter Credit Days" value="{{supplier.CreditDays}}" required min="0">
+        <input type="number" id="CreditDays" name="CreditDays" placeholder="Enter Credit Days" value="{{supplier.CreditDays}}"  min="0">
 
 
 <label for="Status" class="label-block">Status:</label>
@@ -256,7 +256,7 @@
 
  <label for="Address">Address:</label>
         <div>
-           <textarea id="Address" name="Address" rows="4" placeholder="Enter Address" cols="72" required style="width: 100%;">{{supplier.Address}}</textarea>
+           <textarea id="Address" name="Address" rows="4" placeholder="Enter Address" cols="72"  style="width: 100%;">{{supplier.Address}}</textarea>
         </div>
       </div>
 

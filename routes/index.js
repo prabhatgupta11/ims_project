@@ -17,6 +17,7 @@ const storeCategoryMapping = require("../controllers/storeCategoryMapping")
 const orderController = require("../controllers/orderController")
 const supplierMasterController = require("../controllers/suplierMasterController")
 const stateMasterController=require("../controllers/stateMasterController")
+const taxMasterController=require("../controllers/taxMasterController")
 const checkUser = require("../middleware/checkUser")
 // const checkRole = require("../middleware/checkRole")
 const db = require("../models");
@@ -1316,6 +1317,17 @@ router.get("/stateMaster",(req,res)=>{
     
     router.post("/stateMasterUpdate/:uuid",stateMasterController.updateStateMaster)
   
-  /********************************State Master*********************************** */
+
+
+
+   /********************************Tax Master*********************************** */
+
+   router.get("/taxMaster",(req,res)=>{
+    res.render("TaxMaster/taxMaster",{title:'Express'});
+    })
+
+    //post the taxMaster
+    router.post("/createTaxMaster",taxMasterController.createTax)
+  
 
 module.exports = router;
