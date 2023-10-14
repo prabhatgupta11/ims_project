@@ -25,18 +25,28 @@ module.exports = (sequelize, DataTypes) => {
         remarks : {
             type : DataTypes.STRING,
         },
-        approve_b : {
-            type : DataTypes.STRING,
-            defaultValue:'pending'
+        created_on: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
         },
-        approve_by : {
-            type : DataTypes.STRING,
+        batchNo: {
+            type: DataTypes.STRING,
         },
-        approve_date : {
-            type : DataTypes.DATE,
+        expDate: {
+            type: DataTypes.STRING,
+        },
+        productHsnCode: {
+            type: DataTypes.STRING,
+        },
+        created_by: {
+            type: DataTypes.STRING,
         }
-    
-    })
+    },
+       {
+        timestamps: false, // Disable createdAt and updatedAt columns
+       }
+    )
 
     return StockInOut
 }
+

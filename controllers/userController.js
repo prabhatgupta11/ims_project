@@ -85,6 +85,7 @@ const loginUser = async (req, res) => {
     id: user.id,
     role: user.role
   }
+  console.log(req.session)
   req.flash('message', 'You are now login Successfully.');
   res.redirect('/dashboard')
 }
@@ -95,7 +96,7 @@ const loginUser = async (req, res) => {
 const createUser = async (req, res) => {
 
   try {
-// console.log(123,req.body)
+ console.log(123,req.body)
     const { firstName, lastName, email, mobileNumber, role, password, managerFk } = req.body
 
     if (!firstName || !lastName || !email || !mobileNumber || !password) {
@@ -112,6 +113,16 @@ const createUser = async (req, res) => {
       return res.redirect('/user')
     }
 
+    if(req.session.userDetail.role == 'admin' || req.session.userDetail.role == 'user' ){
+      req.flash('message', 'You can not create user only super admin can do this')
+      return res.redirect('/user')
+    }
+
+    if (req.body.outletId == undefined) {
+      req.flash('message', 'Please select store if store is not availabe then please create store first')
+      return res.redirect('/user')
+    }
+
     const user = await User.create({
       firstName,
       lastName,
@@ -124,7 +135,10 @@ const createUser = async (req, res) => {
 
     const selectedUserId = user.id;
     const selectedStoreIds = req.body.outletId; // An array of selected ouletIds
-    
+    // if (selectedStoreIds == undefined) {
+    //   req.flash('message', 'Please select store if store is not availabe then please create store first')
+    //   return res.redirect('/user')
+    // }
       
       const manager = await User.findByPk(selectedUserId);
   
@@ -157,10 +171,65 @@ const createUser = async (req, res) => {
 }
 
 
+// get user data manager wise in the update user form 
+
+const getManagerStoresandcheckedUserStore = async (req,res) => {
+  const getManagerStoresAndCheckedUserStore = async (req, res) => {
+    const managerId = req.params.managerId;
+    const userId = req.params.userId;
+  
+    const stores = await Store.findAll();
+  
+    const selectedManagerStore = await UserStoreMapping.findAll({ where: { userFk: managerId } });
+    const selectedUserStore = await UserStoreMapping.findAll({ where: { userFk: userId } });
+  
+    const managerStoreIds = selectedManagerStore.map(mapping => mapping.storeFk);
+    const userStoreIds = selectedUserStore.map(mapping => mapping.storeFk);
+  
+    const arr = stores.map(store => ({
+      ...store.dataValues,
+      checked: userStoreIds.includes(store.outletId),
+    }));
+  
+    res.json(arr);
+  }
+
+
+  // const managerStore = await UserStoreMapping.findAll({where : {userFk : managerId}})
+  // const userStore = await UserStoreMapping.findAll({where : {userFk : userId}})
+
+  // console.log(1111,managerStore)
+  // console.log(2222,userStore)
+  // for(let i=0;i<managerStore.length;i++)
+  // {
+  //   let flag = true
+  //   for(let j=0;j<userStore.length;j++)
+  //   {
+  //     if(managerStore[i].storeFk==userStore[j].storeFk)
+  //     {
+  //       flag = true
+  //     }
+  //   }
+  //   if (flag == true) {
+  //     arr.push({ ...managerStore[i].dataValues, checked: true })
+  //   }
+  //   else {
+  //     arr.push({ ...managerStore[i].dataValues, checked: false })
+  //   }
+  // }
+
+  // res.json(arr);
+}
+
+
 // Update user
 
 const updateUser = async (req, res) => {
   try {
+    if(req.session.userDetail.role == 'admin' || req.session.userDetail.role == 'user' ){
+      req.flash('message', 'You can not update user only super admin can do this')
+      return res.redirect('/userList')
+    }
     console.log(req.body)
    let managerFk = req.body.managerFk
    if (managerFk == ""){
@@ -171,9 +240,13 @@ const updateUser = async (req, res) => {
     const selectedUserId = req.params.id;
     const selectedStoreIds = req.body.outletId; // An array of selected ouletIds
     console.log(selectedStoreIds)
+    if(selectedStoreIds == undefined){
+      req.flash('message', 'Please assign store to this user')
+      return res.redirect(`/userUpdate/${req.params.id}`)
+    }
       const manager = await User.findByPk(selectedUserId);
   
-      if(manager){
+      if(manager){ 
         for (const selectedStoreId of selectedStoreIds) {
           
           const store = await Store.findByPk(selectedStoreId);
@@ -202,8 +275,10 @@ const updateUser = async (req, res) => {
 
 
 module.exports = {
+
   registerUser,
   loginUser,
   createUser,
+  getManagerStoresandcheckedUserStore,
   updateUser
 }

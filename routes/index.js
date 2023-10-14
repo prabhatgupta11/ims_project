@@ -19,10 +19,12 @@ const supplierMasterController = require("../controllers/suplierMasterController
 const stateMasterController=require("../controllers/stateMasterController")
 const taxMasterController=require("../controllers/taxMasterController")
 const customerMasterController=require("../controllers/customerMasterController")
+const codeMasterController=require("../controllers/codeMasterController")
 const checkUser = require("../middleware/checkUser")
 // const checkRole = require("../middleware/checkRole")
 const db = require("../models");
-const NewStore = db.newStore
+// const Store = db.store
+const NewProduct = db.newProduct
 const Store = db.store
 const Product = db.products
 const Manufacturer = db.manufacturer
@@ -34,10 +36,14 @@ const Order = db.order;
 const OrderItems = db.orderItems
 const SupplierMaster = db.supplier
 const StateMaster = db.stateMaster
+const CodeMaster = db.codeMaster
 const TaxMaster = db.tax
 const CustomerMaster = db.customer
+const ProductPrice= db.productPrice
+const StockInOut= db.stockInOut
 let multer = require('multer');
 const upload = multer({ dest: 'public/' })
+const uploadNew = multer({ dest: 'public/' })
 const bulkUpload = multer({ dest: 'public/' })
 
 
@@ -102,7 +108,7 @@ router.get('/getManagers/:role', async(req, res) => {
 });
 
 router.get('/getAllStores', async (req, res) => {
-  const stores = await Store.findAll({where : {approve_b : 'approved'}}) 
+  const stores = await Store.findAll() 
   res.json(stores);
 });
 
@@ -110,6 +116,8 @@ router.post('/createUser', userController.createUser)
 
 
 // Update User Api
+
+router.get('/getSelectedManagerStores/:managerId/:userId', userStoreMapping.getManagerStore)
 
 router.get('/userUpdate/:id', async function (req, res) {
  
@@ -123,7 +131,7 @@ router.get('/userUpdate/:id', async function (req, res) {
 });
 
 router.get('/getAllStoresForRole/:role', async (req, res) => {
-  const stores = await Store.findAll({where : {approve_b : 'approved'}}) 
+  const stores = await Store.findAll() 
   res.json(stores);
 });
 
@@ -195,11 +203,12 @@ router.get('/userMasterList', async function (req, res) {
 
 router.get('/userStoreMapping', async function (req, res) {
   const user = await User.findAll();
-  const store = await Store.findAll({ where: { approve_b: 'approved' } })
+  const store = await Store.findAll()
   res.render('userStoreMapping', { title: 'Express', message: req.flash('message'), user, store });
 });
 
 router.get('/getSelectedStores/:userId', userStoreMapping.getUserStoreData)
+
 
 //  router.post('/createUser', userStoreMapping.addUserStoreMapping)
 
@@ -209,7 +218,7 @@ router.post('/deselectStore/:userId/:outletId', userStoreMapping.deselectStore)
 // Store Category Mapping
 
 router.get('/storeCategoryMapping', async function (req, res) {
-  const store = await Store.findAll({ where: { approve_b: 'approved' } });
+  const store = await Store.findAll();
   const category = await Category.findAll({ where: { approve_b: 'approved' } })
   res.render('storeCategoryMapping', { title: 'Express', message: req.flash('message'), category, store });
 });
@@ -228,8 +237,34 @@ router.get('/product', checkUser, async function (req, res) {
   res.render('product/product', { title: 'Express', message: req.flash('message'), manufacturer });
 });
 
+router.get('/newProduct', async function (req, res) {
+  const category = await CodeMaster.findAll({ where: { code_level: 1 } });
+  const manufacturer = await Manufacturer.findAll()
+  const tax = await TaxMaster.findAll({where : {Status : 'Active'}})
+  res.render('product/newProduct', { title: 'Express', message: req.flash('message'),category,manufacturer,tax});
+});
+
+router.get('/departments/:categoryId', async (req, res) => {
+  const { categoryId } = req.params;
+  const departments = await CodeMaster.findAll({ where: { code_level: 2, ParentPk: categoryId } });
+  res.json(departments);
+});
+
+router.get('/groups/:departmentId', async (req, res) => {
+  const { departmentId } = req.params;
+  const groups = await CodeMaster.findAll({ where: { code_level: 3, ParentPk: departmentId } });
+  res.json(groups);
+});
+
+router.get('/itemTypes/:groupId', async (req, res) => {
+  const { groupId } = req.params;
+  const itemTypes = await CodeMaster.findAll({ where: { code_level: 4, ParentPk: groupId } });
+  res.json(itemTypes);
+});
 
 router.post('/createProduct', upload.single('imageUrl'), productController.createProduct)
+
+router.post('/createNewProduct', uploadNew.single('imageUrl'), productController.createNewProduct)
 
 
 
@@ -357,12 +392,66 @@ router.get('/productsMasterList', checkUser, async function (req, res) {
   res.json(output)
 });
 
+router.get('/newProductList', async function (req, res) {
+  res.render('product/newProductList', { title: 'Express', message: req.flash('message') });
+});
 
+router.get('/newProductsList', async function (req, res) {
+
+  let draw = req.query.draw;
+
+  let start = parseInt(req.query.start);
+
+  let length = parseInt(req.query.length);
+
+  let where = {}
+
+  if (req.query.search.value) {
+    where[Op.or] = [
+      { itemName: { [Op.like]: `%${req.query.search.value}%` } },
+      { description: { [Op.like]: `%${req.query.search.value}%` } },
+      { status: { [Op.like]: `%${req.query.search.value}%` } },
+    ];
+  }
+
+  const product = await NewProduct.findAll({
+    where: {
+      ...where, // Your initial where conditions, I assume
+      approve_b: ["approved", "pending"]
+    },
+    limit: length,
+    offset: start
+  });
+
+  const count = await NewProduct.count()
+
+
+  let data_arr = []
+  for (let i = 0; i < product.length; i++) {
+    data_arr.push({
+      'itemId': product[i].itemId,
+      'itemName': product[i].itemName,
+      'description': product[i].description,
+      'imageUrl': product[i].imageUrl,
+      'status': product[i].status,
+      'rowguid': product[i].rowguid,
+    });
+  }
+
+  let output = {
+    'draw': draw,
+    'iTotalRecords': count,
+    'iTotalDisplayRecords': count,
+    'aaData': data_arr
+  };
+
+  res.json(output)
+});
 
 
 // Product Update Api
 
-router.get('/updateProduct/:id', checkUser, async function (req, res) {
+router.get('/updateProduct/:id', async function (req, res) {
 
   const product = await Product.findOne({ where: { itemId: req.params.id } })
 
@@ -374,7 +463,25 @@ router.get('/updateProduct/:id', checkUser, async function (req, res) {
 router.post('/updateProduct/:id', upload.single('imageUrl'), productController.updateProduct)
 
 
+router.get('/updateNewProduct/:id', async function (req, res) {
 
+  const product = await NewProduct.findOne({ where: { rowguid: req.params.id } })
+  const category = await CodeMaster.findAll({where : {code_level : 1}})
+  const categoryPreviousValue = await CodeMaster.findOne({where : {id : product.category}})
+  // const department = await CodeMaster.findAll({where : {code_level : 2, ParentPk :2}})
+  const departmentPreviousValue = await CodeMaster.findOne({where : {id : product.department}})
+  // const group = await CodeMaster.findAll({where : {code_level : 3}})
+  const groupPreviousValue = await CodeMaster.findOne({where : {id : product.group}})
+  // const itemType = await CodeMaster.findAll({where : {code_level : 4}})
+  const itemTypePreviousValue = await CodeMaster.findOne({where : {id : product.itemType}})
+  const manufacturer = await Manufacturer.findAll({where : {approve_b : 'approved'}})
+  const manufacturerPreviousValue = await Manufacturer.findOne({where : {manufacturerId : product.brand}})
+  const tax = await TaxMaster.findAll({where : {Status : 'Active'}})
+  const taxPreviousValue = await TaxMaster.findOne({where : {id : product.tax}})
+  res.render('product/newProductUpdate', { title: 'Express', message: req.flash('message'), manufacturer, product,category,tax,categoryPreviousValue,departmentPreviousValue,groupPreviousValue,itemTypePreviousValue,manufacturerPreviousValue,taxPreviousValue});
+});
+
+router.post('/newProductUpdate/:id', upload.single('imageUrl'), productController.updateNewProduct)
 
 // Product Stock Api
 
@@ -396,18 +503,22 @@ router.post('/productCategoryMapping', productCategoryMapping.productCategoryMap
 
 
 
+
 // Store Master Api
 
 router.get('/storeMaster', checkUser, function (req, res) {
   res.render('store/storeMaster', { title: 'Express', message: req.flash('message') });
 });
-router.get('/newStore', function (req, res) {
-  res.render('store/newStore', { title: 'Express', message: req.flash('message') });
+
+router.get('/newStore', async function (req, res) {
+  const category = await CodeMaster.findAll({where : {code_level : 1}})
+  const state = await StateMaster.findAll({where : {status : 'Active'}})
+  res.render('store/newStore', { title: 'Express', message: req.flash('message'),category,state});
 });
 
 router.post("/createNewStore", storeController.createNewStore);
 
-router.post("/createStore", storeController.createStore);
+// router.post("/createStore", storeController.createStore);
 
 
 
@@ -488,7 +599,7 @@ router.get('/newStoremasterList', async function (req, res) {
       { status: { [Op.like]: `%${req.query.search.value}%` } },
     ];
   }
-  const store = await NewStore.findAll({
+  const store = await Store.findAll({
     where: {
       ...where, // Your initial where conditions, I assume
       approve_b: ["approved", "pending"]
@@ -497,7 +608,7 @@ router.get('/newStoremasterList', async function (req, res) {
     offset: start
   });
 
-  const count = await NewStore.count()
+  const count = await Store.count()
 
   let data_arr = []
   for (let i = 0; i < store.length; i++) {
@@ -531,14 +642,16 @@ router.get('/updateStoreMaster/:id', checkUser, async function (req, res) {
   res.render('store/storeMasterUpdate', { title: 'Express', message: req.flash('message'), store });
 });
 
-router.post("/updateStore/:id", storeController.updateStore);
+// router.post("/updateStore/:id", storeController.updateStore);
 
 
 router.get('/updateNewStore/:id', async function (req, res) {
-console.log(req.params.id,123456)
-  let newStore = await NewStore.findOne({ where: { rowguid: req.params.id } })
 
-  res.render('store/newStoreUpdate', { title: 'Express', message: req.flash('message'), newStore });
+  let newStore = await Store.findOne({ where: { rowguid: req.params.id } })
+
+  const state = await StateMaster.findAll({where : {status : "Active"}})
+
+  res.render('store/newStoreUpdate', { title: 'Express', message: req.flash('message'), newStore ,state});
 });
 
 router.post("/updateNewStore/:id", storeController.updateNewStore);
@@ -587,9 +700,322 @@ router.post('/stockInOut', stockInOutController.stockInOut)
 
 
 
+// Stock In Api
+
+router.get('/stockIn', async function (req, res) {
+//   const userId = req.session.userDetail.id
+//   const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+//   let userStores = []
+//   userStores = userStoreMapping.map(mapping => mapping.storeFk)
+//   const store = await Store.findAll({where : {outletId : userStores}})
+//  let storeIds = []
+//  storeIds = store.map(mapping => mapping.outletId)
+const store = await Store.findAll()
+  const product = await NewProduct.findAll()
+  // const supplier = await SupplierMaster.findAll({where : {storeFk : storeIds}})
+  res.render('stockInOut/stockIn', { title: 'Express', message: req.flash('message'), store, product });
+});
+
+// store wise all supplier populate into supplier dropdown
+router.get('/suppliers/:outletId', async function (req,res) {
+  const outletId = req.params.outletId
+  const suppliers = await SupplierMaster.findAll({where : {storeFk : outletId}})
+  res.json(suppliers)
+})
+
+// populate the supplier detail into stock In
+router.get('/allSuppliers/:supplierId', async function (req,res) {
+  const supplierId = req.params.supplierId
+  const suppliers = await SupplierMaster.findAll({where : {id : supplierId}})
+  res.json(suppliers)
+})
+
+// stock In post api
+router.post('/createStockIn', stockInOutController.addStockIn)
+
+
+// Stock In order wise Approval List
+
+router.get('/stockInApprovalList', stockInOutController.stockInApprovalList);
+
+router.post('/updateStockInApprovalStatus', stockInOutController.updateStockInApprovalStatus)
+
+
+
+// stock In list Order wise
+
+router.get('/stockInList',async function (req, res) {
+  res.render('stockInOut/stockInList', { title: 'Express', message: req.flash('message') });
+});
+
+router.get('/stockInListData',async function (req, res) {
+  let draw = req.query.draw;
+  console.log(1234)
+  let start = parseInt(req.query.start);
+  let length = parseInt(req.query.length);
+  let where = {}; // Define the where object for filtering
+
+  if (req.query.search.value) {
+    where[Op.or] = [
+      { '$new_product.itemName$': { [Op.like]: `%${req.query.search.value}%` } },
+      { '$store_master.storeName$': { [Op.like]: `%${req.query.search.value}%` } },
+    ];
+  }
+
+  const order = await Order.findAll({
+    where: {
+      ...where, // Your initial where conditions, I assume
+      approve_b: ["approved", "pending"]
+    },
+     include: [
+    //   // {
+    //   //   model: NewProduct,
+    //   //    attributes:['itemName']
+    //   // },
+      {
+        model: Store,
+         attributes:['storeName']
+      },
+    ],
+    limit: length,
+    offset: start,
+    // where: where, // Apply the filtering
+  });
+
+  const count = await Order.count();
+
+  let data_arr = [];
+  for (let i = 0; i < order.length; i++) {
+    data_arr.push({
+        storeName: order[i].store_master.storeName,
+      orderId: order[i].orderId,
+      customerName: order[i].customerName,
+      totalAmount: order[i].totalAmount,
+      rowguid:order[i].rowguid,
+      approve_b : order[i].approve_b
+    });
+  }
+
+  let output = {
+    draw: draw,
+    iTotalRecords: count,
+    iTotalDisplayRecords: count,
+    aaData: data_arr,
+  };
+
+  res.json(output);
+});
+
+
+// stock In order update module
+
+router.get('/stockInUpdate/:id', async function (req, res) {
+  const orderId = req.params.id
+  const order = await Order.findOne({where : {rowguid : orderId}})
+ 
+  const productPrice = await ProductPrice.findOne({where : {orderFk : order.orderId}})
+  // const previousOrder = await Order.findOne({where : {orderId:productPrice.orderFk}})
+  const previousStore = await Store.findOne({where : {outletId : order.outletId}})
+  const previousSupplier = await SupplierMaster.findOne({where : {Email : order.customerEmail}})
+  //   const userId = req.session.userDetail.id
+  //   const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+  //   let userStores = []
+  //   userStores = userStoreMapping.map(mapping => mapping.storeFk)
+  //   const store = await Store.findAll({where : {outletId : userStores}})
+  //  let storeIds = []
+  //  storeIds = store.map(mapping => mapping.outletId)
+  const store = await Store.findAll()
+    const product = await NewProduct.findAll()
+    // const supplier = await SupplierMaster.findAll({where : {storeFk : storeIds}})
+    res.render('stockInOut/updateStockIn', { title: 'Express', message: req.flash('message'), productPrice,previousStore,order, previousSupplier,store, product });
+  });
+
+  // only view data in stock in order
+  router.get('/stockInView/:id', async function (req, res) {
+    const orderId = req.params.id
+    const order = await Order.findOne({where : {rowguid : orderId}})
+   
+    const productPrice = await ProductPrice.findOne({where : {orderFk : order.orderId}})
+    // const previousOrder = await Order.findOne({where : {orderId:productPrice.orderFk}})
+    const previousStore = await Store.findOne({where : {outletId : order.outletId}})
+    const previousSupplier = await SupplierMaster.findOne({where : {Email : order.customerEmail}})
+    //   const userId = req.session.userDetail.id
+    //   const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+    //   let userStores = []
+    //   userStores = userStoreMapping.map(mapping => mapping.storeFk)
+    //   const store = await Store.findAll({where : {outletId : userStores}})
+    //  let storeIds = []
+    //  storeIds = store.map(mapping => mapping.outletId)
+    const store = await Store.findAll()
+      const product = await NewProduct.findAll()
+      // const supplier = await SupplierMaster.findAll({where : {storeFk : storeIds}})
+      res.render('stockInOut/stockInView', { title: 'Express', message: req.flash('message'), productPrice,previousStore,order, previousSupplier,store, product });
+    });
+
+ // populate the multiplae product details into stockInUpdate module
+router.get('/existingProductDetails/:productId', async function (req,res) {
+  const itemId = req.params.productId
+  const products = await ProductPrice.findAll({where : {orderFk : itemId}})
+  res.json(products)
+})
+
+// existing productName in stokInUpdate module
+router.get('/existingProductName/:productId', async function (req,res) {
+  const itemId = req.params.productId
+  const products = await NewProduct.findOne({where : {itemId : itemId}})
+  res.json(products)
+})
+
+// router.post('/updateStockIn/:id', stockInOutController.updateStockIn)
+router.post('/updateStockIn/:id', stockInOutController.updateStockIn)
+
+//=================================================== Stock Out Api ===================================
+
+router.get('/stockOut', async function (req, res) {
+
+  const store = await Store.findAll()
+  // const product = await NewProduct.findAll()
+  const customer = await CustomerMaster.findAll()
+  res.render('stockInOut/stockOut', { title: 'Express', message: req.flash('message'), store,customer });
+});
+
+
+
+// stock Out Listing Module
+
+router.get('/stockOutList',async function (req, res) {
+  res.render('stockInOut/stockOutList', { title: 'Express', message: req.flash('message') });
+});
+
+
+
+router.get('/stockOutListData',async function (req, res) {
+  let draw = req.query.draw;
+  let start = parseInt(req.query.start);
+  let length = parseInt(req.query.length);
+  let where = {}; // Define the where object for filtering
+
+  if (req.query.search.value) {
+    where[Op.or] = [
+      { '$new_product.itemName$': { [Op.like]: `%${req.query.search.value}%` } },
+      { '$store_master.storeName$': { [Op.like]: `%${req.query.search.value}%` } },
+    ];
+  }
+
+  const productPrice = await ProductPrice.findAll({
+    where: {
+      ...where, // Your initial where conditions, I assume
+      approve_b: ["approved", "pending"]
+    },
+    include: [
+      {
+        model: NewProduct,
+         attributes:['itemName']
+      },
+      {
+        model: Store,
+         attributes:['storeName']
+      },
+    ],
+    limit: length,
+    offset: start,
+    // where: where, // Apply the filtering
+  });
+
+  const count = await ProductPrice.count();
+  console.log(7851,count)
+
+  let data_arr = [];
+  for (let i = 0; i < productPrice.length; i++) {
+    data_arr.push({
+       itemName: productPrice[i].new_product.itemName,
+       storeName: productPrice[i].store_master.storeName,
+      id: productPrice[i].id,
+      orderFk: productPrice[i].orderFk,
+      outletId: productPrice[i].outletId,
+      itemId: productPrice[i].itemId,
+      qty: productPrice[i].qty,
+      salePrice: productPrice[i].salePrice,
+      mrp: productPrice[i].mrp,
+      rowguid:productPrice[i].rowguid,
+      approve_b : productPrice[i].approve_b
+    });
+  }
+
+  let output = {
+    draw: draw,
+    iTotalRecords: count,
+    iTotalDisplayRecords: count,
+    aaData: data_arr,
+  };
+
+  res.json(output);
+});
+
+
+
+// stock Out update module
+
+router.get('/stockOutUpdate/:id', async function (req, res) {
+  const stockId = req.params.id
+  const productPrice = await ProductPrice.findOne({where : {rowguid : stockId}})
+  const previousOrder = await Order.findOne({where : {orderId:productPrice.orderFk}})
+  const previousStore = await Store.findOne({where : {outletId : productPrice.outletId}})
+  const previousSupplier = await SupplierMaster.findOne({where : {id : productPrice.supplierCustomer}})
+
+  //   const userId = req.session.userDetail.id
+  //   const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+  //   let userStores = []
+  //   userStores = userStoreMapping.map(mapping => mapping.storeFk)
+  //   const store = await Store.findAll({where : {outletId : userStores}})
+  //  let storeIds = []
+  //  storeIds = store.map(mapping => mapping.outletId)
+  const store = await Store.findAll()
+    const product = await NewProduct.findAll()
+    // const supplier = await SupplierMaster.findAll({where : {storeFk : storeIds}})
+    res.render('stockInOut/updateStockIn', { title: 'Express', message: req.flash('message'), productPrice, previousOrder,previousStore, previousSupplier,store, product });
+  });
+
+//========================================================================================================
+// populate the customer details into stockOut module
+router.get('/allCustomer/:customerId', async function (req,res) {
+  const customerId = req.params.customerId
+  const customers = await CustomerMaster.findAll({where : {id : customerId}})
+  res.json(customers)
+})
+
+// store based all products
+router.get('/products/:outletId', async function (req,res) {
+  const allProducts = await ProductPrice.findAll({where : {outletId : req.params.outletId}})
+  let products = []
+   products = allProducts.map(mapping => mapping.itemId)
+ allStoreProducts = await NewProduct.findAll({where : {itemId : products}})
+  res.json(allStoreProducts)
+})
+
+// batchNO based all products selected for stockLedger
+router.get('/allBatchNo/:ItemIdbasedONProductDropDown/:outletId', async function (req,res) {
+  //console.log(11 ,req.params.outletId,req.params.ItemIdbasedONProductDropDown)
+  const allBatchNo = await StockInOut.findAll({where : {outletId : req.params.outletId,itemId : req.params.ItemIdbasedONProductDropDown}})
+//   let products = []
+//    products = allProducts.map(mapping => mapping.itemId)
+//  allStoreProducts = await NewProduct.findAll({where : {itemId : products}})
+  res.json(allBatchNo)
+})
+
+
+// populate the product details into stockOut module
+router.get('/getProductDetails/:itemId/:batchNo', async function (req,res) {
+ //console.log(55588,req.params.itemId,req.params.batchNo)
+  const productDetails = await ProductPrice.findAll({where : {itemId : req.params.itemId,batchNo : req.params.batchNo}})
+
+  res.json(productDetails)
+})
+
+
 // Manufacturer Master Api
 
-router.get('/manufacturer', checkUser, function (req, res) {
+router.get('/manufacturer',function (req, res) {
   res.render('manufacturer/manufacturer', { title: 'Express', message: req.flash('message') });
 });
 
@@ -606,7 +1032,7 @@ router.post('/admin/approval/:manufacturerId', manufacturerController.adminAppro
 
 // Manufacturer Listing Api
 
-router.get('/manufacturerList', checkUser, function (req, res) {
+router.get('/manufacturerList',function (req, res) {
   res.render('manufacturer/manufacturerList', { title: 'Express', message: req.flash('message') });
 });
 
@@ -661,7 +1087,7 @@ router.get('/manufacturerMasterList', async function (req, res) {
 
 // Update Manufacturer Master Api
 
-router.get('/updateManufacturer/:id', checkUser, async function (req, res) {
+router.get('/updateManufacturer/:id',async function (req, res) {
   const manufacturer = await Manufacturer.findOne({ where: { manufacturerId: req.params.id } })
   res.render('manufacturer/manufacturerUpdate', { title: 'Express', message: req.flash('message'), manufacturer });
 });
@@ -797,7 +1223,13 @@ router.post('/updateUserStoreMappingApprovalStatus', userStoreMapping.updateUser
 // Order Billing Api
 
 router.get('/order', async function (req, res) {
-  const store = await Store.findAll()
+//  const userId = req.session.userDetail.id
+// const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+// let userStores = []
+// userStores = userStoreMapping.map(mapping => mapping.storeFk)
+//   const store = await Store.findAll({where : {outletId : userStores}})
+
+const store = await Store.findAll()
   const product = await Product.findAll()
   const productStock = await ProductStock.findAll()
   res.render('order/order', { title: 'Express', message: req.flash('message'), store, product,productStock });
@@ -833,6 +1265,7 @@ router.get('/orderDetailsList', async function (req, res) {
   }
 
   const order = await Order.findAll({
+    
     include: [
       {
         model: OrderItems,
@@ -843,6 +1276,18 @@ router.get('/orderDetailsList', async function (req, res) {
     offset: start,
     where: where
   })
+   
+  // console.log(77777777777,order.orderId)
+  // const  customerOrderId=order.orderId
+
+  // const outletIdByOrderid = await ProductPrice.findAll({
+  //   where: { orderFk: customerOrderId },
+  //   attributes: ['outletId']
+  // });
+
+  // const storeName=await Store.findOne({where:{outletId}})
+  
+
 
   const count = await Order.count()
 
@@ -878,10 +1323,19 @@ router.get('/orderDetailsList', async function (req, res) {
 
 router.get('/updateOrder/:id', async function (req, res) {
   const order = await Order.findOne({ where: { orderId: req.params.id } })
-  const orderItems = await OrderItems.findOne({ where: { orderPK : req.params.id } })
-  const store = await Store.findAll({where : {approve_b : 'approved'}})
+  const orderItems = await ProductPrice.findOne({ where: { orderFk : req.params.id } })
+  // const store = await Store.findAll({where : {approve_b : 'approved'}})
   const product = await Product.findAll({where : {approve_b : 'approved'}})
-  res.render('order/orderUpdate', { title: 'Express', message: req.flash('message'), order, store, product,orderItems });
+const previousStore = await Store.findOne({outletId : orderItems.outletId})
+
+  const userId = req.session.userDetail.id
+  const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+  let userStores = []
+  userStores = userStoreMapping.map(mapping => mapping.storeFk)
+    const store = await Store.findAll({where : {outletId : userStores}})
+
+
+  res.render('order/orderUpdate', { title: 'Express', message: req.flash('message'), order, store, product,orderItems,previousStore });
 });
 
 router.get('/getItemsForOutlet/:outletId', async function (req, res) {
@@ -900,6 +1354,20 @@ router.get('/getItemsForOutlet/:outletId', async function (req, res) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+//getting all the product to populate the product dropdown in orderbilling page
+router.get("/getProduct", async(req, res) => {
+  // const itemId =req.params.itemId;
+ try{
+  const productdata= await NewProduct.findAll()
+ // console.log(555566,productdata)
+  res.json(productdata);
+ }
+ catch(err)
+ {
+  res.send(err.message,"Error while fetching the All product")
+ }
 });
 //////////////////////////////////////////
 router.get("/getProductById/:itemId", async(req, res) => {
@@ -926,10 +1394,10 @@ router.get("/getpriceById/:itemId", async(req, res) => {
  }
 });
 
-//for the orderUpdate
+//  route for the orderUpdate
 // Define a route to fetch orderItems by order ID
 router.get('/getOrderItems/:id', async function (req, res) {
-  const orderItems = await OrderItems.findAll({ where: { orderPK: req.params.id } });
+  const orderItems = await ProductPrice.findAll({ where: { orderFk: req.params.id } });
   res.json(orderItems);
 })
 
@@ -946,7 +1414,6 @@ router.get('/uploadBulkProducts', function (req, res) {
 })
 
 router.post('/uploadBulkProducts', bulkUpload.single('file'), productController.uploadBulkProducts)
-
 
 
 
@@ -1169,73 +1636,95 @@ router.post('/getProductWiseStock', async function (req, res) {
 
 
 
-// Supplier Master
+//===================================================== Supplier Master
 
 
-router.get('/supplierMaster', function (req, res) {
-  res.render('supplierMaster/supplierMaster', { title: 'Express' });
+router.get('/supplierMaster', async function (req, res) {
+  const userId = req.session.userDetail.id
+  const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+  let userStores = []
+  userStores = userStoreMapping.map(mapping => mapping.storeFk)
+    const store = await Store.findAll({where : {outletId : userStores}})
+  
+  res.render('supplierMaster/supplierMaster', { title: 'Express',store});
 });
 
 router.post("/createSuplierdata", supplierMasterController.createSuplier);
 
 
 router.get('/suppliersMasterList', async function (req, res) {
-  res.render('supplierMaster/supplierMasterList', { title: 'Express', message: req.flash('message') });
+  // const userId = req.session.userDetail.id
+  // const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+  // let userStores = []
+  // userStores = userStoreMapping.map(mapping => mapping.storeFk)
+    // const store = await Store.findAll({where : {outletId : userStores}})
+    const store = await Store.findAll()
+
+  res.render('supplierMaster/supplierMasterList', { title: 'Express',store, message: req.flash('message') });
 });
 
 
-router.get('/supplierDetailsList', async function (req, res) {
-  let draw = req.query.draw;
+router.post('/supplierDetailsList', async function (req, res) {  // Change to POST request
+  let draw = req.body.draw;
+  let start = parseInt(req.body.start);
+  let length = parseInt(req.body.length);
+  let outletId = req.body.outletId;  // Retrieve outletId from the request
 
-  let start = parseInt(req.query.start);
 
-  let length = parseInt(req.query.length);
+  let where = {};
 
-  let where = {}
-
-  if (req.query.search.value) {
-    where[Op.or] = [
-      { Code: { [Op.like]: `%${req.query.search.value}%` } },
-      { Name: { [Op.like]: `%${req.query.search.value}%` } },
-      { Email: { [Op.like]: `%${req.query.search.value}%` } },
-    ];
+  if (req.body.search.value) {
+      where[Op.or] = [
+          { Code: { [Op.like]: `%${req.body.search.value}%` } },
+          { Name: { [Op.like]: `%${req.body.search.value}%` } },
+          { Email: { [Op.like]: `%${req.body.search.value}%` } },
+      ];
   }
 
-  const supplier = await SupplierMaster.findAll({
-    limit: length,
-    offset: start,
-    where: where
-  })
+  if (outletId) {
+ 
+    where.storeFk = outletId  // Filter by outletId if provided
+  }
 
-  const count = await SupplierMaster.count()
+  const supplier = await SupplierMaster.findAndCountAll({
+      where: where,
+      limit: length,
+      offset: start
+  });
 
-  let data_arr = []
-  for (let i = 0; i < supplier.length; i++) {
-
-
-    data_arr.push({
-      'Code': supplier[i].Code,
-      'Name': supplier[i].Name,
-      'Email': supplier[i].Email,
-      'rowguid':supplier[i].rowguid
-    });
+  let data_arr = [];
+  for (let i = 0; i < supplier.rows.length; i++) {
+      data_arr.push({
+          'Code': supplier.rows[i].Code,
+          'Name': supplier.rows[i].Name,
+          'Email': supplier.rows[i].Email,
+          'rowguid': supplier.rows[i].rowguid
+      });
   }
 
   let output = {
-    'draw': draw,
-    'iTotalRecords': count,
-    'iTotalDisplayRecords': count,
-    'aaData': data_arr
+      'draw': draw,
+      'iTotalRecords': supplier.count,
+      'iTotalDisplayRecords': supplier.count,
+      'aaData': data_arr
   };
 
-  res.json(output)
+  res.json(output);
 });
 
 
+
 router.get('/updateSupplierMaster/:uuid', async function (req, res) {
-  console.log(219874651,req.params.uuid)
+ // console.log(219874651,req.params.uuid)
   const supplier = await SupplierMaster.findOne({ where: { rowguid: req.params.uuid } })
-  res.render('supplierMaster/supplierMasterUpdate', { title: 'Express', supplier });
+ const   previousStore= await Store.findOne({where:{outletId:supplier.storeFk}})
+ const userId = req.session.userDetail.id
+ const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+ let userStores = []
+ userStores = userStoreMapping.map(mapping => mapping.storeFk)
+   const store = await Store.findAll({where : {outletId : userStores}})
+
+  res.render('supplierMaster/supplierMasterUpdate', { title: 'Express', supplier,previousStore,store});
 });
 
 
@@ -1245,6 +1734,8 @@ router.get("/getAllsupplierdata",  supplierMasterController.supplierData)
 
 router.post("/supplierMasterUpdate/:uuid",supplierMasterController.updateSuplier)
 
+
+// getting all the store in supplier master
 
 
 /********************************State Master*********************************** */
@@ -1320,12 +1811,12 @@ router.get("/stateMaster",(req,res)=>{
     
     router.post("/stateMasterUpdate/:uuid",stateMasterController.updateStateMaster)
   
+  /********************************State Master*********************************** */
 
 
+  /*******************************Tax Master********************************** */
 
-   /********************************Tax Master*********************************** */
-
-   router.get("/taxMaster",(req,res)=>{
+  router.get("/taxMaster",(req,res)=>{
     res.render("TaxMaster/taxMaster",{title:'Express'});
     })
 
@@ -1337,17 +1828,19 @@ router.get("/stateMaster",(req,res)=>{
     router.get("/allState", async (req, res) => {
       try {
         const Allstate = await StateMaster.findAll({
-          attributes: ['id', 'Code',"Name"], 
+          where: { Status: "Active" }, 
+          attributes: ['id', 'Code', 'Name'],
         });
-        console.log(555555, Allstate);
+        // console.log(555555, Allstate);
         res.status(200).json(Allstate);
       } catch (error) {
         console.error("Error fetching data:", error);
         res.status(500).json({ error: "Internal Server Error" });
       }
     });
+    
   
-    // tax master listing
+    //============================== tax master listing========================================
   router.get('/taxMasterList', async function (req, res) {
     res.render('TaxMaster/taxMasterList', { title: 'Express', message: req.flash('message') });
   });
@@ -1365,9 +1858,8 @@ router.get("/stateMaster",(req,res)=>{
     if (req.query.search.value) {
       where[Op.or] = [
         { Tax_Code: { [Op.like]: `%${req.query.search.value}%` } },
-        { HSN_Code: { [Op.like]: `%${req.query.search.value}%` } },
-        { State_Code: { [Op.like]: `%${req.query.search.value}%` } },
-        { Status: { [Op.like]: `%${req.query.search.value}%` } },
+        { Description: { [Op.like]: `%${req.query.search.value}%` } },
+        { Tax_percentage: { [Op.like]: `%${req.query.search.value}%` } },
       ];
     }
   
@@ -1385,9 +1877,8 @@ router.get("/stateMaster",(req,res)=>{
   
       data_arr.push({
         'Tax_Code': taxval[i].Tax_Code,
-        'HSN_Code': taxval[i].HSN_Code,
-        'State_Code': taxval[i].State_Code,
-        'Status': taxval[i].Status,
+        'Description': taxval[i].Description,
+        'Tax_percentage': taxval[i].Tax_percentage,
         'rowguid':taxval[i].rowguid
       });
     }
@@ -1407,17 +1898,17 @@ router.get("/stateMaster",(req,res)=>{
   
   router.get("/updateTaxMaster/:uuid", async(req,res)=>{
     const tax= await TaxMaster.findOne({where:{rowguid:req.params.uuid}})
-   
+   // console.log(99999999999,tax)
 
-    const stateNameById=await StateMaster.findOne({where:{id:tax.id}})
-    console.log(3333333333333333,stateNameById)
+    const stateNameById=await StateMaster.findOne({where:{id:tax.State_Code}})
+    
 
     res.render("TaxMaster/taxMasterUpdate",{title:'Express',tax,stateNameById});
     })
   
     router.post("/taxMasterUpdate/:uuid",taxMasterController.updateTax)
   
- /********************************Customer Master*********************************** */
+ /*******************************Customer Master********************************** */
 
  router.get("/customerMaster",(req,res)=>{
   res.render("CustomerMaster/customerMaster",{title:'Express'});
@@ -1491,6 +1982,393 @@ router.get("/stateMaster",(req,res)=>{
 
 
 
-    
-    
+      
+ /*******************************Category Master********************************** */
+ router.get("/categoryMaster",(req,res)=>{
+  res.render("categoryMaster/categoryMaster",{ title: 'Express', message: req.flash('message') });
+  })
+
+  //post the category master
+  router.post("/createCategoryMaster",codeMasterController.createCategory)
+
+
+ /// listing of  category master
+
+ router.get('/codeCategoryMasterList', async function (req, res) {
+  res.render('categoryMaster/categoryMasterList', { title: 'Express', message: req.flash('message') });
+});
+
+
+router.get('/codeCategoryDetailsList', async function (req, res) {
+  let draw = req.query.draw;
+
+  let start = parseInt(req.query.start);
+
+  let length = parseInt(req.query.length);
+
+  let where = {}
+
+  if (req.query.search.value) {
+    where[Op.or] = [
+      { code_name: { [Op.like]: `%${req.query.search.value}%` } },
+      { code_level: { [Op.like]: `%${req.query.search.value}%` } },
+    ];
+  }
+
+  const itemtype = await CodeMaster.findAll({
+    where : {
+      ...where,
+      code_level : '1'
+    },
+    limit: length,
+    offset: start,
+  })
+
+  const count = await CodeMaster.count({where : {code_level : '1'}})
+
+  let data_arr = []
+  for (let i = 0; i < itemtype.length; i++) {
+
+
+    data_arr.push({
+      'code_name': itemtype[i].code_name,
+      'code_level': itemtype[i].code_level,
+      'Active': itemtype[i].Active,
+      'rowguid':itemtype[i].rowguid
+    });
+  }
+
+  let output = {
+    'draw': draw,
+    'iTotalRecords': count,
+    'iTotalDisplayRecords': count,
+    'aaData': data_arr
+  };
+
+  res.json(output)
+});
+
+
+
+ //updating the category
+
+ router.get('/updateCategoryMaster/:uuid', async function (req, res) {
+  const itemType = await CodeMaster.findOne({ where: { rowguid: req.params.uuid } })
+  const val=await CodeMaster.findOne({ where: { id: itemType.ParentPk } })
+  
+  res.render('CategoryMaster/updateCategoryMaster', { title: 'Express', itemType,val });
+});
+
+
+router.post("/codeCategoryMasterUpdate/:uuid",codeMasterController.updateCategory)
+
+
+
+
+
+
+ /*******************************Department Master********************************** */
+ router.get("/departmentMaster",(req,res)=>{
+  res.render("departmentMaster/departmentMaster",{ title: 'Express', message: req.flash('message') });
+  })
+
+  //post the category master
+  router.post("/createDepartmentMaster",codeMasterController.createDepartment)
+
+
+  // getting all the category
+
+  router.get("/allCategory", async (req, res) => {
+    try {
+      const Allcategory = await CodeMaster.findAll({
+        where: { code_level: "1" }, 
+        attributes: ['id', 'code_name',"Active"],
+      });
+      // console.log(555555, Allstate);
+      res.status(200).json(Allcategory);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+  /// listing of  Department master
+
+router.get('/departmentMasterList', async function (req, res) {
+  res.render('departmentMaster/departmentMasterList', { title: 'Express', message: req.flash('message') });
+});
+
+router.get('/departmentDetailsList', async function (req, res) {
+  let draw = req.query.draw;
+
+  let start = parseInt(req.query.start);
+
+  let length = parseInt(req.query.length);
+
+  let where = {}
+
+  if (req.query.search.value) {
+    where[Op.or] = [
+      { code_name: { [Op.like]: `%${req.query.search.value}%` } },
+      { code_level: { [Op.like]: `%${req.query.search.value}%` } },
+    ];
+  }
+
+  const itemtype = await CodeMaster.findAll({
+    where : {
+      ...where,
+      code_level : '2'
+    },
+    limit: length,
+    offset: start,
+  })
+
+  const count = await CodeMaster.count({where : {code_level : '2'}})
+
+  let data_arr = []
+  for (let i = 0; i < itemtype.length; i++) {
+
+
+    data_arr.push({
+      'code_name': itemtype[i].code_name,
+      'code_level': itemtype[i].code_level,
+      'Active': itemtype[i].Active,
+      'rowguid':itemtype[i].rowguid
+    });
+  }
+
+  let output = {
+    'draw': draw,
+    'iTotalRecords': count,
+    'iTotalDisplayRecords': count,
+    'aaData': data_arr
+  };
+
+  res.json(output)
+});
+  
+
+ //updating the department
+
+ router.get('/updateDepartmentMaster/:uuid', async function (req, res) {
+  const itemType = await CodeMaster.findOne({ where: { rowguid: req.params.uuid } })
+  const val=await CodeMaster.findOne({ where: { id: itemType.ParentPk } })
+ 
+  
+  res.render('departmentMaster/updateDepartmentMaster', { title: 'Express', itemType,val });
+});
+
+router.post("/departmentMasterUpdate/:uuid",codeMasterController.updateDepartment)
+
+
+
+
+
+
+
+
+
+
+
+
+   /*******************************Group Master********************************** */
+ router.get("/groupMaster",(req,res)=>{
+  res.render("groupMaster/groupMaster",{ title: 'Express', message: req.flash('message') });
+  })
+
+  //post the category master
+  router.post("/createGroupMaster",codeMasterController.createGroup)
+
+
+  // getting all the category
+
+  router.get("/allgroup", async (req, res) => {
+    try {
+      const Allgroup = await CodeMaster.findAll({
+        where: { code_level: "2" }, 
+        attributes: ['id', 'code_name',"Active"],
+      });
+      // console.log(555555, Allstate);
+      res.status(200).json(Allgroup);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+
+
+/// listing of  group master
+
+router.get('/groupMasterList', async function (req, res) {
+  res.render('groupMaster/groupMasterList', { title: 'Express', message: req.flash('message') });
+});
+router.get('/groupDetailsList', async function (req, res) {
+  let draw = req.query.draw;
+
+  let start = parseInt(req.query.start);
+
+  let length = parseInt(req.query.length);
+
+  let where = {}
+
+  if (req.query.search.value) {
+    where[Op.or] = [
+      { code_name: { [Op.like]: `%${req.query.search.value}%` } },
+      { code_level: { [Op.like]: `%${req.query.search.value}%` } },
+    ];
+  }
+
+  const itemtype = await CodeMaster.findAll({
+    where : {
+      ...where,
+      code_level : '3'
+    },
+    limit: length,
+    offset: start,
+  })
+
+  const count = await CodeMaster.count({where : {code_level : '3'}})
+
+  let data_arr = []
+  for (let i = 0; i < itemtype.length; i++) {
+
+
+    data_arr.push({
+      'code_name': itemtype[i].code_name,
+      'code_level': itemtype[i].code_level,
+      'Active': itemtype[i].Active,
+      'rowguid':itemtype[i].rowguid
+    });
+  }
+
+  let output = {
+    'draw': draw,
+    'iTotalRecords': count,
+    'iTotalDisplayRecords': count,
+    'aaData': data_arr
+  };
+
+  res.json(output)
+});
+
+ //updating the group
+
+ router.get('/updateGroupMaster/:uuid', async function (req, res) {
+  const itemType = await CodeMaster.findOne({ where: { rowguid: req.params.uuid } })
+  const val=await CodeMaster.findOne({ where: { id: itemType.ParentPk } })
+  
+  res.render('groupMaster/updateGroupMaster', { title: 'Express', itemType,val });
+});
+
+router.post("/groupMasterUpdate/:uuid",codeMasterController.updateGroup)
+
+
+
+
+
+
+
+
+
+
+
+     /*******************************ItemType Master********************************** */
+ router.get("/itemTypeMaster",(req,res)=>{
+  res.render("itemTypeMaster/itemTypeMaster",{ title: 'Express', message: req.flash('message') });
+  })
+
+  //post the category master
+  router.post("/itemTypeMaster",codeMasterController.createItemType)
+
+
+  // getting all the category
+
+  router.get("/allitemtype", async (req, res) => {
+    try {
+      const Allgroup = await CodeMaster.findAll({
+        where: { code_level: "3" }, 
+        attributes: ['id', 'code_name',"Active"],
+      });
+      // console.log(555555, Allstate);
+      res.status(200).json(Allgroup);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+
+/// listing of item type
+
+router.get('/itemtypeMasterList', async function (req, res) {
+  res.render('itemTypeMaster/itemtypeMasterList', { title: 'Express', message: req.flash('message') });
+});
+
+router.get('/itemTypeDetailsList', async function (req, res) {
+  let draw = req.query.draw;
+
+  let start = parseInt(req.query.start);
+
+  let length = parseInt(req.query.length);
+
+  let where = {}
+
+  if (req.query.search.value) {
+    where[Op.or] = [
+      { code_name: { [Op.like]: `%${req.query.search.value}%` } },
+      { code_level: { [Op.like]: `%${req.query.search.value}%` } },
+    ];
+  }
+
+  const itemtype = await CodeMaster.findAll({
+    where : {
+      ...where,
+      code_level : '4'
+    },
+    limit: length,
+    offset: start,
+  })
+
+  const count = await CodeMaster.count({where : {code_level : '4'}})
+
+  let data_arr = []
+  for (let i = 0; i < itemtype.length; i++) {
+
+
+    data_arr.push({
+      'code_name': itemtype[i].code_name,
+      'code_level': itemtype[i].code_level,
+      'Active': itemtype[i].Active,
+      'rowguid':itemtype[i].rowguid
+    });
+  }
+
+  let output = {
+    'draw': draw,
+    'iTotalRecords': count,
+    'iTotalDisplayRecords': count,
+    'aaData': data_arr
+  };
+
+  res.json(output)
+});
+
+
+    //updating the item type
+
+    router.get('/updateItemTypeMaster/:uuid', async function (req, res) {
+      const itemType = await CodeMaster.findOne({ where: { rowguid: req.params.uuid } })
+      const val=await CodeMaster.findOne({ where: { id: itemType.ParentPk } })
+      
+      res.render('itemTypeMaster/itemTypeMasterUpdate', { title: 'Express', itemType,val });
+    });
+
+    router.post("/itemTypeMasterUpdate/:uuid",codeMasterController.updateItemType)
+
+
+
+
+
+
 module.exports = router;

@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         create_on: {
             type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW // Use DataTypes.NOW to represent the current date and time
+            defaultValue: DataTypes.NOW 
         },
         created_by : {
             type : DataTypes.STRING,

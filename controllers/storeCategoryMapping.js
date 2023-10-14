@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs")
 const Store = db.store
 const Category = db.category
 const StoreCategoryMapping = db.storeCategoryMapping
+const CodeMaster = db.codeMaster
 const session = require('express-session');
 
 
@@ -45,16 +46,64 @@ console.log(selectedCategoryIds,selectedStoreId)
 
 //  get category data based on store from database and show into selected checkbox
 
-const getStoreCategoryData = async (req, res) => {
+// const getStoreCategoryData = async (req, res) => {
   
+//   const outletId = req.params.outletId;
+
+//   try {
+
+//     const category = await Category.findAll()
+
+//     let selectedCategory = await StoreCategoryMapping.findAll({ where: { storeFk: outletId } })
+
+//     let arr = []
+//     let storeCategoryIds = []
+
+//     for (i = 0; i < selectedCategory.length; i++) {
+//       storeCategoryIds.push(selectedCategory[i].categoryFk)
+//     }
+
+//     function onlyUnique(value, index, array) {
+//       return array.indexOf(value) === index;
+//     }
+//     var unique = storeCategoryIds.filter(onlyUnique);
+//   console.log(unique)
+
+//     for (i = 0; i < category.length; i++) {
+//       let flag = false
+      
+//       for (let j = 0; j < storeCategoryIds.length; j++) {
+//         if (category[i].categoryId == storeCategoryIds[i]) {
+//           flag = true
+//         }
+//       }
+
+//       if (flag == true) {
+//         arr.push({ ...category[i].dataValues, checked: true })
+//       } else {
+//         arr.push({ ...category[i].dataValues, checked: false })
+//       }
+//     }
+
+//     res.json(arr);
+
+//   } catch (error) {
+//     console.log(error)
+//     req.flash('message', 'Internam Server error');
+//     return res.redirect('/storeCategoryMapping')
+//   }
+// }
+
+const getStoreCategoryData = async (req, res) => {
+  console.log(222222222222)
   const outletId = req.params.outletId;
 
   try {
-
-    const category = await Category.findAll()
+    // const category = await CodeMaster.findAll({where : {code_level : 1}})
+    const category = await CodeMaster.findAll({where : {code_level : 1}})
 
     let selectedCategory = await StoreCategoryMapping.findAll({ where: { storeFk: outletId } })
-
+ 
     let arr = []
     let storeCategoryIds = []
 
@@ -66,29 +115,30 @@ const getStoreCategoryData = async (req, res) => {
       return array.indexOf(value) === index;
     }
     var unique = storeCategoryIds.filter(onlyUnique);
-  console.log(unique)
 
     for (i = 0; i < category.length; i++) {
       let flag = false
       
       for (let j = 0; j < storeCategoryIds.length; j++) {
-        if (category[i].categoryId == storeCategoryIds[i]) {
+        if (category[i].id == storeCategoryIds[j]) {
           flag = true
         }
+        
       }
 
       if (flag == true) {
+        
         arr.push({ ...category[i].dataValues, checked: true })
       } else {
+       
         arr.push({ ...category[i].dataValues, checked: false })
       }
     }
-
     res.json(arr);
 
   } catch (error) {
     console.log(error)
-    req.flash('message', 'Internam Server error');
+    req.flash('message', 'Internal Server error');
     return res.redirect('/storeCategoryMapping')
   }
 }
@@ -97,10 +147,10 @@ const getStoreCategoryData = async (req, res) => {
 // deselect a store 
 
 const deselectCategories = async (req, res) => {
-  console.log(123456)
+  console.log(11111111111111)
   const categoryId = req.params.categoryId;  
   const outletId = req.params.outletId;
-  console.log(categoryId,outletId)
+console.log(789456123, categoryId,outletId)
   try {
       // Remove the store from the UserStoreMapping table
     const removeCategory =  await StoreCategoryMapping.destroy({ where: { categoryFk: categoryId, storeFk: outletId } });

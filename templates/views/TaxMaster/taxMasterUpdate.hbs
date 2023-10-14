@@ -17,9 +17,7 @@
       background-color: rgb(244, 244, 247) !important;
     }
 
-    .sup-int[type='text'] {
-   
-    }
+    .sup-int[type='text'] {}
 
     .table-custom tbody tr:nth-child(even) {
       background-color: #ffff;
@@ -184,61 +182,60 @@
     </div>
   </div>
   <div>
+  
     {{#if message}}
     <div class="alert alert-info">{{message}}</div>
     {{/if}}
 
-    <form id="taxmasterform"  action="/taxMasterUpdate/{{tax.rowguid}}" method="post">
-     
+    <form id="taxmasterform" action="/taxMasterUpdate/{{tax.rowguid}}" method="post">
+
       <div id="formdata">
-                <h4>Tax Details</h4>
-                <label for="Tax_Code" class="label-block">Tax Code:</label>
-                <div class="sup-containe" style="position: relative;">
-                    <input type="text" id="Tax_Code" name="Tax_Code" class="sup-int" placeholder="Enter Tax Code" value="{{tax.Tax_Code}}"
-                        required>
-                    
-                </div>
+        <h4>Tax Details</h4>
+        <label for="Tax_Code" class="label-block">Tax Code  <span class="text-danger">*</span>:</label>
+        <div class="sup-containe" style="position: relative;">
+          <input type="text" id="Tax_Code" name="Tax_Code" class="sup-int" placeholder="Enter Tax Code"
+            value="{{tax.Tax_Code}}" required>
+
+        </div>
 
 
 
-                <label for="HSN_Code" class="label-block">HSN Code:</label>
-                <input type="text" id="HSN_Code" name="HSN_Code" placeholder="&#128100; Enter HSN Code"  value="{{tax.HSN_Code}}">
+        <label for="HSN_Code" class="label-block">HSN Code</label>
+        <input type="text" id="HSN_Code" name="HSN_Code" placeholder="&#140100; Enter HSN Code"
+          value="{{tax.HSN_Code}}">
 
-                <label for="State_Code" class="label-block">State Code:</label>
+        <label for="State_Code" class="label-block">State  <span class="text-danger">*</span>:</label>
 
-                <select id="State_Code" name="State_Code" >
-               
-                     <option value="" >{{stateNameById.Name}}</option>
-                     <option value="" >Select State Code</option>
+        <select id="State_Code" name="State_Code">
 
-                     
-                </select>
+          <option value="{{stateNameById.id}}">{{stateNameById.Name}}</option>
 
-                  
+
+        </select>
 
 
 
 
 
-                <label for="Tax_percentage">Tax percentage:</label>
-                <input type="number" id="Tax_percentage" name="Tax_percentage" placeholder="Enter Tax percentage" value="{{tax.Tax_percentage}}"
-                    required>
 
-                <label for="Status" class="label-block">Status:</label>
-                <select id="Status" name="Status">
-                     <option>{{tax.Status}}</option>
-                    <option value="Active" >Active</option>
-                    <option value="Inactive">Inactive</option>
-                </select>
 
-                <label for="Description">Description:</label>
-                <div>
-                    <textarea id="Description" name="Description" rows="4" placeholder="Enter Description" cols="72" 
-                        style="width: 100%;">{{tax.Description}}</textarea><br><br>
-                </div>
+        <label for="Tax_percentage">Tax percentage  <span class="text-danger">*</span></label>
+        <input type="number" id="Tax_percentage" name="Tax_percentage" placeholder="Enter Tax percentage"
+          value="{{tax.Tax_percentage}}" required>
 
-               
-            </div>
+        <label for="Status" class="label-block">Status</label>
+        <select id="Status" name="Status">
+          <option value="{{tax.Status}}">{{tax.Status}}</option>
+        </select>
+
+        <label for="Description">Description</label>
+        <div>
+          <textarea id="Description" name="Description" rows="4" placeholder="Enter Description" cols="72"
+            style="width: 100%;">{{tax.Description}}</textarea><br><br>
+        </div>
+
+
+      </div>
 
   </div>
   </div>
@@ -257,37 +254,83 @@
 
 </body>
 <script>
-   document.addEventListener("DOMContentLoaded", function () {
-        const stateSelect = document.getElementById("State_Code");
+  /* document.addEventListener("DOMContentLoaded", function () {
+     const stateSelect = document.getElementById("State_Code");
+ 
+     let tocheckId = stateSelect.value
+     console.log(888888888888, tocheckId)
+     fetch("/allState")
+       .then((res) => {
+         return res.json();
+       })
+ 
+       .then((data) => {
+ 
+ 
+         data.forEach((ele) => {
+           if (tocheckId == ele.id) {
+             
+             console.log(55555555, ele.id)
+           }
+ 
+ 
+           const option = document.createElement("option");
+           option.value = ele.id;
+           option.textContent = ele.Name;
+           stateSelect.appendChild(option);
+ 
+ 
+         })
+ 
+ 
+ 
+ 
+ 
+       })
+       .then((err) => {
+         console.log(err)
+       })
+ 
+ 
+   });
+ */
+  document.addEventListener("DOMContentLoaded", function () {
+    const stateSelect = document.getElementById("State_Code");
+     const statusSelect = document.getElementById("Status");
 
+        let statusArray = ["Active", "Inactive"]
+
+        statusArray.forEach((ele) => {
+            const option = document.createElement("option");
+            if (statusSelect.value !== ele) {
+                option.value = ele;
+                option.textContent = ele;
+                statusSelect.appendChild(option);
+            }
+        })
+
+    let tocheckId = +stateSelect.value;
+
+    fetch("/allState")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        data.forEach((ele) => {
+          if (tocheckId !== ele.id) {
+            const option = document.createElement("option");
+            option.value = ele.id;
+            option.textContent = ele.Name;
+            stateSelect.appendChild(option);
+          }
+        });
+       // console.log(55,stateSelect)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
        
-
-
-        fetch("/allState")
-            .then((res) => {
-                return res.json();
-            })
-
-            .then((data) => {
-
-
-                data.forEach((ele) => {
-                    const option = document.createElement("option");
-                    option.value = ele.id;
-                    option.textContent = ele.Name;
-                    stateSelect.appendChild(option);
-                })
-
-                console.log(5588, option)
-
-
-
-            })
-            .then((err) => {
-                console.log(err.message)
-            })
-
-    });
+  });
 
 </script>

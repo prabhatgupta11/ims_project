@@ -30,6 +30,15 @@ hbs.registerHelper('ifEquals', function (arg1, arg2, options) {
   return arg1 === arg2 ? options.fn(this) : options.inverse(this);
 });
 
+hbs.registerHelper('isSelected', function(value, selectedValue) {
+  // console.log(value,selectedValue)
+  return value === selectedValue ? 'selected' : '';
+});
+
+hbs.registerHelper('log', function(value) {
+  console.log(value);
+});
+
 // hbs.registerHelper('isSelectedStore', function(selectedStores, storeId) {
 //   console.log("here")
 //   console.log(selectedStores,storeId)

@@ -169,8 +169,8 @@
                 </div>
                 <div class="breadcrumdiv">
                     <ul class="breadcrumb">
-                        <li><a href="#"> Home</a></li>
-                        <li><a href="#">Tax MasterList</a></li>
+                        <li><a href="/dashboard"> Home</a></li>
+                        <li><a href="/taxMasterList">Tax MasterList</a></li>
                         <li><a href="#">Tax Master</a></li>
 
                     </ul>
@@ -188,11 +188,11 @@
         <div class="alert alert-info">{{message}}</div>
         {{/if}}
 
-        <form id="taxMasterform">
+        <form id="taxMasterform" action="/createTaxMaster" method="post">
             {{!-- <h1>Order Billing</h1> --}}
             <div id="formdata">
                 <h4>Tax Details</h4>
-                <label for="Tax_Code" class="label-block">Tax Code:</label>
+                <label for="Tax_Code" class="label-block">Tax Code <span class="text-danger">*</span></label>
                 <div class="sup-containe" style="position: relative;">
                     <input type="text" id="Tax_Code" name="Tax_Code" class="sup-int" placeholder="Enter Tax Code"
                         required>
@@ -203,29 +203,29 @@
 
 
 
-                <label for="HSN_Code" class="label-block">HSN Code:</label>
-                <input type="text" id="HSN_Code" name="HSN_Code" placeholder="&#128100; Enter HSN Code">
+                <label for="HSN_Code" class="label-block">HSN Code</label>
+                <input type="text" id="HSN_Code" name="HSN_Code" placeholder="&#140100; Enter HSN Code">
 
-                <label for="State_Code" class="label-block">State Code:</label>
+                <label for="State_Code" class="label-block">State  <span class="text-danger">*</span></label>
 
-                    <select id="State_Code" name="State_Code">
-                        <option value="">Select State Code</option>
+                    <select id="State_Code" name="State_Code" required>
+                    
                     </select>
 
 
 
 
-                <label for="Tax_percentage">Tax percentage:</label>
-                <input type="number" id="Tax_percentage" name="Tax_Percentage" placeholder="Enter Tax percentage"
+                <label for="Tax_percentage">Tax percentage <span class="text-danger">*</span></label>
+                <input type="number" id="Tax_percentage" name="Tax_percentage" placeholder="Enter Tax percentage"
                     required>
 
-                <label for="Status" class="label-block">Status:</label>
+                <label for="Status" class="label-block">Status</label>
                 <select id="Status" name="Status">
                     <option value="Active" selected>Active</option>
                     <option value="Inactive">Inactive</option>
                 </select>
 
-                <label for="Description">Description:</label>
+                <label for="Description">Description</label>
                 <div>
                     <textarea id="Description" name="Description" rows="4" placeholder="Enter Description" cols="72"
                         style="width: 100%;"></textarea><br><br>
@@ -257,7 +257,7 @@
         const stateSelect = document.getElementById("State_Code");
 
 
-        stateSelect.innerHTML = '<option value="">Select State Code</option>';
+        stateSelect.innerHTML = '<option value="">Select State</option>';
 
 
         fetch("/allState")
@@ -275,23 +275,20 @@
                     stateSelect.appendChild(option);
                 })
 
-                console.log(5588, option)
-
-
 
             })
             .then((err) => {
-                console.log(err.message)
+                console.log(err)
             })
 
     });
 
-    document.getElementById("taxMasterform").addEventListener("submit", function () {
+   // document.getElementById("taxMasterform").addEventListener("submit", function () {
  
 
 
         // Collect form data
-        const formData = {
+     /*   const formData = {
             Tax_Code: document.getElementById("Tax_Code").value,
             HSN_Code: document.getElementById("HSN_Code").value,
             Tax_percentage: document.getElementById("Tax_percentage").value,
@@ -315,6 +312,7 @@
             .then(data => {
                 console.log('Data sent:', data);
 
+
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -322,7 +320,7 @@
 
 
 
-    });
+    });  */
 
 
 </script>

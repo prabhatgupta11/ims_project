@@ -18,7 +18,7 @@ const addManufacturer = async (req, res) => {
 
     const manufacturer = await Manufacturer.create(info)
 
-    req.flash('message', 'Manufacturer added Successfully and Sent for Approval');
+    req.flash('message', 'Manufacturer added Successfully');
     return res.redirect('/manufacturerList')
 
   }
@@ -45,7 +45,7 @@ const updateManufacturer = async (req, res) => {
       return res.redirect('/updateManufacturer/:id')
     }
 
-    req.flash('message', 'Manufacturer Updated Successfully and Sent for Admin Approval');
+    req.flash('message', 'Manufacturer Updated Successfully');
     return res.redirect('/manufacturerList')
 
   } catch (err) {

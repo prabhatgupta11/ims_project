@@ -1,7 +1,7 @@
 const db = require("../models")
 const { v4: uuidv4 } = require('uuid');
 const Order = db.order;
-const OrderItems = db.orderItems
+const ProductPrice = db.productPrice
 
 
 
@@ -13,6 +13,8 @@ const OrderItems = db.orderItems
 // Create order
 
 const createOrderBill = async (req, res) => {
+
+    console.log(666666666666,req.body)
 
     try {
         const { customerName,
@@ -38,24 +40,24 @@ const createOrderBill = async (req, res) => {
             totalAmount,
         });
 
-        // Create order items for each product
+       // Create order items for each product
         const orderItems = products.map(product => ({
-            orderItemId: generateUniqueOrderId(),
-            orderPK: order.orderId,
+            rowguid: generateUniqueOrderId(),
+            orderFk: order.orderId,
             outletId: product.outletId,
             storeName: product.storeName,
             itemId: product.itemId,
             itemName: product.itemName,
-            quantity: product.quantity,
+            qty: product.quantity,
             salePrice: product.price,
-            discountPercentage: product.discount,
+            discount: product.discount,
             itemAmount: product.itemAmount,
             taxPercentage:product.taxPercentage
 
         }));
           
-        // Bulk create order items
-        await OrderItems.bulkCreate(orderItems);
+        // // Bulk create order items
+        await ProductPrice.bulkCreate(orderItems);
         req.flash('message', 'Order Bill created successfully');
         return res.redirect('/orderList')
 
@@ -105,7 +107,7 @@ const updateOrderItems = async (req, res) => {
             console.log('Updating order item with orderItemId:', product.orderItemId);
 
             // Use findOne to find the specific order item by orderItemId
-            const orderItem = await OrderItems.findOne({
+            const orderItem = await ProductPrice.findOne({
                 where: {
                     orderItemId: product.orderItemId
                 }

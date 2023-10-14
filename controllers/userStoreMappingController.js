@@ -1,6 +1,7 @@
 const db = require("../models")
 // const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
+const { json } = require("body-parser")
 // const config = require("../config/auth.config")
 const User = db.user
 const Store = db.store
@@ -33,7 +34,7 @@ const getUserStoreData = async (req, res) => {
       storeIdsToFetch = managedStoreIds.map(mapping => mapping.storeFk);
     }
 
-    const store = await Store.findAll({ where: { outletId: storeIdsToFetch, approve_b: 'approved' } })
+    const store = await Store.findAll({ where: { outletId: storeIdsToFetch} })
 
     // let selectedStore = await UserStoreMapping.findAll({ where: { userFk: userId } })
     console.log(123, storeIdsToFetch, store)
@@ -64,9 +65,9 @@ const getUserStoreData = async (req, res) => {
       if (flag == true) {
         arr.push({ ...store[i].dataValues, checked: false })
       }
-      else {
-        arr.push({ ...store[i].dataValues, checked: false })
-      }
+      // else {
+      //   arr.push({ ...store[i].dataValues, checked: false })
+      // }
     }
 
 
@@ -79,7 +80,97 @@ const getUserStoreData = async (req, res) => {
 }
 
 
+// const getManagerStore = async (req,res) => {
+
+//   const managerId = req.params.managerId
+  
+//   const store = await Store.findAll()
+
+//   const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : managerId}})
+
+//   const managerSelectedStore = []
+  
+//   for (let i=0; i<userStoreMapping.length; i++){
+//     managerSelectedStore.push(userStoreMapping[i].storeFk)
+//   }
+
+//   const stores = await Store.findAll({where : {outletId : managerSelectedStore}})
+   
+//   // res.json(stores)
+
+//   const userId = req.params.userId
+  
+//   const userStoreMappingUser = await UserStoreMapping.findAll({where : {userFk : userId}})
+
+//   const userSelectedStore = []
+  
+//   for (let i=0; i<userStoreMappingUser.length; i++){
+//     userSelectedStore.push(userStoreMappingUser[i].storeFk)
+//   }
+
+// let arr = []
+
+// for (let i=0; i<managerSelectedStore.length; i++){
+//   let flag = false
+//   for (let j=0; j<userSelectedStore.length; j++){
+//     if(managerSelectedStore[i].storeFk==userSelectedStore[j].storeFk){
+//       flag = true
+//     }
+//   }
+//   if (flag = true) {
+//     arr.push({ ...managerSelectedStore[i].dataValues, checked: true })
+//   }
+//   else {
+//     arr.push({ ...managerSelectedStore[i].dataValues, checked: false })
+//   }
+// }
+//  res.json(arr)
+
+// }
+
+
+
+
 // select store in check box and store into userStoreMapping
+
+
+const getManagerStore = async (req, res) => {
+  const managerId = req.params.managerId;
+  
+
+  const store = await Store.findAll();
+  const userStoreMapping = await UserStoreMapping.findAll({ where: { userFk: managerId } });
+
+  const managerSelectedStore = [];
+  for (let i = 0; i < userStoreMapping.length; i++) {
+    managerSelectedStore.push(userStoreMapping[i].storeFk);
+  }
+
+ // Check if managerFk is -1 and populate all stores as selected
+ if (managerId === '-1') {
+  for (let i = 0; i < store.length; i++) {
+    managerSelectedStore.push(store[i].outletId);
+  }
+}
+
+  const stores = await Store.findAll({ where: { outletId: managerSelectedStore } });
+
+  const userId = req.params.userId;
+  const userStoreMappingUser = await UserStoreMapping.findAll({ where: { userFk: userId } });
+  const userSelectedStore = [];
+  for (let i = 0; i < userStoreMappingUser.length; i++) {
+    userSelectedStore.push(userStoreMappingUser[i].storeFk);
+  }
+
+  // Modify your existing code to add the "checked" property to stores
+  for (let i = 0; i < stores.length; i++) {
+    const storeId = stores[i].outletId;
+    stores[i].dataValues.checked = userSelectedStore.includes(storeId);
+  }
+
+  res.json(stores);
+};
+
 
 const addUserStoreMapping = async (req, res) => {
   console.log(123456789)
@@ -114,7 +205,6 @@ const addUserStoreMapping = async (req, res) => {
 // deselect a store 
 
 const deselectStore = async (req, res) => {
-
   const userId = req.params.userId;
   const outletId = req.params.outletId;
 
@@ -179,6 +269,7 @@ const updateUserStoreMappingApprovalStatus = async (req, res) => {
 module.exports = {
   addUserStoreMapping,
   getUserStoreData,
+  getManagerStore,
   deselectStore,
   userStoreMappingApprovalList,
   updateUserStoreMappingApprovalStatus

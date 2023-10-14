@@ -1,5 +1,6 @@
 const db = require("../models")
 const Product = db.products
+const NewProduct = db.newProduct
 const fs = require('fs');
 const xlsx = require('xlsx');
 const Manufacturer = db.manufacturer
@@ -71,6 +72,61 @@ const createProduct = async (req, res) => {
     }
 }
 
+// create New Product
+
+const createNewProduct = async (req,res) => {
+    try {
+
+        if (req.file) {
+            const tmp_path = req.file.path;
+            req.body.newFileName = `${new Date().getTime()}_${req.file.originalname}`
+            /** The original name of the uploaded file
+                stored in the variable "originalname". **/
+            const target_path = `public/uploads/${req.body.newFileName}`;
+            /** A better way to copy the uploaded file. **/
+            const src = fs.createReadStream(tmp_path);
+            const dest = fs.createWriteStream(target_path);
+            src.pipe(dest);
+            src.on('end', function () { });
+            src.on('error', function (err) { });
+        }
+       
+        let info = {
+            category : req.body.category,
+            department : req.body.department,
+            group : req.body.group,
+            itemType : req.body.itemType,
+            brand : req.body.brand,
+            itemCode : req.body.itemCode,
+            itemName : req.body.itemName,
+            description : req.body.description,
+            productType : req.body.productType,
+            status : req.body.status,
+            sellingPricePolicy : req.body.sellingPricePolicy,
+            weight : req.body.weight,
+            imageUrl : req.body.newFileName,
+            taxType : req.body.taxType,
+            tax : req.body.tax,
+            displayOrder : req.body.displayOrder,
+            edit_by : req.body.edit_by,
+            edit_on : req.body.edit_on,
+            approve_b : req.body.approve_b,
+            approved_by : req.body.approved_by,
+            rowguid : req.body.rowguid
+        } 
+            
+        const product = await NewProduct.create(info)
+        req.flash('message', 'Product sucessfully created');
+        return res.redirect('/newProductList')
+    }
+    catch (err) {
+        console.log(err)
+        req.flash('message', 'Something went wrong');
+        return res.redirect('/newProduct')
+    }
+
+}
+
 
 // Update Product Details
 
@@ -109,7 +165,40 @@ const updateProduct = async (req, res) => {
 
 }
 
+const updateNewProduct = async (req, res) => {
+    try {
+        if (req.file) {
+            const tmp_path = req.file.path;
+            req.body.newFileName = `${new Date().getTime()}_${req.file.originalname}`
+            /** The original name of the uploaded file
+                stored in the variable "originalname". **/
+            const target_path = `public/uploads/${req.body.newFileName}`;
 
+            /** A better way to copy the uploaded file. **/
+            const src = fs.createReadStream(tmp_path);
+            const dest = fs.createWriteStream(target_path);
+            src.pipe(dest);
+            src.on('end', function () { });
+            src.on('error', function (err) { });
+        }
+
+        const product = await NewProduct.update({ ...req.body, approve_b: 'pending', imageUrl: req.body.newFileName }, { where: { rowguid: req.params.id } })
+
+        if (!product) {
+            req.flash('message', 'Product not found');
+        }
+
+        req.flash('message', 'Product Details updated sucessfully');
+        return res.redirect('/newProductList')
+
+    } catch (err) {
+        console.log(err)
+        req.flash('message', 'Something went wrong');
+        return res.redirect(`/updateNewProduct/${req.params.id}`)
+    }
+
+
+}
 
 // upload bulk products
 
@@ -121,7 +210,6 @@ const uploadBulkProducts = async function (req, res) {
             const workbook = xlsx.read(fileData, { type: 'buffer' });
             const sheet = workbook.Sheets[workbook.SheetNames[0]];
             const productsInJson = xlsx.utils.sheet_to_json(sheet);
-
             for (const productData of productsInJson) {
                 // console.log(productData)
 
@@ -253,6 +341,8 @@ const updateProductApprovalStatus = async (req, res) => {
 
 module.exports = {
     updateProduct,
+    updateNewProduct,
+    createNewProduct,
     createProduct,
     updateProduct,
     productApprovalList,

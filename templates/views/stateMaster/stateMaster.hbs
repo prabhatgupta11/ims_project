@@ -169,7 +169,7 @@
         <div class="breadcrumdiv">
           <ul class="breadcrumb">
             <li><a href="#"> Home</a></li>
-            <li><a href="#">State MasterList</a></li>
+            <li><a href="#">State Master List</a></li>
             <li><a href="#">State Master</a></li>
 
           </ul>
@@ -187,13 +187,13 @@
     <div class="alert alert-info">{{message}}</div>
     {{/if}}
 
-    <form id="statemasterform">
+    <form id="statemasterform"  action="/createStateMaster" method="post">
       {{!-- <h1>Order Billing</h1> --}}
       <div id="formdata">
         <h4>State Details</h4>
-        <label for="Code" class="label-block">Code:</label>
+        <label for="Code" class="label-block">Code  <span class="text-danger">*</span>:</label>
         <div class="sup-containe" style="position: relative;">
-          <input type="text" id="Code" name="Code" class="sup-int" placeholder="Enter Supplier Code" required>
+          <input type="text" id="Code" name="Code" class="sup-int" placeholder="Enter State Code" required>
           <div class="sup-icon" style="position:absolute; left:10px;top:15%">
             <i style='font-size:12px' class='fas'>&#xf121;</i>
           </div>
@@ -201,15 +201,15 @@
 
 
 
-        <label for="Name" class="label-block">Name:</label>
-        <input type="text" id="Name" name="Name" placeholder="&#128100; Enter Name" required pattern="[A-Za-z ]+"
+        <label for="Name" class="label-block">Name  <span class="text-danger">*</span>:</label>
+        <input type="text" id="Name" name="Name" placeholder="&#46820; Enter State Name" required pattern="[A-Za-z ]+"
           title="Please enter only letters">
 
     
 
 
         <label for="Display_order">Display Order:</label>
-        <input type="number" id="Display_order" name="DisplayOrder" placeholder="Enter Display Order" required min="0">
+        <input type="number" id="Display_order" name="DisplayOrder" placeholder="Enter Display Order"  >
 
 
         <label for="Status" class="label-block">Status:</label>
@@ -236,7 +236,7 @@
 
 
 </body>
-<script>
+{{!-- <script>
   document.getElementById("statemasterform").addEventListener("submit", function () {
     //e.preventDefault();
 
@@ -283,4 +283,4 @@
     document.getElementById("Display_order").value = 0;
   });
 
-</script>
+</script> --}}

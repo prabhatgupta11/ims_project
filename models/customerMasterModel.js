@@ -21,11 +21,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     ContactNo1: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     ContactNo2: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
     Email: {
@@ -33,23 +33,23 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     Address: {
-      type: DataTypes.TEXT, 
+      type:DataTypes.STRING(255), 
       allowNull: false,
     },
     Pincode: {
-      type: DataTypes.STRING(10), 
+      type: DataTypes.STRING(255), 
       allowNull: false,
     },
     GSTNo: {
-      type: DataTypes.STRING(15), 
+      type: DataTypes.STRING(255), 
       allowNull: false,
     },
     PAN: {
-      type: DataTypes.STRING(10), 
+      type: DataTypes.STRING(255), 
       allowNull: false,
     },
     AadharNo: {
-      type: DataTypes.STRING(12), 
+      type: DataTypes.STRING(255), 
       allowNull: false,
     },
     Status: {

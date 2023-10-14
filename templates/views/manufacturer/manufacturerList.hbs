@@ -164,8 +164,8 @@
                                 <th scope="col"><input class="form-check-input border-2" type="checkbox" value=""
                                         id="flexCheckDefault"></th> --}}
                                 <th scope="col ">ID</th>
-                                <th scope="col ">Short Description</th>
-                                <th scope="col ">Long Description</th>
+                                <th scope="col ">Manufacturer Name</th>
+                                <th scope="col ">Manufacturer Description</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -192,9 +192,9 @@
         $(document).ready(function () {
 
             const dataTable = $('#manufacturer_table').DataTable({
-                /* language: {
-                    lengthMenu: '<span class="show-label">Show Entries</span> <span class="dataTables_select">MENU</span>'
-                }, */
+                 "language": {
+                    "lengthMenu": "Show _MENU_ Entries"
+                },
                 'processing': true,
                 'serverSide': true,
                 'serverMethod': 'get',

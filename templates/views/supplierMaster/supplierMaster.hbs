@@ -116,6 +116,12 @@
         position: relative !important;
       }
 
+      input::-webkit-inner-spin-button,
+      input::-webkit-outer-spin-button {
+        appearance: none;
+        margin: 0px;
+      }
+
 
       /* Add more mobile-specific styles here */
     }
@@ -169,8 +175,8 @@
         </div>
         <div class="breadcrumdiv">
           <ul class="breadcrumb">
-            <li><a href="#"> Home</a></li>
-            <li><a href="#">Master</a></li>
+            <li><a href="/dashboard"> Home</a></li>
+            <li><a href="/supplierMasterList">Master</a></li>
             <li><a href="#">Supplier Master</a></li>
 
           </ul>
@@ -184,72 +190,93 @@
     </div>
   </div>
   <div>
-    {{#if message}}
-    <div class="alert alert-info">{{message}}</div>
-    {{/if}}
+     {{#if message}}
+      <div class="alert alert-info">{{message}}</div>
+      {{/if}}
 
-    <form id="supplierForm">
-      {{!-- <h1>Order Billing</h1> --}}
+
+    <form id="supplierForm" action="/createSuplierdata" method="post">
+
       <div id="formdata">
         <h4>Supplier Details</h4>
-        <label for="Code" class="label-block">Code:</label>
+
+         <label for="store">Store  <span class="text-danger">*</span></label>
+        <div class="cons" style="position: relative;">
+          <div class="icon-context input-field" style="position: absolute; top:8px;left:10px ">
+            <i class="fa-solid fa-store icons-icons" style="font-size: 15px;"></i>
+          </div>
+
+          <select name="outletId" id="store" class="store-select" style="padding-left: 30px;font-size:14px" required>
+               {{!-- <option value="" disabled selected> Select Store</option> --}}
+            <option value=""> Select Store</option>
+            {{#each store}}
+            <option value='{{outletId}}'>{{storeName}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+
+        <label for="Code" class="label-block">Code :</label>
         <div class="sup-containe" style="position: relative;">
-          <input type="text" id="Code" name="Code" class="sup-int" placeholder="Enter Supplier Code" required>
+          <input type="text" id="Code" name="Code" class="sup-int" placeholder="Enter Supplier Code" />
           <div class="sup-icon" style="position:absolute; left:10px;top:15%">
             <i style='font-size:12px' class='fas'>&#xf121;</i>
           </div>
         </div>
+    
+        
 
-
-
-        <label for="Name" class="label-block">Name:</label>
-        <input type="text" id="Name" name="Name" placeholder="&#128100; Enter Name" required pattern="[A-Za-z ]+"
-          title="Please enter only letters">
+        <label for="Name" class="label-block">Name <span class="text-danger">*</span> :</label>
+        <input type="text" id="Name" name="Name" placeholder="&#128100; Enter Supplier Name" required 
+          title="Please enter only letters"/>
 
         <label for="ContactPersonName" class="label-block">Contact Person Name:</label>
         <input type="text" id="ContactPersonName" name="ContactPersonName" placeholder="&#128100; Enter Contact Person"
-          pattern="[A-Za-z ]+" title="Please enter only letters" required>
+          pattern="[A-Za-z ]+" title="Please enter only letters" />
 
 
 
 
-        <label for="ContactNo">Contact No:</label>
+        <label for="ContactNo">Contact No <span class="text-danger">*</span> :</label>
         <input type="number" id="ContactNo" name="ContactNo" placeholder="&#x260E; Enter Contact Number" required
-          maxlength="10" title="Please enter a 10-digit phone number">
+          maxlength="20" title="Please enter a 10-digit phone number"
+          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
 
         <label for="AadharNo">Aadhar No:</label>
         <input type="number" id="AadharNo" name="AadharNo" placeholder="&#9751;  Enter Aadhar Number"
-          minlength="10" maxlength="12" title="Please enter a 12-digit Aadhar Number">
+          title="Please enter a 12-digit Aadhar Number" maxlength="12"
+          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+
 
 
 
         <label for="Pincode">Pincode:</label>
-        <input type="number" id="Pincode" name="Pincode" placeholder="&#9951;  Enter Pincode"  maxlength="6"
-          title="Please enter a 6-digit Pin Code Number">
+        <input type="number" id="Pincode" name="Pincode" placeholder="&#9951;  Enter Pincode" maxlength="6"
+          title="Please enter a 6-digit Pin Code Number"
+          oninput="javascript : if(this.value > this.maxLength) this.value = this.value.slice(0,this.maxLength)" />
 
 
 
 
-        <label for="Email">Email:</label>
-        <input type="email" id="Email" name="Email" placeholder="&#x2709;  Enter Email" required>
+        <label for="Email">Email <span class="text-danger">*</span> :</label>
+        <input type="email" id="Email" name="Email" placeholder="&#x2709;  Enter Email" required />
 
         <label for="GSTNo">GST No:</label>
-        <input type="text" id="GSTNo" name="GSTNo" placeholder="&#9951; Enter GST No." 
-          oninput="convertToUpperCase(this)" minlength="15" maxlength="15" title="Please enter a 15-digit GST Number">
+        <input type="text" id="GSTNo" name="GSTNo" placeholder="&#9951; Enter GST No."
+          oninput="convertToUpperCase(this)" minlength="15" maxlength="15" title="Please enter a 15-digit GST Number" />
 
 
 
         <label for="PAN">PAN:</label>
-        <input type="text" id="PAN" name="PAN" placeholder="&#9751; Enter PAN" 
-          oninput="convertToUpperCase(this)" minlength="10" maxlength="10" title="Please enter a 10-digit PAN Number">
+        <input type="text" id="PAN" name="PAN" placeholder="&#9751; Enter PAN" oninput="convertToUpperCase(this)"
+          minlength="10" maxlength="10" title="Please enter a 10-digit PAN Number" />
 
 
         <label for="CreditLimit">Credit Limit:</label>
-        <input type="number" id="CreditLimit" name="CreditLimit" placeholder="Enter Credit Limit" step="0.01" 
-          min="0">
+        <input type="number" id="CreditLimit" name="CreditLimit" placeholder="Enter Credit Limit" />
 
         <label for="CreditDays">Credit Days:</label>
-        <input type="number" id="CreditDays" name="CreditDays" placeholder="Enter Credit Days"  min="0">
+        <input type="number" id="CreditDays" name="CreditDays" placeholder="Enter Credit Days" />
 
 
         <label for="Status" class="label-block">Status:</label>
@@ -260,7 +287,7 @@
 
         <label for="Address">Address:</label>
         <div>
-          <textarea id="Address" name="Address" rows="4" placeholder="Enter Address" cols="72" 
+          <textarea id="Address" name="Address" rows="4" placeholder="Enter Address" cols="72"
             style="width: 100%;"></textarea><br><br>
         </div>
       </div>
@@ -282,129 +309,71 @@
 
 </body>
 <script>
-  document.getElementById("supplierForm").addEventListener("submit", function () {
-    //e.preventDefault();
-
-    // Collect form data
-    const formData = {
-      Code: document.getElementById("Code").value,
-      Name: document.getElementById("Name").value,
-      ContactPersonName: document.getElementById("ContactPersonName").value,
-      ContactNo: document.getElementById("ContactNo").value,
-      Email: document.getElementById("Email").value,
-      Address: document.getElementById("Address").value,
-      Pincode: document.getElementById("Pincode").value,
-      GSTNo: document.getElementById("GSTNo").value,
-      PAN: document.getElementById("PAN").value,
-      AadharNo: document.getElementById("AadharNo").value,
-      CreditLimit: parseFloat(document.getElementById("CreditLimit").value || 0), // Set default value to 0
-      CreditDays: parseInt(document.getElementById("CreditDays").value || 0), // Set default value to 0
-      Status: document.getElementById("Status").value,
-    };
-    // Display zero if the user hasn't entered any value for Credit Limit and Credit Days
-    document.getElementById("CreditLimit").value = formData.CreditLimit;
-    document.getElementById("CreditDays").value = formData.CreditDays;
-
-    // Log form data to the console (you can replace this with your backend submission logic)
-    console.log("Form Data:", formData);
 
 
 
-    fetch('/createSuplierdata', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Data sent:', data);
-
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  });
-
-  /*
-  ////contact,addhar number validation
-   const contactNoInput = document.getElementById('ContactNo');
-    const AadharNoInput = document.getElementById('AadharNo');
-    const GSTNoInput = document.getElementById('GSTNo');
-      const PANNoInput = document.getElementById('PAN');
-      const PinCodeNoInput = document.getElementById('Pincode');
-      
-    
-   
-  
-      contactNoInput.addEventListener('input', () => {
-      const value = contactNoInput.value;
-      const valid = /^[0-9]{0,10}$/.test(value);
-  
-      if (valid || value === '') {
-        contactNoInput.setCustomValidity('');
-      } else {
-        contactNoInput.setCustomValidity('Please enter a maximum of 10 digits for the contact number');
-      }
-    });
-  
-   
-  
-    AadharNoInput.addEventListener('input', () => {
-      const valid = /^[0-9]{12}$/.test(AadharNoInput.value);
-  
-      if (valid) {
-        AadharNoInput.setCustomValidity('');
-      } else {
-        AadharNoInput.setCustomValidity('Please enter a 12-digit Aadhar number');
-      }
-    });
-  
-  PANNoInput.addEventListener('input', () => {
-      const valid = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(PANNoInput.value);
-  
-      if (valid) {
-          PANNoInput.setCustomValidity('');
-      } else {
-          PANNoInput.setCustomValidity('Please enter a valid PAN number (e.g., ABCDE1234F)');
-      }
-  });
-  
-  
-  
-  /*GSTNoInput.addEventListener('input', () => {
-          const valid = GSTNoInput.checkValidity();
-  
-          if (valid) {
-              GSTNoInput.setCustomValidity('');
-          } else {
-              GSTNoInput.setCustomValidity('Please enter a 15-digit GST Number');
-          }
-      });
-  */
-
-  /*
-  GSTNoInput.addEventListener('input', () => {
-      const valid = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9A-Z]{2}[0-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/.test(GSTNoInput.value);
-  
-      if (valid) {
-          GSTNoInput.setCustomValidity('');
-      } else {
-          GSTNoInput.setCustomValidity('Please enter a valid 15-digit GST number (e.g., 22ABCDE1234F1Z5)');
-      }
-  });
-  */
-
-  // to convert the userinput to uppercase
+  document.getElementById("CreditLimit").value = 0;
+  // validation 
+  // Convert into upper case
   function convertToUpperCase(input) {
     input.value = input.value.toUpperCase();
   }
 
-  // Ensure Credit Limit and Credit Days default to 0 on page load
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("CreditLimit").value = 0;
-    document.getElementById("CreditDays").value = 0;
+  // Validation for contact number 
+  const contactNoValidation = document.getElementById('ContactNo');
+  contactNoValidation.addEventListener('input', () => {
+    const contactNoValue = contactNoValidation.value;
+    if (/^[9876]\d{9}$/.test(contactNoValue)) {
+      contactNoValidation.setCustomValidity('');
+    } else {
+      contactNoValidation.setCustomValidity('Please enter a valid 10-digit contact number');
+    }
+  });
+
+
+
+
+  const addhar = document.getElementById('AadharNo');
+
+  addhar.addEventListener('input', function () {
+    const addharval = addhar.value;
+    if (/^[0-9]{12}$/.test(addharval)) {
+      addhar.setCustomValidity("");
+    } else {
+      addhar.setCustomValidity("Please enter a valid 12-digit Aadhar Number");
+    }
+  });
+
+
+
+  // PAN number validation 
+  const panNoValidation = document.getElementById('PAN');
+
+  panNoValidation.addEventListener('input', () => {
+    const validPanNo = /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(panNoValidation.value);
+
+    if (validPanNo) {
+      panNoValidation.setCustomValidity('');
+    } else {
+      panNoValidation.setCustomValidity('Please enter a valid PAN number');
+    }
+  });
+
+
+
+  // GST number validation 
+  const gstNoValidation = document.getElementById('GSTNo');
+
+  gstNoValidation.addEventListener('input', () => {
+    const validGstNo = /^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(gstNoValidation.value);
+
+    if (validGstNo) {
+      gstNoValidation.setCustomValidity('');
+    } else {
+      gstNoValidation.setCustomValidity('Please enter a valid GST number');
+    }
   });
 
 </script>
+
+</html>
