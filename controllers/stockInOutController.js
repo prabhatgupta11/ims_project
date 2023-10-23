@@ -6,7 +6,11 @@ const Order = db.order
 
 
 
+<<<<<<< HEAD
 //  create stock In Details
+=======
+//  create stock In module
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
 
 const addStockIn = async (req, res) => {
     try {
@@ -43,18 +47,31 @@ const addStockIn = async (req, res) => {
             grandTotal
         } = req.body
 
+<<<<<<< HEAD
         // console.log(888888888,req.body)
         // Create an order with customer details
         const order = await Order.create({
             stockType: stockType,
             outletId: outletId,
             referenceNumber: referenceNumber,
+=======
+// console.log(888888888,req.body)
+        // Create an order with customer details
+        const order = await Order.create({
+            outletId: outletId,
+            referenceNumber:referenceNumber,
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
             orderDate: orderDate,
             customerName: name,
             customerMobile: mobileNo,
             customerEmail: email,
+<<<<<<< HEAD
             remarks: remarks,
             totalAmount: grandTotal
+=======
+            remarks : remarks,
+            totalAmount : grandTotal
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
         });
 
         let products = []
@@ -96,6 +113,7 @@ const addStockIn = async (req, res) => {
             itemId: product.itemId,
             stockType: stockType,
             supplierCustomer: product.supplierCustomer,
+<<<<<<< HEAD
             hsnCode: product.hsnCode,
             batchNo: product.batchNo,
             mfgDate: product.mfgDate,
@@ -103,6 +121,15 @@ const addStockIn = async (req, res) => {
             freeQty: product.freeQty,
             qty: product.qty,
             purchasePrice: product.purchasePrice,
+=======
+            hsnCode : product.hsnCode,
+            batchNo : product.batchNo,
+            mfgDate : product.mfgDate,
+            expDate : product.expDate,
+            freeQty : product.freeQty,
+            qty :product.qty,
+            purchasePrice : product.purchasePrice,
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
             discountType: product.discountType,
             discount: product.discount,
             originalPrice: product.originalPrice,
@@ -111,9 +138,15 @@ const addStockIn = async (req, res) => {
             costPriceWithoutTax: product.costPriceWithoutTax,
             taxPercentage: product.taxPercentage,
             taxAmount: product.taxAmount,
+<<<<<<< HEAD
             packingType: product.packing,
             pack: product.pack,
             totalAmount: product.totalAmount
+=======
+            packingType : product.packing,
+            pack : product.pack,
+            totalAmount :product.totalAmount
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
         }));
         // console.log(22222222222,orderItems)
 
@@ -133,12 +166,19 @@ const addStockIn = async (req, res) => {
 // update stock In module
 const updateStockIn = async (req, res) => {
     try {
+<<<<<<< HEAD
 
         // Existing product details
         const orderUpdate = await Order.findOne({ where: { rowguid: req.params.id } });
         const productPrice = await ProductPrice.findAll({ where: { orderFk: orderUpdate.orderId } });
         let pRowguid = []
         pRowguid = productPrice.map(mapping => mapping.rowguid)
+=======
+        // Existing product details
+        const orderUpdate = await Order.findOne({ where: { rowguid: req.params.id } });
+         const productPrice = await ProductPrice.findOne({ where: { orderFk: orderUpdate.orderId } });
+
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
         const {
             stockType,
             referenceNumber,
@@ -170,6 +210,7 @@ const updateStockIn = async (req, res) => {
             totalAmount,
             grandTotal
         } = req.body;
+<<<<<<< HEAD
         // Add pRowguid to the req.body
         req.body.pRowguid = pRowguid;
        
@@ -177,6 +218,12 @@ const updateStockIn = async (req, res) => {
         const order = await Order.update(
             {
                 stockType: stockType,
+=======
+
+        // Create an order with customer details if needed
+        const order = await Order.update(
+            {
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                 outletId: outletId,
                 referenceNumber: referenceNumber,
                 orderDate: orderDate,
@@ -185,7 +232,11 @@ const updateStockIn = async (req, res) => {
                 customerEmail: email,
                 remarks: remarks,
                 totalAmount: grandTotal,
+<<<<<<< HEAD
                 approve_b: 'pending'
+=======
+                approve_b:'pending'
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
             },
             { where: { rowguid: req.params.id } }
         );
@@ -193,11 +244,19 @@ const updateStockIn = async (req, res) => {
         // Create an array to track which products are updated and which are new
         const updatedProducts = [];
         const newProducts = [];
+<<<<<<< HEAD
         
         // Loop through the items (assuming itemId is a unique identifier for each product)
         for (let i = 0; i < itemId.length; i++) {
             const product = {
                 orderFk: orderUpdate.orderId,
+=======
+
+        // Loop through the items (assuming itemId is a unique identifier for each product)
+        for (let i = 0; i < itemId.length; i++) {
+            const product = {
+                orderFk : productPrice.orderFk,
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                 outletId: outletId,
                 stockType: stockType,
                 supplierCustomer: supplierCustomer,
@@ -219,17 +278,28 @@ const updateStockIn = async (req, res) => {
                 taxAmount: taxAmount[i],
                 packing: packing[i],
                 pack: pack[i],
+<<<<<<< HEAD
                 totalAmount: totalAmount[i],
                 rowguid: pRowguid[i] || generateRowguid(),
                 approve_b: 'pending'
+=======
+                totalAmount:totalAmount[i],
+                approve_b:'pending'
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
             };
 
             // Check if the product already exists based on itemId and outletId
             const existingProduct = await ProductPrice.findOne({
+<<<<<<< HEAD
                 where: {rowguid: product.rowguid },
             });
 
 
+=======
+                where: { itemId: product.itemId, outletId: product.outletId },
+            });
+
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
             if (existingProduct) {
                 // If it exists, update the existing record
                 await existingProduct.update(product);
@@ -240,11 +310,15 @@ const updateStockIn = async (req, res) => {
                 newProducts.push(newProduct);
             }
         }
+<<<<<<< HEAD
         // Function to generate a new rowguid
         function generateRowguid() {
             const uuid = require('uuid');
             return uuid.v4();
         }
+=======
+
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
         // Here, you can handle updatedProducts and newProducts as needed
 
         req.flash('message', 'Stock Updated Successfully');
@@ -274,7 +348,11 @@ const stockInApprovalList = async function (req, res) {
         whereClause = { approve_b: "rejected" };
     }
 
+<<<<<<< HEAD
     const stockInOut = await Order.findAll({ where: { ...whereClause, stockType: 'In' } });
+=======
+    const stockInOut = await Order.findAll({ where: whereClause });
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     res.render('approval/stockInApprovalList', { title: 'Express', message: req.flash('message'), stockInOut });
 }
 
@@ -294,11 +372,19 @@ const updateStockInApprovalStatus = async (req, res) => {
                 req.flash('message', 'No approval requests were updated.');
             }
 
+<<<<<<< HEAD
             return res.redirect('/stockInApprovalList');
         } catch (err) {
             console.log(err);
             req.flash('message', 'Something went wrong');
             return res.redirect('/stockInApprovalList');
+=======
+            return res.redirect('/stockInOrderApprovalList');
+        } catch (err) {
+            console.log(err);
+            req.flash('message', 'Something went wrong');
+            return res.redirect('/stockInOrderApprovalList');
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
         }
     }
 
@@ -312,6 +398,7 @@ const updateStockInApprovalStatus = async (req, res) => {
 
             for (const stockInOut of productPrices) {
                 // Check if stockInOut data exists
+<<<<<<< HEAD
                 // const existingStockInOut = await StockInOut.findOne({
                 //     where: {
                 //         itemId: stockInOut.itemId,
@@ -699,6 +786,39 @@ const updateStockOutApprovalStatus = async (req, res) => {
                 });
             }
             // }
+=======
+                const existingStockInOut = await StockInOut.findOne({
+                    where: {
+                        itemId: stockInOut.itemId,
+                        outletId: stockInOut.outletId,
+                    },
+                });
+
+                if (existingStockInOut) {
+                    // Update stockInOut data
+                    await existingStockInOut.update({
+                        type: stockInOut.stockType,
+                        qty: stockInOut.qty,
+                        remarks: order.remarks,
+                        batchNo: stockInOut.batchNo,
+                        expDate: stockInOut.expDate,
+                        productHsnCode: stockInOut.hsnCode,
+                    });
+                } else {
+                    // Create stockInOut data
+                    await StockInOut.create({
+                        itemId: stockInOut.itemId,
+                        outletId: stockInOut.outletId,
+                        type: stockInOut.stockType,
+                        qty: stockInOut.qty,
+                        remarks: order.remarks,
+                        batchNo: stockInOut.batchNo,
+                        expDate: stockInOut.expDate,
+                        productHsnCode: stockInOut.hsnCode,
+                    });
+                }
+            }
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
 
             flashMessages.push(`Checked Id ${orderId} ${action}`);
         }
@@ -759,7 +879,10 @@ const stockInOut = async (req, res) => {
 
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
 // stockInOut approval
 
 const stockInOutApprovalList = async function (req, res) {
@@ -829,6 +952,10 @@ module.exports = {
     stockOutApprovalList,
     updateStockOutApprovalStatus,
     stockInOut,
+    addStockIn,
+    updateStockIn,
+    stockInApprovalList,
+    updateStockInApprovalStatus,
     stockInOutApprovalList,
     updateStockInOutApprovalStatus,
 }

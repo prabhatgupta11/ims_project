@@ -63,7 +63,17 @@ app.use(session({
 
 app.use(flash());
 
-app.use('/', indexRouter);
+app.get("/",(req,res)=>{
+  try{
+    res.send("welcome")
+  }
+  catch(err)
+  {
+    res.send(err.message)
+  }
+})
+
+//app.use('/', indexRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));

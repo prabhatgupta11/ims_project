@@ -163,6 +163,50 @@
             top: 47%;
             color: gray;
         }
+<<<<<<< HEAD
+=======
+        
+        
+         table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+    }
+
+    #product-list tr:last-child td {
+        border-top: 2px solid #ccc;
+    }
+
+    #grand-total {
+        border: none;
+        width: auto;
+        font-weight: bold;
+    }
+
+    #product-table {
+        width: 100%;
+    }
+
+    /* Additional styles for header and grand total row alignment */
+    #product-table thead th, #product-table tfoot th {
+        text-align: center;
+    }
+
+    #product-table tfoot td {
+        text-align: center;
+    }
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     </style>
 </head>
 
@@ -240,7 +284,11 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Reference Number <span
                                             class="text-danger">*</span></label>
+<<<<<<< HEAD
                                     <input type="text" class="form-control input-field-three" id="exampleInputEmail1"
+=======
+                                    <input type="number" class="form-control input-field-three" id="exampleInputEmail1"
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                                         aria-describedby="emailHelp" name="referenceNumber"
                                         placeholder="Enter Reference Number" required>
                                     <div class="icon-context">
@@ -441,9 +489,15 @@
                 </tbody>
 
             </table>
+<<<<<<< HEAD
             <div class="col-12 d-flex justify-content-end align-items-center" style="min-width:180%;display:none">
                 <th class="fw-1">Grand Total</th>
                 <input type="text"   id="grand-total" name="grandTotal" class="px-2 py-1 ml-2 rounded" readonly>
+=======
+            <div class="col-12 d-flex justify-content-end align-items-center" style="min-width:160%;display:none">
+                <th class="fw-1">Grand Total</th>
+                <input type="text"  id="grand-total" name="grandTotal" class="px-2 py-1 ml-2 rounded" readonly>
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
 
             </div>
         </div>
@@ -554,12 +608,17 @@
       <select name="freeQty[]" class="product-select rounded-3 p-1 mx-2">
         <option value="">Select Free Qty</option>
          <option value="Yes">Yes</option>
+<<<<<<< HEAD
           <option value="No">No</option> 
+=======
+          <option value="No">No</option>
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
       </select>
     </td>
     <td><input type="number" name="qty[]" class=" col-md-12  p-1 mx-2"></td>
     <td><input type="number" name="purchasePrice[]" class=" col-md-12  p-1 mx-2 "></td>
     <td class = 'd-none'><input type="text"  name="discountType[]" class="col-md-12  p-1 mx-2" value = "percentage"></td>
+<<<<<<< HEAD
     <td><input type="number" name="discount[]" step='0.01' class=" col-md-12 p-1 mx-2 "></td>
     <td><input type="number" name="originalPrice[]" step='0.01' class=" col-md-12 p-1 mx-2 "></td>
     <td><input type="number" name="mrp[]" class=" col-md-12 p-1 mx-2 "></td> 
@@ -570,6 +629,18 @@
     <td class = 'd-none'><input type="number" name="packing[]" class=" col-md-12 p-1 mx-2 "></td>
     <td class = 'd-none'><input type="number" name="pack[]" class=" col-md-12 p-1 mx-2 "></td>
     <td><input type="number" name="totalAmount[]" step='0.01' class=" col-md-12 p-1 mx-2 "></td>
+=======
+    <td><input type="number" name="discount[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="originalPrice[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="mrp[]" class=" col-md-12 p-1 mx-2 "></td> 
+    <td><input type="number" name="salePrice[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="costPriceWithoutTax[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="taxPercentage[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="taxAmount[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td class = 'd-none'><input type="number" name="packing[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td class = 'd-none'><input type="number" name="pack[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="totalAmount[]" class=" col-md-12 p-1 mx-2 "></td>
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     <td><i class="fa-solid fa-trash delete-row-btn ml-auto"></i></td>
   `;
         tablebody.appendChild(newRow);
@@ -615,6 +686,7 @@
         const discountPercentage = parseFloat(discountPercentageInput.value) || 0;
         const taxPercentage = parseFloat(taxPercentageInput.value) || 0;
 
+<<<<<<< HEAD
     
         const originalPrice = purchasePrice - (purchasePrice * (discountPercentage / 100));
         const taxAmount = originalPrice * (taxPercentage / 100);
@@ -624,6 +696,22 @@
         originalPriceInput.value = parseFloat(originalPrice.toFixed(2)) // Format to two decimal places
         taxAmountInput.value = parseFloat(taxAmount.toFixed(2))
         totalAmountInput.value = parseFloat(totalAmount.toFixed(2))
+=======
+        console.log(11, taxPercentage)
+        // Calculate Original Price
+        const originalPrice = purchasePrice - (purchasePrice * (discountPercentage / 100));
+        console.log(12, originalPrice)
+        const taxAmount = originalPrice * (taxPercentage / 100);
+        console.log(13, taxAmount)
+
+        const totalAmount = quantity * (taxAmount + originalPrice)
+
+        console.log(14, totalAmount)
+        // Update the Original Price field,tax amount field and total amount field with the calculated value
+        originalPriceInput.value = originalPrice.toFixed(2); // Format to two decimal places
+        taxAmountInput.value = taxAmount.toFixed(2)
+        totalAmountInput.value = totalAmount.toFixed(2)
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
         updateGrandTotal();
     }
 
@@ -631,13 +719,20 @@
         let rows = tablebody.querySelectorAll("tr");
         let total = 0;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
         rows.forEach(row => {
             const totalAmountInput = row.querySelector('input[name="totalAmount[]"]');
             const totalAmount = parseFloat(totalAmountInput.value) || 0;
             total += totalAmount;
         });
+<<<<<<< HEAD
         grandTotal.value = total; // Update the grand total in your HTML
+=======
+        grandTotal.value = total.toFixed(2); // Update the grand total in your HTML
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     }
 
     function removeRow(row) {

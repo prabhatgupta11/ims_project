@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement : true
         },
+<<<<<<< HEAD
         stockType : {
             type : DataTypes.STRING(10)
         },
@@ -17,6 +18,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         orderDate: {
             type: DataTypes.STRING,
+=======
+        outletId : {
+            type : DataTypes.STRING(250)
+        },
+        orderDate: {
+            type: DataTypes.STRING(250),
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
         },
         referenceNumber : {
             type : DataTypes.STRING(250)

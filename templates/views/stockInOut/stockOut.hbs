@@ -375,9 +375,12 @@
                                 <th>Batch No</th>
                             </div>
                             <div class="col-md-2">
+<<<<<<< HEAD
                                 <th>Available Stock Quantiy</th>
                             </div>
                             <div class="col-md-2">
+=======
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                                 <th>HSN Code</th>
                             </div>
 
@@ -522,19 +525,31 @@
 
         newRow.innerHTML = `
             <td class="px-0" style="width:20%">
+<<<<<<< HEAD
                 <select name="itemId[]" id='productDropdown' class="product-select rounded-3 p-1 mx-2" >
+=======
+                <select name="itemId" id='productDropdown' class="product-select rounded-3 p-1 mx-2" onchange="populateProductDetails(this)">
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                     <option value="">Select Product</option>
                     <!-- Dynamically populates -->
                 </select>
             </td>
              <td class="px-0" style="width:20%">
+<<<<<<< HEAD
                 <select name="batchNo[]" id='batchDropdown' class="product-select rounded-3 p-1 mx-2" onchange="populateProductDetails(this)">
+=======
+                <select name="batchNo" id='batchDropdown' class="product-select rounded-3 p-1 mx-2">
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                     <option value="">Select Batch No</option>
                     <!-- Dynamically populates -->
                 </select>
             </td>
+<<<<<<< HEAD
             <td><input type="text" id ='stockQuantity' name="stockQuantity" class="col-md-12 p-1 mx-2"></td>
             <td><input type="text" name="hsnCode[]" class="col-md-12 p-1 mx-2"></td>
+=======
+            <td><input type="number" name="hsnCode[]" class="col-md-12 p-1 mx-2"></td>
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
 
            
     <td><input type="date" name="mfgDate[]" class=" col-md-12 p-1 mx-2"></td>
@@ -564,11 +579,19 @@
         tablebody.appendChild(newRow);
         removeRow(newRow);
 
+<<<<<<< HEAD
         const productDropdown = $(newRow).find('select[name="itemId[]"]');
         populateProducts(productDropdown);
         productDropdown.change(function () {
             const itemId = $(this).val();
             const batchDropdown = $(this).closest('tr').find('select[name="batchNo[]"]');
+=======
+        const productDropdown = $(newRow).find('select[name="itemId"]');
+        populateProducts(productDropdown);
+        productDropdown.change(function () {
+            const itemId = $(this).val();
+            const batchDropdown = $(this).closest('tr').find('select[name="batchNo"]');
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
             // Clear and populate the batchDropdown based on the selected itemId
             populateBatchNo(itemId, batchDropdown);
         });
@@ -596,7 +619,11 @@
         updateGrandTotal();
     });
 
+<<<<<<< HEAD
     // Calculation for original price, tax amount, total amount and grand total
+=======
+// Calculation for original price, tax amount, total amount and grand total
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     function updateOriginalPrice() {
         // Get the input fields for Quantity, Purchase Price, Discount Percentage, and Original Price
         const quantityInput = this.querySelector('input[name="qty[]"]');
@@ -630,7 +657,11 @@
         updateGrandTotal();
     }
 
+<<<<<<< HEAD
     // Grand Total Calculation 
+=======
+// Grand Total Calculation 
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     function updateGrandTotal() {
         let rows = tablebody.querySelectorAll("tr");
         let total = 0;
@@ -643,7 +674,11 @@
         grandTotal.value = total.toFixed(2); // Update the grand total in your HTML
     }
 
+<<<<<<< HEAD
     // function to remove row
+=======
+// function to remove row
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     function removeRow(row) {
         const deleteBtn = row.querySelector(".delete-row-btn");
         deleteBtn.addEventListener("click", function () {
@@ -651,7 +686,11 @@
         });
     }
 
+<<<<<<< HEAD
     // function to populate ptoduct based on selected store
+=======
+// function to populate ptoduct based on selected store
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     function populateProducts(productDropdown) {
         let outletId = $('#storeDropdown').val();
 
@@ -661,12 +700,20 @@
 
         $.get(`/products/${outletId}`, function (products) {
             products.forEach(function (product) {
+<<<<<<< HEAD
                 productDropdown.append(`<option value="${product.itemId}">${product.itemName}</option>  `);
+=======
+                productDropdown.append(`<option value="${product.itemId}">${product.itemName}</option>`);
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
             });
         });
     }
 
+<<<<<<< HEAD
     //function to populate batch no based on selected itemId
+=======
+//function to populate batch no based on selected itemId
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     function populateBatchNo(itemId, batchDropdown) {
         let outletId = $('#storeDropdown').val();
         // const batchDropdown = $('#batchDropdown');
@@ -694,7 +741,11 @@
     function populateProductDetails(selectElement, itemId, batchNo) {
 
         const productName = selectElement.options[selectElement.selectedIndex].text;
+<<<<<<< HEAD
 
+=======
+console.log(productName)
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
         fetch(`/getProductDetails/${itemId}/${batchNo}`)
             .then(response => response.json())
             .then(data => {
@@ -721,6 +772,7 @@
                 row.querySelector('input[name="packing[]"]').value = data[0].packing;
                 row.querySelector('input[name="pack[]"]').value = data[0].pack;
 
+<<<<<<< HEAD
                 // Attach event listeners for Quantity, Purchase Price, and Discount Percentage
                 const quantityInput = row.querySelector('input[name="qty[]"]');
                 const purchasePriceInput = row.querySelector('input[name="purchasePrice[]"]');
@@ -771,6 +823,8 @@
                         console.error("Error fetching stock quantity:", error);
                     });
 
+=======
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
             })
             .catch(error => {
                 console.error("Error fetching product details:", error);

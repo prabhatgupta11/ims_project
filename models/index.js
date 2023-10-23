@@ -59,10 +59,16 @@ db.store.belongsToMany(db.user, { through: db.userStoreMapping, foreignKey: 'sto
 db.store.belongsToMany(db.codeMaster, { through: db.storeCategoryMapping, foreignKey: 'storeFk', as: 'selectedCategories' });
 db.codeMaster.belongsToMany(db.store, { through: db.storeCategoryMapping, foreignKey: 'categoryFk' });
 
+<<<<<<< HEAD
 // db.productPrice.belongsTo(db.newProduct, { sourceKey: "itemId", foreignKey: "itemId" });
 // db.productPrice.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
  db.order.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
  db.stockInOut.belongsTo(db.newProduct, { sourceKey: "itemId", foreignKey: "itemId" });
+=======
+db.productPrice.belongsTo(db.newProduct, { sourceKey: "itemId", foreignKey: "itemId" });
+db.productPrice.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
+db.order.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
 
 db.sequelize.sync({ force: false })
    .then(() => {

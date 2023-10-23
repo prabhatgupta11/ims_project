@@ -240,8 +240,13 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Reference Number <span
                                             class="text-danger">*</span></label>
+<<<<<<< HEAD
                                     <input type="text" class="form-control input-field-three" id="exampleInputEmail1"
                                         aria-describedby="emailHelp" value="{{order.referenceNumber}}" 
+=======
+                                    <input type="number" class="form-control input-field-three" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{order.referenceNumber}}"
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                                         name="referenceNumber" placeholder="Enter Reference Number" required>
                                     <div class="icon-context">
                                         <i class="fa-solid fa-id-card icons-short" style="left: 4%;"></i>
@@ -563,6 +568,7 @@
     <td><input type="number" name="qty[]" class=" col-md-12  p-1 mx-2"></td>
     <td><input type="number" name="purchasePrice[]" class=" col-md-12  p-1 mx-2 "></td>
     <td class = 'd-none'><input type="text"  name="discountType[]" class="col-md-12  p-1 mx-2" value = "percentage"></td>
+<<<<<<< HEAD
     <td><input type="number" name="discount[]" step='0.01' class=" col-md-12 p-1 mx-2 "></td>
     <td><input type="number" name="originalPrice[]" step='0.01' class=" col-md-12 p-1 mx-2 "></td>
     <td><input type="number" name="mrp[]" class=" col-md-12 p-1 mx-2 "></td> 
@@ -573,6 +579,18 @@
     <td class = 'd-none'><input type="number" name="packing[]" class=" col-md-12 p-1 mx-2 "></td>
     <td class = 'd-none'><input type="number" name="pack[]" class=" col-md-12 p-1 mx-2 "></td>
     <td><input type="number" name="totalAmount[]" step='0.01' class=" col-md-12 p-1 mx-2 "></td>
+=======
+    <td><input type="number" name="discount[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="originalPrice[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="mrp[]" class=" col-md-12 p-1 mx-2 "></td> 
+    <td><input type="number" name="salePrice[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="costPriceWithoutTax[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="taxPercentage[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="taxAmount[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td class = 'd-none'><input type="number" name="packing[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td class = 'd-none'><input type="number" name="pack[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="totalAmount[]" class=" col-md-12 p-1 mx-2 "></td>
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     <td><i class="fa-solid fa-trash delete-row-btn ml-auto"></i></td>
   `;
 
@@ -657,7 +675,11 @@
         {{/each}}
       </select>
     </td>
+<<<<<<< HEAD
     <td><input type="text" name="hsnCode[]" class="col-md-12 p-1 mx-2" value="${existingData.hsnCode}"></td>
+=======
+    <td><input type="number" name="hsnCode[]" class="col-md-12 p-1 mx-2" value="${existingData.hsnCode}"></td>
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     <td><input type="text" name="batchNo[]" class=" col-md-12 p-1 mx-2" value="${existingData.batchNo}"></td>
     <td><input type="date" name="mfgDate[]" class=" col-md-12 p-1 mx-2" value="${existingData.mfgDate}"></td>
     <td><input type="date" name="expDate[]" class="col-md-12 p-1 mx-2" value="${existingData.expDate}"></td>
@@ -671,6 +693,7 @@
     <td><input type="number" name="qty[]" class=" col-md-12  p-1 mx-2" value="${existingData.qty}"></td>
     <td><input type="number" name="purchasePrice[]" class=" col-md-12  p-1 mx-2" value="${existingData.purchasePrice}"></td>
     <td class = 'd-none'><input type="text"  name="discountType[]" class="col-md-12  p-1 mx-2" value = "percentage" value="${existingData.discountType}"></td>
+<<<<<<< HEAD
     <td><input type="number" name="discount[]" step='0.01' class=" col-md-12 p-1 mx-2" value="${existingData.discount}"></td>
     <td><input type="number" name="originalPrice[]" step='0.01' class=" col-md-12 p-1 mx-2 " value="${existingData.originalPrice}"></td>
     <td><input type="number" name="mrp[]" class=" col-md-12 p-1 mx-2 " value="${existingData.mrp}"></td> 
@@ -681,6 +704,18 @@
     <td class = 'd-none'><input type="number" name="packing[]" class=" col-md-12 p-1 mx-2 " value="${existingData.packing}"></td>
     <td class = 'd-none'><input type="number" name="pack[]" class=" col-md-12 p-1 mx-2 " value="${existingData.pack}"></td>
     <td><input type="number" name="totalAmount[]" step='0.01' class=" col-md-12 p-1 mx-2 " value="${existingData.totalAmount}"></td>
+=======
+    <td><input type="number" name="discount[]" class=" col-md-12 p-1 mx-2" value="${existingData.discount}"></td>
+    <td><input type="number" name="originalPrice[]" class=" col-md-12 p-1 mx-2 " value="${existingData.originalPrice}"></td>
+    <td><input type="number" name="mrp[]" class=" col-md-12 p-1 mx-2 " value="${existingData.mrp}"></td> 
+    <td><input type="number" name="salePrice[]" class=" col-md-12 p-1 mx-2 " value="${existingData.salePrice}"></td>
+    <td><input type="number" name="costPriceWithoutTax[]" class=" col-md-12 p-1 mx-2 " value="${existingData.costPriceWithoutTax}"></td>
+    <td><input type="number" name="taxPercentage[]" class=" col-md-12 p-1 mx-2 " value="${existingData.taxPercentage}"></td>
+    <td><input type="number" name="taxAmount[]" class=" col-md-12 p-1 mx-2 " value="${existingData.taxAmount}"></td>
+    <td class = 'd-none'><input type="number" name="packing[]" class=" col-md-12 p-1 mx-2 " value="${existingData.packing}"></td>
+    <td class = 'd-none'><input type="number" name="pack[]" class=" col-md-12 p-1 mx-2 " value="${existingData.pack}"></td>
+    <td><input type="number" name="totalAmount[]" class=" col-md-12 p-1 mx-2 " value="${existingData.totalAmount}"></td>
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     <td><i class="fa-solid fa-trash delete-row-btn ml-auto"></i></td>
   `;
 

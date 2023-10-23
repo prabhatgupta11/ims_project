@@ -4,7 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Document</title>
+=======
+    <title>StockOut List</title>
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
     <link rel="stylesheet" href="css/newStyle.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -170,12 +174,17 @@
 
             <div class="container-table pt-2 p-0 mt-4 table-responsive">
                 <form style="overflow: hidden;">
+<<<<<<< HEAD
                     <table class="table table-custom " id="order_table">
+=======
+                    <table class="table table-custom " id="stockIn_table">
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                         <thead>
                             <tr>
                                 {{!-- <th scope="col"><i class="fa-regular fa-square-check"></i></th>
                                 <th scope="col"><input class="form-check-input border-2" type="checkbox" value=""
                                         id="flexCheckDefault"></th> --}}
+<<<<<<< HEAD
                                 {{!-- <th scope="col ">ID</th> --}}
                                 <th scope="col ">OrderId</th>
                                 <th scope="col ">Store Name</th>
@@ -183,6 +192,15 @@
                                 {{!-- <th scope="col ">Stock Qty</th> --}}
                                 {{!-- <th scope="col ">Sale Price</th> --}}
                                 <th scope="col ">Order Amount</th>
+=======
+                                <th scope="col ">ID</th>
+                                <th scope="col ">OrderId</th>
+                                <th scope="col ">Store Name</th>
+                                <th scope="col ">Item Name</th>
+                                <th scope="col ">Stock Qty</th>
+                                <th scope="col ">Sale Price</th>
+                                <th scope="col ">MRP</th>
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -218,7 +236,11 @@
     <script>
         $(document).ready(function () {
 
+<<<<<<< HEAD
             const dataTable = $('#order_table').DataTable({
+=======
+            const dataTable = $('#stockIn_table').DataTable({
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                 "language": {
                     "lengthMenu": "Show _MENU_ Entries"
                 },
@@ -231,6 +253,7 @@
                 },
                 'aaSorting': [],
                 'columns': [
+<<<<<<< HEAD
                   //  { data: 'id' },
                     { data: 'orderId' },
                     { data: 'storeName' },
@@ -238,6 +261,15 @@
                     { data: 'totalAmount' },
                   //  { data: 'salePrice' },
                   //  { data: 'mrp' },
+=======
+                    { data: 'id' },
+                    { data: 'orderFk' },
+                    { data: 'storeName' },
+                    { data: 'itemName' },
+                    { data: 'qty' },
+                    { data: 'salePrice' },
+                    { data: 'mrp' },
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                  //   {
                        // data: "rowguid",
                        // 'render': function (data, type, row) {
@@ -246,6 +278,7 @@
                       {
                         data: "rowguid",
                         render: function (data, type, row) {
+<<<<<<< HEAD
                            // if (row.approve_b === 'approved') {
                               // return "<a href='/stockOutView/" + data + "'>View</a>";
                            // } else {
@@ -253,6 +286,18 @@
                            // }
                         }
                    }
+=======
+                            console.log("row.approve_b:", row.approve_b);
+
+                            if (row.approve_b === 'approved') {
+                                return "<a href='/stockInView/" + data + "'>View</a>";
+                            } else {
+                                return "<a href='/stockOutUpdate/" + data + "' class='edit-link'>Edit</a>";
+                            }
+                        }
+                //    }
+                    }
+>>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
                 ]
 
         });

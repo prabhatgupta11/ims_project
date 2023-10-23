@@ -1108,6 +1108,319 @@ router.get('/stockOutView/:id', async function (req, res) {
     res.render('stockInOut/stockOutView', { title: 'Express', message: req.flash('message'), productPrice,previousStore,order, previousCustomer,store, product });
   });
 
+// Stock In Api
+
+router.get('/stockIn', async function (req, res) {
+//   const userId = req.session.userDetail.id
+//   const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+//   let userStores = []
+//   userStores = userStoreMapping.map(mapping => mapping.storeFk)
+//   const store = await Store.findAll({where : {outletId : userStores}})
+//  let storeIds = []
+//  storeIds = store.map(mapping => mapping.outletId)
+const store = await Store.findAll()
+  const product = await NewProduct.findAll()
+  // const supplier = await SupplierMaster.findAll({where : {storeFk : storeIds}})
+  res.render('stockInOut/stockIn', { title: 'Express', message: req.flash('message'), store, product });
+});
+
+// store wise all supplier populate into supplier dropdown
+router.get('/suppliers/:outletId', async function (req,res) {
+  const outletId = req.params.outletId
+  const suppliers = await SupplierMaster.findAll({where : {storeFk : outletId}})
+  res.json(suppliers)
+})
+
+// populate the supplier detail into stock In
+router.get('/allSuppliers/:supplierId', async function (req,res) {
+  const supplierId = req.params.supplierId
+  const suppliers = await SupplierMaster.findAll({where : {id : supplierId}})
+  res.json(suppliers)
+})
+
+// stock In post api
+router.post('/createStockIn', stockInOutController.addStockIn)
+
+
+// Stock In order wise Approval List
+
+router.get('/stockInApprovalList', stockInOutController.stockInApprovalList);
+
+router.post('/updateStockInApprovalStatus', stockInOutController.updateStockInApprovalStatus)
+
+
+
+// stock In list Order wise
+
+router.get('/stockInList',async function (req, res) {
+  res.render('stockInOut/stockInList', { title: 'Express', message: req.flash('message') });
+});
+
+router.get('/stockInListData',async function (req, res) {
+  let draw = req.query.draw;
+  console.log(1234)
+  let start = parseInt(req.query.start);
+  let length = parseInt(req.query.length);
+  let where = {}; // Define the where object for filtering
+
+  if (req.query.search.value) {
+    where[Op.or] = [
+      { '$new_product.itemName$': { [Op.like]: `%${req.query.search.value}%` } },
+      { '$store_master.storeName$': { [Op.like]: `%${req.query.search.value}%` } },
+    ];
+  }
+
+  const order = await Order.findAll({
+    where: {
+      ...where, // Your initial where conditions, I assume
+      approve_b: ["approved", "pending"]
+    },
+     include: [
+    //   // {
+    //   //   model: NewProduct,
+    //   //    attributes:['itemName']
+    //   // },
+      {
+        model: Store,
+         attributes:['storeName']
+      },
+    ],
+    limit: length,
+    offset: start,
+    // where: where, // Apply the filtering
+  });
+
+  const count = await Order.count();
+
+  let data_arr = [];
+  for (let i = 0; i < order.length; i++) {
+    data_arr.push({
+        storeName: order[i].store_master.storeName,
+      orderId: order[i].orderId,
+      customerName: order[i].customerName,
+      totalAmount: order[i].totalAmount,
+      rowguid:order[i].rowguid,
+      approve_b : order[i].approve_b
+    });
+  }
+
+  let output = {
+    draw: draw,
+    iTotalRecords: count,
+    iTotalDisplayRecords: count,
+    aaData: data_arr,
+  };
+
+  res.json(output);
+});
+
+
+// stock In order update module
+
+router.get('/stockInUpdate/:id', async function (req, res) {
+  const orderId = req.params.id
+  const order = await Order.findOne({where : {rowguid : orderId}})
+ 
+  const productPrice = await ProductPrice.findOne({where : {orderFk : order.orderId}})
+  // const previousOrder = await Order.findOne({where : {orderId:productPrice.orderFk}})
+  const previousStore = await Store.findOne({where : {outletId : order.outletId}})
+  const previousSupplier = await SupplierMaster.findOne({where : {Email : order.customerEmail}})
+  //   const userId = req.session.userDetail.id
+  //   const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+  //   let userStores = []
+  //   userStores = userStoreMapping.map(mapping => mapping.storeFk)
+  //   const store = await Store.findAll({where : {outletId : userStores}})
+  //  let storeIds = []
+  //  storeIds = store.map(mapping => mapping.outletId)
+  const store = await Store.findAll()
+    const product = await NewProduct.findAll()
+    // const supplier = await SupplierMaster.findAll({where : {storeFk : storeIds}})
+    res.render('stockInOut/updateStockIn', { title: 'Express', message: req.flash('message'), productPrice,previousStore,order, previousSupplier,store, product });
+  });
+
+  // only view data in stock in order
+  router.get('/stockInView/:id', async function (req, res) {
+    const orderId = req.params.id
+    const order = await Order.findOne({where : {rowguid : orderId}})
+   
+    const productPrice = await ProductPrice.findOne({where : {orderFk : order.orderId}})
+    // const previousOrder = await Order.findOne({where : {orderId:productPrice.orderFk}})
+    const previousStore = await Store.findOne({where : {outletId : order.outletId}})
+    const previousSupplier = await SupplierMaster.findOne({where : {Email : order.customerEmail}})
+    //   const userId = req.session.userDetail.id
+    //   const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+    //   let userStores = []
+    //   userStores = userStoreMapping.map(mapping => mapping.storeFk)
+    //   const store = await Store.findAll({where : {outletId : userStores}})
+    //  let storeIds = []
+    //  storeIds = store.map(mapping => mapping.outletId)
+    const store = await Store.findAll()
+      const product = await NewProduct.findAll()
+      // const supplier = await SupplierMaster.findAll({where : {storeFk : storeIds}})
+      res.render('stockInOut/stockInView', { title: 'Express', message: req.flash('message'), productPrice,previousStore,order, previousSupplier,store, product });
+    });
+
+ // populate the multiplae product details into stockInUpdate module
+router.get('/existingProductDetails/:productId', async function (req,res) {
+  const itemId = req.params.productId
+  const products = await ProductPrice.findAll({where : {orderFk : itemId}})
+  res.json(products)
+})
+
+// existing productName in stokInUpdate module
+router.get('/existingProductName/:productId', async function (req,res) {
+  const itemId = req.params.productId
+  const products = await NewProduct.findOne({where : {itemId : itemId}})
+  res.json(products)
+})
+
+// router.post('/updateStockIn/:id', stockInOutController.updateStockIn)
+router.post('/updateStockIn/:id', stockInOutController.updateStockIn)
+
+//=================================================== Stock Out Api ===================================
+
+router.get('/stockOut', async function (req, res) {
+
+  const store = await Store.findAll()
+  // const product = await NewProduct.findAll()
+  const customer = await CustomerMaster.findAll()
+  res.render('stockInOut/stockOut', { title: 'Express', message: req.flash('message'), store,customer });
+});
+
+
+
+// stock Out Listing Module
+
+router.get('/stockOutList',async function (req, res) {
+  res.render('stockInOut/stockOutList', { title: 'Express', message: req.flash('message') });
+});
+
+
+
+router.get('/stockOutListData',async function (req, res) {
+  let draw = req.query.draw;
+  let start = parseInt(req.query.start);
+  let length = parseInt(req.query.length);
+  let where = {}; // Define the where object for filtering
+
+  if (req.query.search.value) {
+    where[Op.or] = [
+      { '$new_product.itemName$': { [Op.like]: `%${req.query.search.value}%` } },
+      { '$store_master.storeName$': { [Op.like]: `%${req.query.search.value}%` } },
+    ];
+  }
+
+  const productPrice = await ProductPrice.findAll({
+    where: {
+      ...where, // Your initial where conditions, I assume
+      approve_b: ["approved", "pending"]
+    },
+    include: [
+      {
+        model: NewProduct,
+         attributes:['itemName']
+      },
+      {
+        model: Store,
+         attributes:['storeName']
+      },
+    ],
+    limit: length,
+    offset: start,
+    // where: where, // Apply the filtering
+  });
+
+  const count = await ProductPrice.count();
+  console.log(7851,count)
+
+  let data_arr = [];
+  for (let i = 0; i < productPrice.length; i++) {
+    data_arr.push({
+       itemName: productPrice[i].new_product.itemName,
+       storeName: productPrice[i].store_master.storeName,
+      id: productPrice[i].id,
+      orderFk: productPrice[i].orderFk,
+      outletId: productPrice[i].outletId,
+      itemId: productPrice[i].itemId,
+      qty: productPrice[i].qty,
+      salePrice: productPrice[i].salePrice,
+      mrp: productPrice[i].mrp,
+      rowguid:productPrice[i].rowguid,
+      approve_b : productPrice[i].approve_b
+    });
+  }
+
+  let output = {
+    draw: draw,
+    iTotalRecords: count,
+    iTotalDisplayRecords: count,
+    aaData: data_arr,
+  };
+
+  res.json(output);
+});
+
+
+
+// stock Out update module
+
+router.get('/stockOutUpdate/:id', async function (req, res) {
+  const stockId = req.params.id
+  const productPrice = await ProductPrice.findOne({where : {rowguid : stockId}})
+  const previousOrder = await Order.findOne({where : {orderId:productPrice.orderFk}})
+  const previousStore = await Store.findOne({where : {outletId : productPrice.outletId}})
+  const previousSupplier = await SupplierMaster.findOne({where : {id : productPrice.supplierCustomer}})
+
+  //   const userId = req.session.userDetail.id
+  //   const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+  //   let userStores = []
+  //   userStores = userStoreMapping.map(mapping => mapping.storeFk)
+  //   const store = await Store.findAll({where : {outletId : userStores}})
+  //  let storeIds = []
+  //  storeIds = store.map(mapping => mapping.outletId)
+  const store = await Store.findAll()
+    const product = await NewProduct.findAll()
+    // const supplier = await SupplierMaster.findAll({where : {storeFk : storeIds}})
+    res.render('stockInOut/updateStockIn', { title: 'Express', message: req.flash('message'), productPrice, previousOrder,previousStore, previousSupplier,store, product });
+  });
+
+//========================================================================================================
+// populate the customer details into stockOut module
+router.get('/allCustomer/:customerId', async function (req,res) {
+  const customerId = req.params.customerId
+  const customers = await CustomerMaster.findAll({where : {id : customerId}})
+  res.json(customers)
+})
+
+// store based all products
+router.get('/products/:outletId', async function (req,res) {
+  const allProducts = await ProductPrice.findAll({where : {outletId : req.params.outletId}})
+  let products = []
+   products = allProducts.map(mapping => mapping.itemId)
+ allStoreProducts = await NewProduct.findAll({where : {itemId : products}})
+  res.json(allStoreProducts)
+})
+
+// batchNO based all products selected for stockLedger
+router.get('/allBatchNo/:ItemIdbasedONProductDropDown/:outletId', async function (req,res) {
+  //console.log(11 ,req.params.outletId,req.params.ItemIdbasedONProductDropDown)
+  const allBatchNo = await StockInOut.findAll({where : {outletId : req.params.outletId,itemId : req.params.ItemIdbasedONProductDropDown}})
+//   let products = []
+//    products = allProducts.map(mapping => mapping.itemId)
+//  allStoreProducts = await NewProduct.findAll({where : {itemId : products}})
+  res.json(allBatchNo)
+})
+
+
+// populate the product details into stockOut module
+router.get('/getProductDetails/:itemId/:batchNo', async function (req,res) {
+ //console.log(55588,req.params.itemId,req.params.batchNo)
+  const productDetails = await ProductPrice.findAll({where : {itemId : req.params.itemId,batchNo : req.params.batchNo}})
+
+  res.json(productDetails)
+})
+
+
 // Manufacturer Master Api
 
 router.get('/manufacturer',function (req, res) {
