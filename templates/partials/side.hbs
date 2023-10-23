@@ -50,72 +50,94 @@
                 <div class="nav_list" id="dashboard-submenu">
                     <a style="font-size: small;" href="/userList" class="nav_link">
                         <i class="fa-solid fa-users"></i>
-                        <span class="nav_name">User List </span>
-                    </a>
-                    <a style="font-size: small;" href="/uploadBulkProducts" class="nav_link">
-                        <i class="fa-solid fa-upload"></i>
-                        <span class="nav_name">Upload Products</span>
-                    </a>
-                    <a style="font-size: small;" href="/productMasterList" class="nav_link">
-                        <i class="fa-solid fa-list"></i>
-                        <span class="nav_name">Product Master List</span>
-                    </a>
-                    <a style="font-size: small;" href="/productDetailsList" class="nav_link">
-                        <i class="fa-solid fa-list"></i>
-                        <span class="nav_name">Product Detail List</span>
+                        <span class="nav_name">User Management </span>
                     </a>
                     <a style="font-size: small;" href="/manufacturerList" class="nav_link">
                         <i class="fa-solid fa-list"></i>
-                        <span class="nav_name">Manufacturer List </span>
+                        <span class="nav_name">Manufacturer </span>
+                    </a>
+
+
+                    <a style="font-size: small;" href="/codeCategoryMasterList" class="nav_link">
+
+                        <i class="fa-solid fa-list"></i>
+                        <span class="nav_name">Category </span>
+                    </a>
+
+
+                    <a style="font-size: small;" href="/departmentMasterList" class="nav_link">
+                        <i class="fa-solid fa-list"></i>
+                        <span class="nav_name">Department </span>
+                    </a>
+
+                    <a style="font-size: small;" href="/groupMasterList" class="nav_link">
+
+                        <i class="fa-solid fa-list"></i>
+                        <span class="nav_name">Group </span>
+                    </a>
+
+                    <a style="font-size: small;" href="/itemtypeMasterList" class="nav_link">
+
+                        <i class="fa-solid fa-list"></i>
+                        <span class="nav_name">Item Type </span>
+                    </a>
+
+
+                    <a style="font-size: small;" href="/suppliersMasterList" class="nav_link">
+                        <i class="fa-solid fa-list"></i>
+                        <span class="nav_name">Suppliers Master</span>
+                    </a>
+                    <a style="font-size: small;" href="/customerMasterList" class="nav_link">
+                        <i class="fa-solid fa-list"></i>
+                        <span class="nav_name">Customer Master</span>
+                    </a>
+                    <a style="font-size: small;" href="/stateMasterList" class="nav_link">
+                        <i class="fa-solid fa-list"></i>
+                        <span class="nav_name">State Master</span>
+                    </a>
+                    <a style="font-size: small;" href="/taxMasterList" class="nav_link">
+                        <i class="fa-solid fa-list"></i>
+                        <span class="nav_name">Tax Master</span>
                     </a>
                     <a style="font-size: small;" href="/newStoreList" class="nav_link">
                         <i class="fa-solid fa-list"></i>
-                        <span class="nav_name">New Store List</span>
-                    </a>
-                    <a style="font-size: small;" href="/storeList" class="nav_link">
-                        <i class="fa-solid fa-list"></i>
                         <span class="nav_name">Store List</span>
                     </a>
-                    <a style="font-size: small;" href="/categoryList" class="nav_link">
-                        <i class="fa-solid fa-list"></i>
-                        <span class="nav_name">Category List</span>
+                    <a style="font-size: small;" href="/newProductList" class="nav_link">
+
+                        <i class="fa-solid fa-upload"></i>
+                        <span class="nav_name">Product Master</span>
                     </a>
-                    <a style="font-size: small;" href="/productCategoryMapping" class="nav_link">
-                        <i class="fa-brands fa-dropbox"></i>
-                        <span class="nav_name">Product-Category Mapping</span>
-                    </a>
-                    <a style="font-size: small;" href="/productRaise" class="nav_link">
-                        <i class="fa-solid fa-hand-holding-dollar"></i>
-                        <span class="nav_name">Product Rate</span>
-                    </a>
-                    <a style="font-size: small;" href="/stockInOut" class="nav_link">
-                        <i class="fa-solid fa-people-carry-box"></i>
-                        <span class="nav_name">Stock In/Out</span>
-                    </a>
-                    {{!-- <a style="font-size: small;" href="/userStoreMapping" class="nav_link">
-                        <i class="fa-solid fa-sitemap"></i>
-                        <span class="nav_name">User-Store Mapping</span>
+                    {{!-- <a style="font-size: small;" href="/uploadBulkProducts" class="nav_link">
+                        <i class="fa-solid fa-upload"></i>
+                        <span class="nav_name">Bulk Product Upload</span>
+
                     </a> --}}
-                    <a style="font-size: small;" href="/storeCategoryMapping" class="nav_link">
+
+
+
+
+
+                </div>
+                <div class="nav_link" id="trans-toggle">
+                    <i class="fa-regular fa-thumbs-up"></i>
+                    <span class="nav_name">Transacton</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="nav_list" id="trans-submenu">
+                    <a style="font-size: small;" href="/stockInList" class="nav_link">
                         <i class="fa-solid fa-sitemap"></i>
-                        <span class="nav_name">Store-Category Mapping</span>
+                        <span class="nav_name">Stock IN</span>
                     </a>
-                    {{!-- <a style="font-size: small;" href="/getProductWiseStoreWiseStockQuantity" class="nav_link">
+                    <a style="font-size: small;" href="/stockOutList" class="nav_link">
                         <i class="fa-solid fa-sitemap"></i>
-                        <span class="nav_name">Product Wise Store Wise Stock Quantity</span>
+                        <span class="nav_name">Stock Out</span>
                     </a>
-                    <a style="font-size: small;" href="/getStoreWiseProductWiseStockQuantity" class="nav_link">
+
+                    {{!-- <a style="font-size: small;" href="/orderList" class="nav_link">
                         <i class="fa-solid fa-sitemap"></i>
-                        <span class="nav_name">Store Wise Product Wise Stock Quantity</span>
+                        <span class="nav_name">Order</span>
                     </a> --}}
-                    <a style="font-size: small;" href="/getStoreWiseProduct" class="nav_link">
-                        <i class="fa-solid fa-sitemap"></i>
-                        <span class="nav_name">Store-Product Wise Stock Quantity Report</span>
-                    </a>
-                    <a style="font-size: small;" href="/getProductWiseStock" class="nav_link">
-                        <i class="fa-solid fa-sitemap"></i>
-                        <span class="nav_name">Product-Store Wise Stock Quantity Report</span>
-                    </a>
                 </div>
                 <div class="nav_link" id="approval-toggle">
                     <i class="fa-regular fa-thumbs-up"></i>
@@ -123,91 +145,76 @@
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
                 <div class="nav_list" id="approval-submenu">
-                    <a style="font-size: small;" href="/manufacturerApprovalList" class="nav_link">
+                    {{!-- <a style="font-size: small;" href="/manufacturerApprovalList" class="nav_link">
                         <i class="fa-solid fa-building"></i>
                         <span class="nav_name">Manufacturer Approval</span>
-                    </a>
-                    <a style="font-size: small;" href="/storeApprovalList" class="nav_link">
+                    </a> --}}
+                    {{!-- <a style="font-size: small;" href="/storeApprovalList" class="nav_link">
                         <i class="fa-solid fa-shop"></i>
                         <span class="nav_name">Store Approval</span>
-                    </a>
-                    <a style="font-size: small;" href="/categoryApprovalList" class="nav_link">
+                    </a> --}}
+                    {{!-- <a style="font-size: small;" href="/categoryApprovalList" class="nav_link">
                         <i class="fa-solid fa-layer-group"></i>
                         <span class="nav_name">Category Approval</span>
-                    </a>
-                    <a style="font-size: small;" href="/productApprovalList" class="nav_link">
+                    </a> --}}
+                    {{!-- <a style="font-size: small;" href="/productApprovalList" class="nav_link">
                         <i class="fa-brands fa-product-hunt"></i>
                         <span class="nav_name">Product Approval</span>
-                    </a>
-                    <a style="font-size: small;" href="/proCatMapApprovalList" class="nav_link">
+                    </a> --}}
+                    {{!-- <a style="font-size: small;" href="/proCatMapApprovalList" class="nav_link">
                         <i class="fa-solid fa-network-wired"></i>
                         <span class="nav_name">Product-Category Mapping Approval</span>
-                    </a>
-                    <a style="font-size: small;" href="/productRaiseApprovalList" class="nav_link">
+                    </a> --}}
+                    {{!-- <a style="font-size: small;" href="/productRaiseApprovalList" class="nav_link">
                         <i class="fa-solid fa-file-invoice-dollar"></i>
                         <span class="nav_name">Product Rate Approval</span>
+                    </a> --}}
+                    <a style="font-size: small;" href="/stockInApprovalList" class="nav_link">
+                        <i class="fa-solid fa-truck-ramp-box"></i>
+                        <span class="nav_name">Stock In Approval</span>
                     </a>
-                    <a style="font-size: small;" href="/stockInOutApprovalList" class="nav_link">
+                    <a style="font-size: small;" href="/stockOutApprovalList" class="nav_link">
+                        <i class="fa-solid fa-truck-ramp-box"></i>
+                        <span class="nav_name">Stock Out Approval</span>
+                    </a>
+                    {{!-- <a style="font-size: small;" href="/stockInOutApprovalList" class="nav_link">
                         <i class="fa-solid fa-truck-ramp-box"></i>
                         <span class="nav_name">Stock In/Out Approval</span>
-                    </a>
+                    </a> --}}
                     {{!-- <a href="/userStoreMappingApprovalList" class="nav_link">
                         <i class="fa-solid fa-minus"></i>
                         <span class="nav_name">User Store Mapping Approval List</span>
                     </a> --}}
                 </div>
-                {{!-- <div class="nav_link" id="dashboard-toggle">
-                    <i class="bx bx-folder nav_icon "></i>
-                    <span class="nav_name">Categories</span>
+                <div class="nav_link" id="report-toggle">
+                    <i class="fa-regular fa-thumbs-up"></i>
+                    <span class="nav_name">Reports</span>
+                    <i class="fa-solid fa-chevron-down"></i>
                 </div>
-                <div class="nav_link" id="dashboard-toggle">
-                    <i class="bx bx-folder nav_icon "></i>
-                    <span class="nav_name">Files</span>
-                </div> --}}
-                <div class="nav_link order-toggle">
-                    <i class="fa-solid fa-cash-register"></i>
-                    <a href="/order" style="text-decoration: none;color: var(--first-color-light);"> <span
-                            class="nav_name">Order Billing</span></a>
-                </div>
-                <div class="nav_link order-toggle">
-                    <i class="fa-regular fa-rectangle-list"></i>
-                    <span class="nav_name"> <a href="/orderList"
-                            style="text-decoration: none;color: var(--first-color-light);">Order List</a></span>
-                </div>
-                <div class="nav_link order-toggle">
-                    <i class="fa-regular fa-rectangle-list"></i>
-                    <span class="nav_name"> <a href="/suppliersMasterList"
-                            style="text-decoration: none;color: var(--first-color-light);">Supplier Master
-                            List</a></span>
-                </div>
-                <div class="nav_link order-toggle">
-                    <i class="fa-regular fa-rectangle-list"></i>
-                    <span class="nav_name"> <a href="/stateMasterList"
-                            style="text-decoration: none;color: var(--first-color-light);">State Master List</a></span>
-                </div>
+                <div class="nav_list" id="report-submenu">
+                    {{!-- <a style="font-size: small;" href="/getStoreWiseProduct" class="nav_link">
+                        <i class="fa-solid fa-sitemap"></i>
+                        <span class="nav_name">Store-Product Wise Stock Quantity Report</span>
+                    </a> --}}
+                    {{!-- <a style="font-size: small;" href="/getProductWiseStock" class="nav_link">
+                        <i class="fa-solid fa-sitemap"></i>
+                        <span class="nav_name">Product-Store Wise Stock Quantity Report</span>
+                    </a> --}}
+                    <a style="font-size: small;" href="/stockSummary" class="nav_link">
+                        <i class="fa-solid fa-truck-ramp-box"></i>
+                        <span class="nav_name">Stock Summary</span>
+                    </a>
 
-                {{!-- tax master --}}
+                    <a style="font-size: small;" href="/stockDetail" class="nav_link">
+                        <i class="fa-solid fa-truck-ramp-box"></i>
+                        <span class="nav_name">Stock Detail
+                        </span>
+                    </a>
 
-                {{!-- <div class="nav_link order-toggle">
-                    <i class="fa-regular fa-rectangle-list"></i>
-                    <span class="nav_name"> <a href="/taxMaster"
-                            style="text-decoration: none;color: var(--first-color-light);">Tax Master</a></span>
-                </div> --}}
-
-                <div class="nav_link order-toggle">
-                    <i class="fa-regular fa-rectangle-list"></i>
-                    <span class="nav_name"> <a href="/taxMasterList"
-                            style="text-decoration: none;color: var(--first-color-light);">Tax Master List</a></span>
                 </div>
 
 
-                {{!-- Customer master --}}
 
-                <div class="nav_link order-toggle">
-                    <i class="fa-regular fa-rectangle-list"></i>
-                    <span class="nav_name"> <a href="/customerMasterList"
-                            style="text-decoration: none;color: var(--first-color-light);">Customer Master List</a></span>
-                </div>
 
 
             </div>
@@ -258,7 +265,12 @@
         $('#approval-toggle').click(function () {
             toggleSubmenu($('#approval-submenu'));
         });
-
+        $('#trans-toggle').click(function () {
+            toggleSubmenu($('#trans-submenu'));
+        });
+        $('#report-toggle').click(function () {
+            toggleSubmenu($('#report-submenu'));
+        });
         setActiveLink();
 
         function toggleSubmenu(submenu) {

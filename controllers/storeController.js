@@ -1,34 +1,37 @@
 const db = require("../models")
-const Store = db.store;
-const NewStore = db.newStore
+// const Store = db.store;
+const Store = db.store
+const CodeMaster = db.codeMaster
+const StoreCategoryMapping = db.storeCategoryMapping
+const UserStoreMapping = db.userStoreMapping
 
 
-const createStore = async (req, res) => {
+// const createStore = async (req, res) => {
 
-  try {
+//   try {
 
-    let info = {
-      outletId,
-      storeName,
-      storeAddress,
-      approve_b,
-      approve_by,
-      approve_date
-    } = req.body
+//     let info = {
+//       outletId,
+//       storeName,
+//       storeAddress,
+//       approve_b,
+//       approve_by,
+//       approve_date
+//     } = req.body
 
-    const store = await Store.create(info)
+//     const store = await Store.create(info)
 
-    req.flash('message', 'Store added Successfully and Sent for Approval');
-    return res.redirect('/storeList')
+//     req.flash('message', 'Store added Successfully and Sent for Approval');
+//     return res.redirect('/storeList')
 
-  }
+//   }
 
-  catch (err) {
-    req.flash('message', 'Something Went Wrong');
-    return res.redirect('/storeMaster')
-  }
+//   catch (err) {
+//     req.flash('message', 'Something Went Wrong');
+//     return res.redirect('/storeMaster')
+//   }
 
-}
+// }
 
 // Get All Store Details
 const getAllStoreDetails = async (req, res) => {
@@ -42,29 +45,29 @@ const getAllStoreDetails = async (req, res) => {
 
 // Update Store Details
 
-const updateStore = async (req, res) => {
+// const updateStore = async (req, res) => {
 
-  try {
+//   try {
 
-    const store = await Store.update({ ...req.body, approve_b: 'pending' }, { where: { outletId: req.params.id } })
+//     const store = await Store.update({ ...req.body, approve_b: 'pending' }, { where: { outletId: req.params.id } })
 
-    if (!store) {
-      res.status(200).send({
-        success: false,
-        message: "Store Not Found"
-      })
-    }
+//     if (!store) {
+//       res.status(200).send({
+//         success: false,
+//         message: "Store Not Found"
+//       })
+//     }
 
-    req.flash('message', 'Store updated successfully and sent for Approval');
-    return res.redirect('/storeList')
+//     req.flash('message', 'Store updated successfully and sent for Approval');
+//     return res.redirect('/storeList')
 
-  } catch (err) {
-    console.log(err.message)
-    req.flash('message', 'Something Went Wrong');
-    return res.redirect('/storeMaster')
-  }
+//   } catch (err) {
+//     console.log(err.message)
+//     req.flash('message', 'Something Went Wrong');
+//     return res.redirect('/storeMaster')
+//   }
 
-}
+// }
 
 
 //   store Approval List
@@ -117,6 +120,17 @@ const updateStoreApprovalStatus = async (req, res) => {
 
 
 const createNewStore = async function (req, res) {
+
+  if(req.session.userDetail.role == 'admin' || req.session.userDetail.role == 'user' ){
+    req.flash('message', 'You can not create store only super admin can do this')
+    return res.redirect('/newStore')
+  }
+
+  const selectedCategoryIds = req.body.category; //ids in array
+ if(selectedCategoryIds == undefined){
+req.flash('message', 'Please select category first if category is not showing then create category first')
+return res.redirect('/newStore')
+ }
   try {
     let info = {
       outletId,
@@ -142,11 +156,30 @@ const createNewStore = async function (req, res) {
       rowguid
     } = req.body
 
-     await NewStore.create(info)
+    const newStore = await Store.create(info)
 
+     const selectedStoreId = newStore.outletId; 
+    
      const store = await Store.findByPk(selectedStoreId);
 
-    req.flash('message', 'Store added Successfully and Sent for Approval');
+    // Create associations between the user and selected stores
+    for (const selectedCategoryId of selectedCategoryIds) {
+      const category = await CodeMaster.findByPk(selectedCategoryId);
+      if (category) {
+        // Create a UserStoreMapping entry
+        await StoreCategoryMapping.create({
+          storeFk: store.outletId,
+          categoryFk: category.id
+        });
+      }
+    }
+    if (req.session.userDetail.role == 'super admin'){
+      await UserStoreMapping.create({
+        userFk: req.session.userDetail.id,
+        storeFk: newStore.outletId
+      });
+    }
+    req.flash('message', 'Store added Successfully');
     return res.redirect('/newStoreList')
 
   }
@@ -159,36 +192,69 @@ const createNewStore = async function (req, res) {
 
 }
 
-const updateNewStore = async (req, res) => {
 
+const updateNewStore = async (req, res) => {
   try {
 
-    const newStore = await NewStore.update({ ...req.body, approve_b: 'pending' }, { where: { rowguid: req.params.id } })
-
-    if (!newStore) {
-      res.status(200).send({
-        success: false,
-        message: "Store Not Found"
-      })
+    if(req.session.userDetail.role == 'admin' || req.session.userDetail.role == 'user' ){
+      req.flash('message', 'You can not update store only super admin can do this')
+      return res.redirect('/newStoreList')
     }
 
-    req.flash('message', 'Store updated successfully and sent for Approval');
-    return res.redirect('/newStoreList')
+    const store = await Store.findOne({ where: { rowguid: req.params.id } });
 
+    if (!store) {
+      // Handle the case where the store with the given ID doesn't exist
+      req.flash('message', 'Store not found');
+      return res.redirect('/newStoreList');
+    }
+
+    // Update the store's information
+    await store.update({ ...req.body, approve_b: 'pending' });
+
+    const selectedCategoryIds = req.body.id || []; // Default to an empty array if no categories are selected
+
+    if (selectedCategoryIds.length === 0) {
+      // If no categories are selected, remove all existing category associations
+      await StoreCategoryMapping.destroy({ where: { storeFk: store.outletId } });
+      req.flash('message', 'Store updated successfully');
+    } else {
+      // Remove existing category associations for this store
+      await StoreCategoryMapping.destroy({ where: { storeFk: store.outletId } });
+
+      // Create associations between the store and selected categories
+      for (const selectedCategoryId of selectedCategoryIds) {
+        const category = await CodeMaster.findByPk(selectedCategoryId);
+
+        if (category) {
+          // Create a StoreCategoryMapping entry
+          await StoreCategoryMapping.create({
+            storeFk: store.outletId,
+            categoryFk: category.id
+          });
+        }
+      }
+      req.flash('message', 'Store updated successfully');
+    }
+
+    return res.redirect('/newStoreList');
   } catch (err) {
-    console.log(err)
+    console.error(err);
     req.flash('message', 'Something Went Wrong');
-    return res.redirect(`/updateNewStore/${req.params.id}`)
+    return res.redirect(`/updateNewStore/${req.params.id}`);
   }
+};
 
-}
+
+
+
 
 module.exports = {
   createNewStore,
   updateNewStore,
-  createStore,
+  // createStore,
   getAllStoreDetails,
-  updateStore,
+  // updateStore,
   storeApprovalList,
   updateStoreApprovalStatus
 }

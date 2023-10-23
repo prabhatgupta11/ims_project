@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         HSN_Code: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
         Tax_percentage: {

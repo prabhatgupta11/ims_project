@@ -11,20 +11,20 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- 
+
   <style>
     body {
       background-color: rgb(244, 244, 247) !important;
     }
-   
-    .sup-int[type='text']{
+
+    .sup-int[type='text'] {
       /*padding-left: 30px;*/
     }
 
     .table-custom tbody tr:nth-child(even) {
       background-color: #ffff;
     }
-    
+
 
     /* Dark color for odd rows */
     .table-custom tbody tr:nth-child(odd) {
@@ -61,9 +61,9 @@
     }
 
     ul.breadcrumb li a {
-      color:#4f46e5;
+      color: #4f46e5;
       text-decoration: none;
-      
+
     }
 
     ul.breadcrumb li a:hover {
@@ -161,7 +161,8 @@
       <div class="me-two d-flex justify-content-center align-items-center">
 
         <div class="block">
-          <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px ;  margin-bottom: 18px;">Supplier Master Update
+          <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px ;  margin-bottom: 18px;">Supplier
+            Master Update
         </div>
         <div id="line">
           <span id="line-content"></span> <!-- Content inside the div -->
@@ -176,95 +177,122 @@
         </div>
       </div>
 
-{{!-- <a href="/orderList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;" > <i class="fa fa-xmark text-dark fa-2x"></i></a> --}}
-<a href="/suppliersMasterList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;" > <i class="fa fa-xmark text-dark fa-2x"></i></a>
-     </div>
+      {{!-- <a href="/orderList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
+          class="fa fa-xmark text-dark fa-2x"></i></a> --}}
+      <a href="/suppliersMasterList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
+          class="fa fa-xmark text-dark fa-2x"></i></a>
     </div>
-      <div>
-        {{#if message}}
-        <div class="alert alert-info">{{message}}</div>
-        {{/if}}
- 
+  </div>
+  <div>
+    {{#if message}}
+    <div class="alert alert-info">{{message}}</div>
+    {{/if}}
+
     <form id="supplierForm" action="/supplierMasterUpdate/{{supplier.rowguid}}" method="post">
       {{!-- <h1>Order Billing</h1> --}}
       <div id="formdata">
         <h4>Enter Supplier details</h4>
-        <label for="Code" class="label-block">Code:</label>
         
-        <input type="text" id="Code" name="Code" class="sup-int"  placeholder="Enter Supplier Code" value="{{supplier.Code}}" required>
-        <div class="sup-icon">
-        
+         <label for="store">Store</label>
+        <div class="cons" style="position: relative;">
+          <div class="icon-context input-field" style="position: absolute; top:8px;left:10px ">
+            <i class="fa-solid fa-store icons-icons" style="font-size: 15px;"></i>
+          </div>
+
+          <select name="outletId" id="store" class="store-select" style="padding-left: 30px;font-size:14px" >
+               {{!-- <option value="" disabled selected> Select Store</option> --}}
+            <option value="{{previousStore.outletId}}"> {{previousStore.storeName}}</option>
+            {{#each store}}
+            <option value='{{outletId}}'>{{storeName}}</option>
+            {{/each}}
+          </select>
         </div>
-     
 
 
+        <label for="Code" class="label-block">Code</label>
 
-        <label for="Name" class="label-block">Name:</label>
-        <input type="text"  id="Name" name="Name" placeholder="&#128100; Enter Name" value="{{supplier.Name}}"
-          required  pattern="[A-Za-z ]+"
-      title="Please enter only letters">
+        <input type="text" id="Code" name="Code" class="sup-int" placeholder="Enter Supplier Code"
+          value="{{supplier.Code}}" >
+        <div class="sup-icon">
 
-        <label for="ContactPersonName" class="label-block">Contact Person Name:</label>
-        <input  type="text" id="ContactPersonName"name="ContactPersonName" placeholder="&#128100; Enter Contact Person" value="{{supplier.ContactPersonName}}"  pattern="[A-Za-z ]+" title="Please enter only letters" required>
-
-
-
-
-      <label for="ContactNo">Contact No:</label>
-        <input type="number" id="ContactNo" name="ContactNo" placeholder="&#x260E; Enter Contact Number" value="{{supplier.ContactNo}}" required   maxlength="10" title="Please enter a 10-digit phone number">
-
-        <label for="AadharNo">Aadhar No:</label>
-        <input type="number" id="AadharNo" name="AadharNo"  placeholder="&#9751;  Enter Aadhar Number" value="{{supplier.AadharNo}}"   minlength="10" maxlength="12" title="Please enter a 12-digit Aadhar Number">
-
-
-
-          <label for="Pincode">Pincode:</label>
-        <input type="number" id="Pincode" name="Pincode" placeholder="&#9951;  Enter Pincode" value="{{supplier.Pincode}}"   maxlength="6" title="Please enter a 6-digit Pin Code Number">
+        </div>
 
 
 
 
-  <label for="Email">Email:</label>
-        <input type="email" id="Email" name="Email" placeholder="&#x2709;  Enter Email" value="{{supplier.Email}}" required >
+        <label for="Name" class="label-block">Name <span class="text-danger">*</span> </label>
+        <input type="text" id="Name" name="Name" placeholder="&#128100; Enter Name" value="{{supplier.Name}}" required
+          pattern="[A-Za-z ]+" title="Please enter only letters">
 
- <label for="GSTNo">GST No:</label>
-        <input type="text" id="GSTNo" name="GSTNo" placeholder="&#9951; Enter GST No." value="{{supplier.GSTNo}}"  oninput="convertToUpperCase(this)"
-        minlength="15"  maxlength="15" title="Please enter a 15-digit GST Number"
-        >
-
-
-
-          <label for="PAN">PAN:</label>
-        <input type="text" id="PAN" name="PAN" placeholder="&#9751; Enter PAN" value="{{supplier.PAN}}" oninput="convertToUpperCase(this)"
-         minlength="10"  maxlength="10"  title="Please enter a 10-digit PAN Number" >
+        <label for="ContactPersonName" class="label-block">Contact Person Name</label>
+        <input type="text" id="ContactPersonName" name="ContactPersonName" placeholder="&#128100; Enter Contact Person"
+          value="{{supplier.ContactPersonName}}" pattern="[A-Za-z ]+" title="Please enter only letters" >
 
 
-  <label for="CreditLimit">Credit Limit:</label>
-        <input type="number" id="CreditLimit" name="CreditLimit" placeholder="Enter Credit Limit" value="{{supplier.CreditLimit}}" step="0.01"
-           min="0">
-
-            <label for="CreditDays">Credit Days:</label>
-        <input type="number" id="CreditDays" name="CreditDays" placeholder="Enter Credit Days" value="{{supplier.CreditDays}}"  min="0">
 
 
-<label for="Status" class="label-block">Status:</label>
-    <select id="Status" name="Status">
-        <option>{{supplier.Status}}</option>
-      <option value="Active">Active</option>
-      <option value="Inactive">Inactive</option>
-    </select>
+        <label for="ContactNo">Contact No <span class="text-danger">*</span></label>
+        <input type="number" id="ContactNo" name="ContactNo" placeholder="&#x260E; Enter Contact Number"
+          value="{{supplier.ContactNo}}" required maxlength="20" title="Please enter a 10-digit phone number">
 
- <label for="Address">Address:</label>
+        <label for="AadharNo">Aadhar No</label>
+        <input type="number" id="AadharNo" name="AadharNo" placeholder="&#9751;  Enter Aadhar Number"
+          value="{{supplier.AadharNo}}" title="Please enter a 12-digit Aadhar Number">
+
+
+
+        <label for="Pincode">Pincode</label>
+        <input type="number" id="Pincode" name="Pincode" placeholder="&#9951;  Enter Pincode"
+          value="{{supplier.Pincode}}" maxlength="6" title="Please enter a 6-digit Pin Code Number">
+
+
+
+
+        <label for="Email">Email <span class="text-danger">*</span></label>
+        <input type="email" id="Email" name="Email" placeholder="&#x2709;  Enter Email" value="{{supplier.Email}}"
+          required>
+
+        <label for="GSTNo">GST No</label>
+        <input type="text" id="GSTNo" name="GSTNo" placeholder="&#9951; Enter GST No." value="{{supplier.GSTNo}}"
+          oninput="convertToUpperCase(this)" minlength="15" maxlength="15" title="Please enter a 15-digit GST Number">
+
+
+
+        <label for="PAN">PAN</label>
+        <input type="text" id="PAN" name="PAN" placeholder="&#9751; Enter PAN" value="{{supplier.PAN}}"
+          oninput="convertToUpperCase(this)" minlength="10" maxlength="10" title="Please enter a 10-digit PAN Number">
+
+
+ <label for="CreditLimit">Credit Limit</label>
+<input type="number" id="CreditLimit" name="CreditLimit" placeholder="Enter Credit Limit"
+  value="{{supplier.CreditLimit}}" step="0.01" min="0" onblur="setDefaultCreditLimit(this)">
+
+        <label for="CreditDays">Credit Days</label>
+        <input type="number" id="CreditDays" name="CreditDays" placeholder="Enter Credit Days"
+          value="{{supplier.CreditDays}}" min="0">
+
+
+        <label for="Status" class="label-block">Status</label>
+        <select id="Status" name="Status">
+               <option value="{{supplier.Status}}">{{supplier.Status}}</option>
+          {{!-- <option>{{supplier.Status}}</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option> --}}
+        </select>
+
+        <label for="Address">Address</label>
         <div>
-           <textarea id="Address" name="Address" rows="4" placeholder="Enter Address" cols="72"  style="width: 100%;">{{supplier.Address}}</textarea>
+          <textarea id="Address" name="Address" rows="4" placeholder="Enter Address" cols="72"
+            style="width: 100%;">{{supplier.Address}}</textarea>
         </div>
       </div>
 
   </div>
   </div>
 
-   {{!-- submit button --}}
-   <button type="submit" style="border-radius: 10px; margin-top:30px; margin-bottom:30px; background-color:#4723d9;">Submit</button>
+ 
+  <button type="submit"
+    style="border-radius: 10px; margin-top:30px; margin-bottom:30px; background-color:#4723d9;">Submit</button>
 
   </form>
 
@@ -273,6 +301,28 @@
   </div>
 
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const statusSelect = document.getElementById("Status");
 
+        let statusArray = ["Active", "Inactive"]
+
+        statusArray.forEach((ele) => {
+            const option = document.createElement("option");
+            if (statusSelect.value !== ele) {
+                option.value = ele;
+                option.textContent = ele;
+                statusSelect.appendChild(option);
+            }
+        })
+    })
+
+
+  function setDefaultCreditLimit(inputElement) {
+  if (inputElement.value.trim() === "") {
+    inputElement.value = "0";
+  }
+}
+</script>
 
 </body>

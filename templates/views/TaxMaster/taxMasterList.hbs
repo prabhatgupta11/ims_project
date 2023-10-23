@@ -116,7 +116,9 @@
                 style="background-color: #ff9f43;font-weight:500"><a href="/taxMaster"
                     style="text-decoration: none;color:white">+ Add Tax Master</a></button>
         </div>
-
+        {{#if message}}
+        <div class="alert alert-info">{{message}}</div>
+        {{/if}}
 
         <div class="container col-md-12 me-class" style="padding-right:24px">
             <div class="input-group py-2">
@@ -134,9 +136,8 @@
                             <tr>
 
                                 <th scope="col ">Tax Code</th>
-                                <th scope="col ">HSN Code</th>
-                                <th scope="col ">State Code</th>
-                                <th scope="col ">Status</th>
+                                <th scope="col ">Tax Description</th>
+                                <th scope="col ">Tax %</th>
                                 <th scope="col ">Action</th>
                             </tr>
                         </thead>
@@ -167,6 +168,9 @@
     <script>
         $(document).ready(function () {
             const dataTable = $('#tax_table').DataTable({
+                "language": {
+                    "lengthMenu": "Show _MENU_ Entries"
+                },
                 'processing': true,
                 'serverSide': true,
                 'ajax': {
@@ -175,9 +179,8 @@
                 },
                 'columns': [
                     { data: 'Tax_Code' },
-                    { data: 'HSN_Code' },
-                    { data: 'State_Code' },
-                    { data: 'Status' },
+                    { data: 'Description' },
+                    { data: 'Tax_percentage' },
                     {
                         data: 'rowguid',
                         'render': function (data, type, row) {
@@ -188,47 +191,6 @@
             });
         });
     </script>
-    {{!--
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const tableBody = document.getElementById("tablebody");
-
-            // Fetch supplier data
-            fetch(/getAllsupplierdata)
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(supplier => {
-
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                        <td>${supplier.Code}</td>
-                        <td>${supplier.Name}</td>
-                        <td>${supplier.Email}</td>
-                        <td><a href='/updateSupplierMaster/${supplier.rowguid}'>Edit</a></td>
-                    `;
-                        tableBody.appendChild(row);
-                    });
-
-
-                    /*var alleditbtn=document.querySelectorAll(".edit-btn");
-                       console.log(7777,alleditbtn)
-                       for(let i=0;i<alleditbtn.length;i++)
-                       {
-                          alleditbtn[i].addEventListener("click", () => {
-                              alert(button is clicked ${alleditbtn[i].value})
-                          const supplierUuid = alleditbtn[i].value;
-                          // Assuming you want to navigate to the edit page with the supplierId as a parameter
-                          window.location.href = /supplierMasterUpdate/${supplierUuid};
-                      });
-                       }*/
-                })
-                .catch(error => console.error('Error fetching supplier data:', error));
-
-        });
-
-        // code of edit-btn
-
-    </script> --}}
 
 
 </body>

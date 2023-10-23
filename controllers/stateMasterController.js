@@ -5,13 +5,16 @@ const createStateMaster = async (req, res) => {
   try {
     console.log(50500000, req.body);
     const newStateMaster = await StateMaster.create(req.body);
-    return res.status(201).json(newStateMaster);
+   req.flash('message', 'State Master created successfully')
+  return res.redirect("/stateMasterList")
+
   } catch (error) {
-    console.error('Error creating State Master:', error.message);
-    return res.status(500).json({ error: 'Could not create state Mster', message: error.message });
+    console.log(error)
+    req.flash('message', 'Something Went Wrong Creating State Master')
+    return res.redirect("/stateMaster")
+    
   }
 }
-
 
 
 const supplierData=async(req,res)=>{
@@ -26,12 +29,13 @@ const supplierData=async(req,res)=>{
 const updateStateMaster = async (req, res) => {
   try {
       const newStateMaster = await StateMaster.update({...req.body},{where:{rowguid:req.params.uuid}});
+      req.flash('message', 'State Master updated successfully')
       return res.redirect("/stateMasterList")
     }
   
     catch (error) {
-      console.error('Error creating storeMaster:', error);
-      return res.status(500).json({ error: 'Could not create storeMaster' });
+      req.flash('message', 'Something went wrong')
+      return res.redirect(`/stateMaster/${req.params.uuid}`)
     }
   
   }

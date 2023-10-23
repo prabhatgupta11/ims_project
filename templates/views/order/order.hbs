@@ -19,7 +19,7 @@
     .table-custom tbody tr:nth-child(even) {
       background-color: #ffff;
     }
-    
+
 
     /* Dark color for odd rows */
     .table-custom tbody tr:nth-child(odd) {
@@ -56,9 +56,9 @@
     }
 
     ul.breadcrumb li a {
-      color:#4f46e5;
+      color: #4f46e5;
       text-decoration: none;
-      
+
     }
 
     ul.breadcrumb li a:hover {
@@ -172,14 +172,13 @@
         </div>
       </div>
 
-<a href="/orderList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;" > <i class="fa fa-xmark text-dark fa-2x"></i></a>
-     </div>
+      <a href="/orderList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
+          class="fa fa-xmark text-dark fa-2x"></i></a>
     </div>
-      <div>
-        {{#if message}}
-        <div class="alert alert-info">{{message}}</div>
-        {{/if}}
+  </div>
+  <div>
  
+
     <form id="billing-form">
       {{!-- <h1>Order Billing</h1> --}}
       <div id="formdata">
@@ -238,7 +237,9 @@
         </div>
       </div>
 
-
+   {{#if message}}
+    <div class="alert alert-info">{{message}}</div>
+    {{/if}}
       <table id="product-table" class="table">
         <button type="button" class="delete-row-btn button-15" id="add-product-btn">AddProduct</button>
         <thead>
@@ -273,16 +274,19 @@
 
           </div>
         </thead>
-        <tbody id="product-list">
-
+        
+        <tbody id="product-list"  style="overflow: scroll;">
+    
         </tbody>
         <tfoot class="tfoot">
+     
           <tr>
 
             <td colspan="5" style="text-align: right;"><strong>Grand Total:</strong></td>
             <td><input type="number" name="totalAmount" id="grand-total" readonly></td>
-      
+
           </tr>
+      
         </tfoot>
       </table>
   </div>
@@ -295,8 +299,7 @@
 
 
   </div>
-  {{!--
-  <script src="/templates/views/script.js"></script> --}}
+ 
 
 
 
@@ -305,19 +308,14 @@
   let tablebody = document.getElementById("product-list");
   let addbtn = document.getElementById("add-product-btn");
   let storeSelect = document.getElementById("store");
-  const containerfoot =  document.querySelector(".tfoot")
+  const containerfoot = document.querySelector(".tfoot")
 
   addbtn.addEventListener("click", () => {
-  const newRow = document.createElement("tr");
-      /*  if(containerfoot.style.display === 'none'){
-        console.log('worj')
-        containerfoot.style.display = 'block'
-      }
-      else{
-        containerfoot.style.display ='none'
-      } */
+    const newRow = document.createElement("tr");
+
 
     newRow.innerHTML = `
+
     <td class="px-0" style="width:20%">
       <select name="itemId" class="product-select">
         <option value="">Select Product</option>
@@ -329,6 +327,7 @@
     <td><input type="number" name="total" class="total-cell col-md-10" readonly></td>
     <td><input type="number" name="taxPercentage" class="gst-input col-md-10"></td>
     <td><i class="fa-solid fa-trash delete-row-btn"></i></td>
+
   `;
     tablebody.appendChild(newRow);
     setupRowListeners(newRow);
@@ -344,38 +343,62 @@
     }
 
     productSelect.innerHTML = '<option value="">Select Product</option>';
+    console.log("working")
+    fetch(`/getProduct`)
+      .then(res => res.json())
 
-    const selectedOutletId = storeSelect.value;
+      .then(actuladat => {
 
-    if (selectedOutletId) {
-      fetch(`/getItemsForOutlet/${selectedOutletId}`)
-        .then(response => response.json())
-        .then(data => {
-          console.log(00000000000000, data);
-          data.forEach(product => {
-            const itemId = product.itemId;
-            fetch(`/getProductById/${itemId}`)
-              .then(res => res.json())
-              .then(actuladat => {
-                console.log(111111111111111, actuladat.itemName);
-                const option = document.createElement("option");
-                option.value = actuladat.itemId;
-                option.textContent = actuladat.itemName;
-                productSelect.appendChild(option);
-              })
-              .catch(err => {
-                console.log(err.message);
-              });
-          });
+        //  console.log(111111111111111, actuladat);
+        actuladat.forEach((ele) => {
+          const option = document.createElement("option");
+          console.log(1, ele.itemId);
+          console.log(2, ele.itemName);
+          option.value = ele.itemId;
+          option.textContent = ele.itemName;
+
+          productSelect.appendChild(option);
         })
-        .catch(error => console.error("Error fetching products:", error));
-    }
+
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+
+    //const selectedOutletId = storeSelect.value;
+
+    //if (selectedOutletId) {
+    /* fetch(`/getItemsForOutlet/${selectedOutletId}`)
+       .then(response => response.json())
+       .then(data => {
+         console.log(00000000000000, data);
+         data.forEach(product => {
+           const itemId = product.itemId;
+           fetch(`/getProductById/${itemId}`)
+             .then(res => res.json())
+             
+             .then(actuladat => {
+               console.log(111111111111111, actuladat.itemName);
+               const option = document.createElement("option");
+               option.value = actuladat.itemId;
+               option.textContent = actuladat.itemName;
+               productSelect.appendChild(option);
+             })
+             .catch(err => {
+               console.log(err.message);
+             });
+         });
+       })
+       .catch(error => console.error("Error fetching products:", error));
+  // }
+  */
   }
 
   //Update price when a product is selected
   document.addEventListener("change", event => {
     if (event.target.classList.contains("product-select")) {
       const selectedProduct = event.target.value;
+      console.log("working2")
       const row = event.target.closest("tr");
       const priceInput = row.querySelector(".price-input");
 
@@ -531,6 +554,6 @@
   }
 
 
- 
+
 
 </script>

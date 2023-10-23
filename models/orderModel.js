@@ -9,9 +9,18 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement : true
         },
-        // orderPK: {
-        //     type: DataTypes.STRING(250),
-        // },
+        stockType : {
+            type : DataTypes.STRING(10)
+        },
+        outletId : {
+            type : DataTypes.STRING
+        },
+        orderDate: {
+            type: DataTypes.STRING,
+        },
+        referenceNumber : {
+            type : DataTypes.STRING(250)
+        },
         customerName : {
             type : DataTypes.STRING(250)
         },
@@ -20,6 +29,20 @@ module.exports = (sequelize, DataTypes) => {
         },
         customerEmail : {
             type : DataTypes.STRING(250)
+        },
+        totalAmount : {
+            type : DataTypes.STRING(255)
+        },
+        remarks : {
+            type : DataTypes.STRING(250)
+        },
+        approve_b : {
+            type : DataTypes.STRING(10),
+            defaultValue : 'pending'
+        },
+        rowguid: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4
         },
         customerCity : {
             type : DataTypes.STRING(250)
@@ -31,9 +54,6 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.STRING(250)
         },
         paymentMode : {
-            type : DataTypes.STRING(250)
-        },
-        outletId : {
             type : DataTypes.STRING(250)
         },
         onlineReferenceNo: {
@@ -56,9 +76,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         totalFreeQty : {
             type : DataTypes.STRING(250)
-        },
-        totalAmount : {
-            type : DataTypes.STRING(255)
         },
         totalTaxAmount : {
             type : DataTypes.STRING(250)

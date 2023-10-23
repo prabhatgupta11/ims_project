@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    Display_Order: {
+    DisplayOrder: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
@@ -42,9 +42,9 @@ module.exports = (sequelize, DataTypes) => {
     approved_by: {
       type: DataTypes.STRING(255),
     },
-    displayorder: {
-      type: DataTypes.INTEGER,
-    },
+    // displayorder: {
+    //   type: DataTypes.INTEGER,
+    // },
     rowguid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,

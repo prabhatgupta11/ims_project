@@ -1,13 +1,17 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  const SupplierMaster = sequelize.define('SupplierMaster', {
+  const SupplierMaster = sequelize.define('Supplier_Master', {
     id: {
         type: DataTypes.BIGINT(20),
         allowNull: false,
         primaryKey: true,
         autoIncrement : true
     },
+    storeFk: {
+      type: DataTypes.STRING(255),
+    },
+
     Code: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -21,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     ContactNo: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     Email: {
@@ -33,33 +37,34 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     Pincode: {
-      type: DataTypes.STRING(10), 
+      type: DataTypes.STRING(255), 
       allowNull: false,
     },
     GSTNo: {
-      type: DataTypes.STRING(15), 
+      type: DataTypes.STRING(255), 
       allowNull: false,
     },
     PAN: {
-      type: DataTypes.STRING(10), 
+      type: DataTypes.STRING(255), 
       allowNull: false,
     },
     AadharNo: {
-      type: DataTypes.STRING(12), 
+      type: DataTypes.STRING(255), 
       allowNull: false,
     },
     CreditLimit: {
-      type: DataTypes.DECIMAL(10, 2), 
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     CreditDays: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     Status: {
       type: DataTypes.ENUM('Active', 'Inactive'), 
       defaultValue: 'Active',
     },
+    
     created_by: {
       type: DataTypes.STRING(255),
     },

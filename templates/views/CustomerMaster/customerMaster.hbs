@@ -169,9 +169,9 @@
         </div>
         <div class="breadcrumdiv">
           <ul class="breadcrumb">
-            <li><a href="#"> Home</a></li>
-            <li><a href="#">Master</a></li>
-            <li><a href="#">Customer Master</a></li>
+            <li><a href="/dashboard"> Home</a></li>
+            <li><a href="/customerMasterList">Customer Master List</a></li>
+            <li><a href="/customerMaster">Customer Master</a></li>
 
           </ul>
         </div>
@@ -188,13 +188,13 @@
     <div class="alert alert-info">{{message}}</div>
     {{/if}}
 
-    <form id="supplierForm">
+    <form id="supplierForm" action="/createCustomerMaster" method="post">
       {{!-- <h1>Order Billing</h1> --}}
       <div id="formdata">
         <h4>Customer Master Details</h4>
-        <label for="Code" class="label-block">Code:</label>
+        <label for="Code" class="label-block">Code</label>
         <div class="sup-containe" style="position: relative;">
-          <input type="text" id="Code" name="Code" class="sup-int" placeholder="Enter Customer Code" required>
+          <input type="text" id="Code" name="Code" class="sup-int" placeholder="Enter Customer Code">
           <div class="sup-icon" style="position:absolute; left:10px;top:15%">
             <i style='font-size:12px' class='fas'>&#xf121;</i>
           </div>
@@ -202,60 +202,60 @@
 
 
 
-        <label for="Name" class="label-block">Name:</label>
+        <label for="Name" class="label-block"> Name <span class="text-danger">*</span></label>
         <input type="text" id="Name" name="Name" placeholder="&#128100; Enter Name" required pattern="[A-Za-z ]+"
           title="Please enter only letters">
 
-        <label for="ContactPersonName" class="label-block">Contact Person Name:</label>
+        <label for="ContactPersonName" class="label-block">Contact Person Name</label>
         <input type="text" id="ContactPersonName" name="ContactPersonName" placeholder="&#128100; Enter Contact Person"
-          pattern="[A-Za-z ]+" title="Please enter only letters" required>
+           title="Please enter only letters" >
 
 
 
 
-        <label for="ContactNo1">Contact No. 1:</label>
+        <label for="ContactNo1">Contact No. 1 <span class="text-danger">*</span> </label>
         <input type="number" id="ContactNo1" name="ContactNo1" placeholder="&#x260E; Enter Contact Number 1" required
           maxlength="10" title="Please enter a 10-digit phone number">
 
-      <label for="ContactNo2">Contact No. 2:</label>
-        <input type="number" id="ContactNo2" name="ContactNo2" placeholder="&#x260E; Enter Contact Number 2" required
+      <label for="ContactNo2">Contact No. 2</label>
+        <input type="number" id="ContactNo2" name="ContactNo2" placeholder="&#x260E; Enter Contact Number 2" 
           maxlength="10" title="Please enter a 10-digit phone number">
 
 
-        <label for="AadharNo">Aadhar No:</label>
+        <label for="AadharNo">Aadhar No</label>
         <input type="number" id="AadharNo" name="AadharNo" placeholder="&#9751;  Enter Aadhar Number"
-          minlength="10" maxlength="12" title="Please enter a 12-digit Aadhar Number">
+            title="Please enter a 12-digit Aadhar Number">
 
 
 
-        <label for="Pincode">Pincode:</label>
+        <label for="Pincode">Pincode</label>
         <input type="number" id="Pincode" name="Pincode" placeholder="&#9951;  Enter Pincode"  maxlength="6"
           title="Please enter a 6-digit Pin Code Number">
 
 
 
 
-        <label for="Email">Email:</label>
+        <label for="Email">Email <span class="text-danger">*</span></label>
         <input type="email" id="Email" name="Email" placeholder="&#x2709;  Enter Email" required>
 
-        <label for="GSTNo">GST No:</label>
+        <label for="GSTNo">GST No</label>
         <input type="text" id="GSTNo" name="GSTNo" placeholder="&#9951; Enter GST No." 
           oninput="convertToUpperCase(this)" minlength="15" maxlength="15" title="Please enter a 15-digit GST Number">
 
 
 
-        <label for="PAN">PAN:</label>
+        <label for="PAN">PAN</label>
         <input type="text" id="PAN" name="PAN" placeholder="&#9751; Enter PAN" 
           oninput="convertToUpperCase(this)" minlength="10" maxlength="10" title="Please enter a 10-digit PAN Number">
 
 
-        <label for="Status" class="label-block">Status:</label>
+        <label for="Status" class="label-block">Status</label>
         <select id="Status" name="Status">
           <option value="Active" selected>Active</option>
           <option value="Inactive">Inactive</option>
         </select>
 
-        <label for="Address">Address:</label>
+        <label for="Address">Address</label>
         <div>
           <textarea id="Address" name="Address" rows="4" placeholder="Enter Address" cols="72" 
             style="width: 100%;"></textarea><br><br>
@@ -279,11 +279,11 @@
 
 </body>
 <script>
-  document.getElementById("supplierForm").addEventListener("submit", function () {
+  //document.getElementById("supplierForm").addEventListener("submit", function () {
     //e.preventDefault();
 
     // Collect form data
-    const formData = {
+   /* const formData = {
       Code: document.getElementById("Code").value,
       Name: document.getElementById("Name").value,
       ContactPersonName: document.getElementById("ContactPersonName").value,

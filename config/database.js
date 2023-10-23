@@ -1,3 +1,4 @@
+
 module.exports = {
     dbName: 'ims_project',
     user: 'root',

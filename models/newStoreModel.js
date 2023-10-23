@@ -3,7 +3,7 @@ const { sequelize, user } = require(".");
 
 module.exports = (sequelize, DataTypes) => {
     
-    const NewStore = sequelize.define('new_store_master', {
+    const Store = sequelize.define('store_master', {
         outletId: {
             type: DataTypes.BIGINT(20),
             allowNull: false,
@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue : 'active',
         },
         displayOrder : {
-            type : DataTypes.INTEGER,
+            type : DataTypes.STRING,
             allowNull : false,
         },
         edit_by : {
@@ -90,5 +90,5 @@ module.exports = (sequelize, DataTypes) => {
     
     })
 
-    return NewStore
+    return Store
 }
