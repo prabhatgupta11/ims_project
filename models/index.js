@@ -27,9 +27,10 @@ db.sequelize = sequelize
 
 db.products = require("./productModel")(sequelize, DataTypes)
 db.newProduct = require("./productNewModel")(sequelize, DataTypes)
+db.productImage = require("./productImageModel")(sequelize, DataTypes)
 db.productStock = require("./productStockModel")(sequelize, DataTypes)
 db.user = require("./userModel")(sequelize, DataTypes)
-// db.store = require('./storeModel')(sequelize, DataTypes)
+db.salesExecutive = require('./salesExecutive')(sequelize, DataTypes)
 db.store = require('./newStoreModel')(sequelize, DataTypes)
 db.productRaise = require('./productRaiseModel')(sequelize, DataTypes)
 db.productPrice = require('./productPriceModel')(sequelize, DataTypes)
@@ -39,8 +40,12 @@ db.category = require('./categoryMasterModel')(sequelize, DataTypes)
 db.productCategoryMapping = require('./productCategoryMappingModel')(sequelize, DataTypes)
 db.userStoreMapping = require('./userStoreMapping')(sequelize, DataTypes)
 db.storeCategoryMapping = require('./storeCategoryMapping')(sequelize, DataTypes)
+db.purchaseOrder = require('./purchaseOrder')(sequelize, DataTypes)
+db.purchaseOrderItems = require('./purchaseOrderItems')(sequelize, DataTypes)
 db.order = require('./orderModel')(sequelize, DataTypes)
 db.orderItems = require('./orderItemsModel')(sequelize, DataTypes)
+db.saleQuotation = require("./saleQuotationModel")(sequelize, DataTypes)
+db.saleQuotationItem = require("./saleQuotationItemModel")(sequelize, DataTypes)
 db.productMapping = require('./productMappingModel')(sequelize, DataTypes)
 db.supplier = require('./supplierMaster')(sequelize, DataTypes)
 db.stateMaster = require('./stateMasterModel')(sequelize, DataTypes)
@@ -48,6 +53,8 @@ db.codeMaster = require('./code_master')(sequelize, DataTypes)
 db.tax = require('./taxMasterModel')(sequelize, DataTypes)
 db.customer = require('./customerMasterModel')(sequelize, DataTypes)
 db.productPrice = require('./productPriceModel')(sequelize, DataTypes)
+db.autoGenerateNumber = require('./autoGenerateNumber')(sequelize, DataTypes)
+db.userLog = require("./userLogModel")(sequelize, DataTypes)
 
 // db.products.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
 db.productStock.belongsTo(db.products, { sourceKey: "itemId", foreignKey: "itemId" });
@@ -55,20 +62,25 @@ db.productStock.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outlet
 db.products.belongsTo(db.manufacturer, { sourceKey: "manufacturerId", foreignKey: "manufacturerId" })
 db.user.belongsToMany(db.store, { through: db.userStoreMapping, foreignKey: 'userFk', as: 'selectedStores' });
 db.store.belongsToMany(db.user, { through: db.userStoreMapping, foreignKey: 'storeFk' });
-// db.order.belongsTo(db.orderItems, { sourceKey: 'orderPK', foreignKey: 'orderId' });
+db.productPrice.belongsTo(db.order, { sourceKey: 'orderId', foreignKey: 'orderFk' });
+db.productPrice.belongsTo(db.customer, { sourceKey: 'id', foreignKey: 'supplierCustomer' });
 db.store.belongsToMany(db.codeMaster, { through: db.storeCategoryMapping, foreignKey: 'storeFk', as: 'selectedCategories' });
 db.codeMaster.belongsToMany(db.store, { through: db.storeCategoryMapping, foreignKey: 'categoryFk' });
 
-<<<<<<< HEAD
-// db.productPrice.belongsTo(db.newProduct, { sourceKey: "itemId", foreignKey: "itemId" });
-// db.productPrice.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
- db.order.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
- db.stockInOut.belongsTo(db.newProduct, { sourceKey: "itemId", foreignKey: "itemId" });
-=======
 db.productPrice.belongsTo(db.newProduct, { sourceKey: "itemId", foreignKey: "itemId" });
 db.productPrice.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
 db.order.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
->>>>>>> 2b0ad6109b335d29fb285ba6c943268772076b46
+db.purchaseOrder.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
+db.stockInOut.belongsTo(db.newProduct, { sourceKey: "itemId", foreignKey: "itemId" });
+
+db.saleQuotation.belongsTo(db.store, { sourceKey: "outletId", foreignKey: "outletId" });
+db.saleQuotationItem.belongsTo(db.newProduct, { sourceKey: "itemId", foreignKey: "itemId" });
+
+db.saleQuotation.hasMany(db.saleQuotationItem, {
+   foreignKey: 'orderFk',
+   as: 'saleQuotationsItem',
+});
+
 
 db.sequelize.sync({ force: false })
    .then(() => {

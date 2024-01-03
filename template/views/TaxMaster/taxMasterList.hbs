@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="css/newStyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+
+    <style>
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 10px;
+            padding-left: 12px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+
+        form.over {
+            overflow-x: scroll;
+            overflow-y: scroll;
+        }
+
+
+
+        form.over {
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+
+            form.over {
+                overflow-x: scroll;
+                overflow-y: scroll;
+            }
+
+
+        }
+
+        @media (max-width: 1024px) {
+
+            form.over {
+                overflow-x: scroll;
+                overflow-y: scroll;
+            }
+
+        }
+
+        @media (max-width: 820px) {
+
+            form.over {
+                overflow-x: scroll;
+                overflow-y: scroll;
+            }
+
+
+        }
+
+
+
+
+
+
+
+
+        .fa-solid.fa-list {
+            margin-right: 4px;
+            width: 40px;
+            height: 35px;
+            position: relative;
+            bottom: 3px;
+        }
+
+
+        @media (min-width:300px) and (max-width:400px) {
+            .dataTables_length {
+                margin-right: 157px !important;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (min-width:401px) and (max-width:500px) {
+            .dataTables_length {
+                margin-right: 157px !important;
+                margin-bottom: 10px;
+            }
+        }
+
+        .button-2>a {
+            color: #333333;
+        }
+
+        .button-30 {
+            align-items: center;
+            appearance: none;
+            background-color: #FCFCFD;
+            border-radius: 4px;
+            border-width: 0;
+            box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+            box-sizing: border-box;
+            color: #36395A;
+            cursor: pointer;
+            display: inline-flex;
+            font-size: 13px;
+            padding: 10px;
+            justify-content: center;
+            line-height: 1;
+            list-style: none;
+            overflow: hidden;
+            position: relative;
+            text-align: left;
+            text-decoration: none;
+            transition: box-shadow .15s, transform .15s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            white-space: nowrap;
+            will-change: box-shadow, transform;
+
+        }
+
+        .button-30:focus {
+            box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+        }
+
+        .button-30:hover {
+            box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+            transform: translateY(-2px);
+        }
+
+        .button-30:active {
+            box-shadow: #D6D6E7 0 3px 7px inset;
+            transform: translateY(2px);
+        }
+
+        .color-container {
+            position: absolute;
+            z-index: 0;
+            top: 0;
+            height: 200px;
+            width: 100%;
+            background-color: #9096de;
+        }
+    </style>
+</head>
+
+<body id="body-pd">
+
+    <!-- partial:../../partials/_navbar.html -->
+    {{>navbar}}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_settings-panel.html -->
+        {{>setting}}
+        <!-- partial -->
+        <!-- partial:../../partials/_sidebar.html -->
+        {{>side}}
+        <!-- partial -->
+
+        <div class="soon w-100">
+
+
+            <div class="color-container"></div>
+            <div class="col-md-12 row-md-5 mx-0 main_container ">
+                <div class="row-md-4 subtitle d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex ">
+
+
+                    </div>
+
+                    <div class="w-100 d-flex justify-content-between align-items-center mb-2 mt-4">
+                        <h3 class="card-title my-0 font-weight-semibold text-white ls-tighter" style="z-index: 3;"> <i
+                                class="fa-solid fa-address-book mr-2"></i>Tax Master List</h3>
+
+                        <button class="button-30 float-right my-auto" role="button" type="button"><a href="/taxMaster"
+                                style="text-decoration: none" class="text-dark px-3">Add</a></button>
+                    </div>
+
+                </div>
+                {{!-- {{#if message}}
+                <div class="alert alert-info">{{message}}</div>
+                {{/if}} --}}
+                {{!-- <div class="row-md-4 subtitle d-flex justify-content-between align-items-center">
+                    <div class="block cross-section">
+                        {{#if message}}
+                        <div class="alert alert-info">{{message}}</div>
+                        {{/if}}
+                        <h4 class="flex-grow-1">User List
+                    </div>
+
+                </div> --}}
+
+                <div class="container col-md-12 me-class" style="padding-right:24px;border-radius:10px">
+
+
+                    <div class="container-table pt-2 p-0 mt-4 table-responsive">
+                        <form class="over">
+                            <table class="table table-custom" id="tax_table">
+                                <thead>
+                                    <tr>
+
+                                        <th scope="col ">Tax Code</th>
+                                        <th scope="col ">Tax Description</th>
+                                        <th scope="col ">Tax %</th>
+                                        <th scope="col ">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablebody">
+
+                                </tbody>
+
+                                {{!-- {{#each data}} --}}
+
+                                <tr>
+
+                            </table>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="../../vendors/js/vendor.bundle.base.js"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page -->
+        <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+        <script src="../../vendors/select2/select2.min.js"></script>
+        <!-- End plugin js for this page -->
+        <!-- inject:js -->
+        <script src="../../js/off-canvas.js"></script>
+        <script src="../../js/hoverable-collapse.js"></script>
+        <script src="../../js/template.js"></script>
+        <script src="../../js/settings.js"></script>
+        <script src="../../js/todolist.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page-->
+        <script src="../../js/file-upload.js"></script>
+        <script src="../../js/typeahead.js"></script>
+        <script src="../../js/select2.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+
+
+        {{!--
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"></script>
+        <script src="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css"></script> --}}
+
+        <script>
+            $(document).ready(function () {
+                const dataTable = $('#tax_table').DataTable({
+                    "language": {
+                        "lengthMenu": "Show _MENU_ Entries"
+                    },
+                    'processing': true,
+                    'serverSide': true,
+                    'ajax': {
+                        'url': '/taxDetailsList',
+                        'type': 'GET'
+                    },
+                    'columns': [
+                        { data: 'Tax_Code' },
+                        { data: 'Description' },
+                        { data: 'Tax_percentage' },
+                        {
+                            data: "rowguid",
+                            render: function (data, type, row) {
+                                return "<a href='/updateTaxMaster/" + data + "'><img src='/images1/edit.png' width='30px' alt='Edit'></a> | <a href='#'  class='delete-link' data-id='" + data + "'><img src='/images1/bin.png' width = '30px' alt='Delete' class='delete-icon'</a>";
+                            }
+                        }
+                    ],
+                });
+            });
+
+            // Add this code outside the document.ready block
+            $(document).on('click', '.delete-link', function () {
+
+                var rowguid = $(this).data('id');
+
+                // Perform the delete action using a POST request
+                $.post('/deleteTax/' + rowguid, function (response) {
+                    // Handle the response, e.g., show a success message
+                    console.log(response);
+                    // Optionally, you can reload the DataTable after deletion
+                    location.reload();
+                });
+            });
+        </script>
+
+
+</body>
+
+</html>

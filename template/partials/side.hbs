@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="/js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/images/favicon.png" />
+    {{!-- boostrap link --}}
+
+    <style>
+        #ui-basic ul {
+            max-height: 300px;
+            overflow-y: scroll;
+
+        }
+
+
+        #ui-basic ul::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        #ui-basic ul::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 1px grey;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        #ui-basic ul::-webkit-scrollbar-thumb {
+            background: #747ac2;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        #ui-basic ul::-webkit-scrollbar-thumb:hover {
+            background: #403f9b;
+        }
+
+
+
+              #tables ul {
+            max-height: 300px;
+            overflow-y: scroll;
+
+        }
+
+
+        #tables ul::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        #tables ul::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 1px grey;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        #tables ul::-webkit-scrollbar-thumb {
+            background: #747ac2;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        #tables ul::-webkit-scrollbar-thumb:hover {
+            background: #403f9b;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">
+                    <i class="icon-grid menu-icon"></i>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                    aria-controls="ui-basic">
+                    <i class="icon-layout menu-icon"></i>
+                    <span class="menu-title">Master</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="/userList">User</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/salesExecutiveList">Sales Executive</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/manufacturerList">Brand </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/codeCategoryMasterList">Category</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/departmentMasterList">Department </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/groupMasterList">Group </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/suppliersMasterList">Suppliers Master</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/customerMasterList">Customer Master</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/stateMasterList">State Master</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/taxMasterList">Tax Master</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/newStoreList">Store Master</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/newProductList">Product Master</a></li>
+                        {{!-- <li class="nav-item"> <a class="nav-link" href="/productNew">Product New</a></li> --}}
+                        <li class="nav-item"> <a class="nav-link" href="/uploadBulkProducts">Upload Bulk Product</a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+                    aria-controls="form-elements">
+                    <i class="icon-columns menu-icon"></i>
+                    <span class="menu-title">Purchase</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="form-elements">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/purchaseOrderList">Purchase Order </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/stockInList">Purchase Invoice </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/purchaseInvoiceCancelList">Purchase Return </a></li>
+
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+                    <i class="icon-bar-graph menu-icon"></i>
+                    <span class="menu-title">Sales</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="charts">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/saleQuotationList">Sales Quotation </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/stockOutList">Sales Invoice </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/saleReturnList">Sales Return </a></li>
+                    </ul>
+                </div>
+            </li>
+
+
+ 
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false" aria-controls="ui-advanced">
+                <i class="icon-image menu-icon"></i>
+                <span class="menu-title">Transaction</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="ui-advanced">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/openingStockList">Opening Stock Entry</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/productDamageList">Product Damage Entry</a></li>     
+                </ul>
+              </div>
+            </li>
+         
+
+           <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#editors" aria-expanded="false" aria-controls="editors">
+                <i class="icon-loader menu-icon"></i>
+                <span class="menu-title">Approval</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="editors">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"><a class="nav-link" href="/newProductApprovalList">Product Approval</a></li>
+                </ul>
+              </div>
+            </li>
+
+              <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+                <i class="icon-grid-2 menu-icon"></i>
+                <span class="menu-title">Reports</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="tables">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/stockSummary">Stock Summary</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/stockDetail">Stock Detail</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/customerReport">Customer Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/supplierReport">Supplier Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/storeReport">Store Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/taxReport">Tax Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/itemReport">Item Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/brandReport">Brand Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/employeeReport">Employee Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/purchaseOrderReport">Purchase Order Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/purchaseInvoiceReport">Purchase Invoice Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/purchaseRetunReport">Purchase Return Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/purchaseCancelReport">Purchase Cancel Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/saleInvoiceReport">Sale Invoice Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/saleGSTReport">Sale GST Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/purchaseGoodsReport">Purchase of goods Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/saleQuotationReport">Sale Quotation Report</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/saleReturnReport">Sale Return Report</a></li>
+
+
+                </ul>
+              </div>
+            </li>
+
+        </ul>
+    </nav>
+
+    <script src="vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="vendors/chart.js/Chart.min.js"></script>
+    <script src="vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="js/dataTables.select.min.js"></script>
+
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="js/off-canvas.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <script src="js/template.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="js/dashboard.js"></script>
+    <script src="js/Chart.roundedBarCharts.js"></script>
+    <!-- End custom js for this page-->
+</body>
+
+
+
+
+</html>

@@ -35,10 +35,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             defaultValue: 'Active'
         },
-        // Active: {
-        //     type: DataTypes.ENUM('Active', 'Inactive'), 
-        //     defaultValue: 'Active',
-        //   },
+        isDeleted: {
+            type: DataTypes.STRING, 
+            defaultValue: '0',
+          },
         approve_b: {
             type: DataTypes.STRING,
             defaultValue: 'Y'

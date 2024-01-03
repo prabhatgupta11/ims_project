@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     Code: {
       type: DataTypes.STRING(255),
       allowNull: false,
+      unique:true,
     },
     Name: {
       type: DataTypes.STRING(255),
@@ -64,7 +65,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('Active', 'Inactive'), 
       defaultValue: 'Active',
     },
-    
+    isDeleted: {
+      type: DataTypes.STRING, 
+      defaultValue: '0',
+    },
     created_by: {
       type: DataTypes.STRING(255),
     },

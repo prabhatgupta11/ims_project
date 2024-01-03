@@ -12,12 +12,13 @@ const upload = multer()
 const hbs = require("hbs");
 
 const indexRouter = require('./routes/index');
+// const userActivity = require('./middleware/userActivity')
 
 const app = express();
 
 const staticpath = path.join(__dirname,);
-const templatespath = path.join(__dirname,"./templates/views");
-const partialpath = path.join(__dirname,"./templates/partials");
+const templatespath = path.join(__dirname,"./template/views");
+const partialpath = path.join(__dirname,"./template/partials");
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(staticpath));
 
@@ -30,15 +31,6 @@ hbs.registerHelper('ifEquals', function (arg1, arg2, options) {
   return arg1 === arg2 ? options.fn(this) : options.inverse(this);
 });
 
-hbs.registerHelper('isSelected', function(value, selectedValue) {
-  // console.log(value,selectedValue)
-  return value === selectedValue ? 'selected' : '';
-});
-
-hbs.registerHelper('log', function(value) {
-  console.log(value);
-});
-
 // hbs.registerHelper('isSelectedStore', function(selectedStores, storeId) {
 //   console.log("here")
 //   console.log(selectedStores,storeId)
@@ -46,6 +38,13 @@ hbs.registerHelper('log', function(value) {
 // });
 hbs.registerHelper('isEqual', function (value1, value2, options) {
   return value1 === value2 ? options.fn(this) : options.inverse(this);
+});
+
+hbs.registerHelper("capitalizeFirst", function (str) {
+  if (typeof str !== "string") {
+    return str;
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1);
 });
 
 
@@ -63,30 +62,21 @@ app.use(session({
 
 app.use(flash());
 
-app.get("/",(req,res)=>{
-  try{
-    res.send("welcome")
-  }
-  catch(err)
-  {
-    res.send(err.message)
-  }
-})
+app.use('/', indexRouter);
+// app.use(userActivity)
 
-//app.use('/', indexRouter);
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
 
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// app.use(function(err, req, res, next) {
+//   console.log(err)
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-app.use(function(err, req, res, next) {
-  console.log(err)
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  res.status(err.status || 500);
-  res.render('error');
-});
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
 app.listen(8000, () => {
   console.log('Listening on port 8000...');

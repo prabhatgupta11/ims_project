@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Skydash Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="/vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <style>
+    /* file upload button */
+input[type="file"]::file-selector-button {
+  border-radius: 4px;
+  padding: 0 16px;
+  height: 40px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+  margin-right: 16px;
+  transition: background-color 200ms;
+}
+
+/* file upload button hover state */
+input[type="file"]::file-selector-button:hover {
+  background-color: #f3f4f6;
+}
+
+/* file upload button active state */
+input[type="file"]::file-selector-button:active {
+  background-color: #e5e7eb;
+}
+
+/* ------------------------ */
+
+
+  </style>
+
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    {{>navbar}}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_settings-panel.html -->
+      {{>setting}}
+      <!-- partial -->
+      <!-- partial:../../partials/_sidebar.html -->
+      {{>side}}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="color-container"></div>
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="d-flex mb-3">
+              <a href="/userList" class="text-white" style="z-index: 3;"><i class="fa-solid fa-angle-left "></i></a>
+              <h3 class="card-title ml-4 my-0 font-weight-semibold text-white ls-tighter" style="z-index: 3;">Add User
+              </h3>
+
+
+            </div>
+            <div class="col-md-12  grid-margin stretch-card p-0">
+
+              <div class="card">
+                <div class="card-body col-md-6 p-0">
+
+                  <div class="wrapper pl-3 py-4  col-md-12">
+
+                    <form action="/uploadBulkProducts" method="post" enctype="multipart/form-data">
+                      <div
+                        class="form-context  px-0 col-md-12 col-12  d-flex flex-wrap justify-content-start align-items-start">
+
+                        <div class="inner-cont p-0 col-md-10 col-lg-12 flex-wrap col-12 d-flex justify-content-start align-content-start">
+                          <div class=" mb-1 col-md-6  px-0 d-flex justify-content-start align-items-center">
+                            <label for="fname" class=" mb-2 block text-nowrap p-0 col-4 col-md-5">Upload file<span
+                                class="text-danger">*</span></label>
+                            <input type="file" name="file" class="col-md-12" accept=".xlsx" id="formFileDisabled" required />
+                          </div>
+                         
+                        </div>
+                       
+                      
+                      </div>
+                   <div
+                          class="inner-cont p-0 col-md-6 col-lg-6 flex-column  flex-wrap col-12 d-flex  justify-content-start align-content-start">
+                          <div class="d-flex align-items-center justify-content-start my-2  col-md-12 p-0">
+                            <button class="btn btn-primary mr-2 " role="button" type="submit" style="padding: 9px 20px;
+    border-radius: 6px;">Upload</button>
+                            <button class="btn btn-primary mr-2" role="button"  style=" padding: 9px 0px;
+    border-radius: 6px;"><a href="/document/ProductExcelFile.xlsx" download="ProductExcelFile.xlsx"
+                    class="formate button-15 text-light" style="width: 150px; float:right; text-decoration:none ">Download
+                    Format</a></button>
+                          </div>
+                        </div>
+                  </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+  </div>
+  
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../../vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script src="../../vendors/select2/select2.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../../js/off-canvas.js"></script>
+  <script src="../../js/hoverable-collapse.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/settings.js"></script>
+  <script src="../../js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../../js/file-upload.js"></script>
+  <script src="../../js/typeahead.js"></script>
+  <script src="../../js/select2.js"></script>
+  <!-- End custom js for this page-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+
+</html>

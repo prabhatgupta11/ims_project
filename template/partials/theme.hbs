@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/newStyle.css">
+</head>
+
+<body>
+  <div class="color-switcher">
+    <div class="switcher-btn">
+      <i class="fas fa-cog"></i>
+    </div>
+    <h5>Themes</h5>
+    <div class="theme-button-container">
+      <span class="theme-button" data-image="/images/back.jpg"
+        style="background: url('/images/back.jpg') center/contain;"></span>
+      {{!-- <span class="theme-button" data-image="/images/back1.jpg"
+        style="background: url('/images/back1.jpg') center/contain;"></span> --}}
+      <span class="theme-button" data-image="/images/back2.jpg"
+        style="background: url('/images/back2.jpg') center/contain;"></span>
+      {{!-- <span class="theme-button" data-image="/images/back3.jpg"
+        style="background: url('/images/back3.jpg') center/contain;"></span> --}}
+      <span class="theme-button" data-image="/images/back4.jpg"
+        style="background: url('/images/back4.jpg') center/contain;"></span>
+      {{!-- <span class="theme-button" data-image="/images/back5.jpg"
+        style="background: url('/images/back5.jpg') center/contain;"></span> --}}
+      <span class="theme-button" data-image="/images/back6.jpg"
+        style="background: url('/images/back6.jpg') center/contain;"></span>
+      {{!-- <span class="theme-button" data-image="/images/back7.jpg"
+        style="background: url('/images/back7.jpg') center/contain;"></span> --}}
+      <span class="theme-button" data-image="/images/back8.jpg"
+        style="background: url('/images/back8.jpg') center/contain;"></span>
+      <span class="theme-button" data-image="/images/back9.jpg"
+        style="background: url('/images/back9.jpg') center/contain;"></span>
+      <span class="theme-button" data-image="/images/back10.jpg"
+        style="background: url('/images/back10.jpg') center/contain;"></span>
+      <span class="theme-button" data-image="/images/back11.jpg"
+        style="background: url('/images/back11.jpg') center/contain;"></span>
+      <span class="theme-button" data-image="/images/back12.jpg"
+        style="background: url('/images/back12.jpg') center/contain;"></span>
+      <span class="theme-button" data-image="/images/back13.jpg"
+        style="background: url('/images/back13.jpg') center/contain;"></span>
+      {{!-- <span class="theme-button" data-image="/images/back14.jpg"
+        style="background: url('/images/back14.jpg') center/contain;"></span> --}}
+      <span class="theme-button" data-image="/images/back15.jpg"
+        style="background: url('/images/back15.jpg') center/contain;"></span>
+      <span class="theme-button" data-image="/images/back16.jpg"
+        style="background: url('/images/back16.jpg') center/contain;"></span>
+      {{!-- <span class="theme-button" data-image="/images/back17.jpg"
+        style="background: url('/images/back17.jpg') center/contain;"></span> --}}
+      <span class="theme-button" data-image="/images/back18.jpg"
+        style="background: url('/images/back18.jpg') center/contain;"></span>
+      <span class="theme-button" data-image="/images/back19.jpg"
+        style="background: url('/images/back19.jpg') center/contain;"></span>
+
+    </div>
+  </div>
+
+
+  <!-- Add jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <!-- Your existing script -->
+  <script>
+    $(document).ready(function () {
+      function setBackgroundImage(imageUrl) {
+        $('.soon').css('background', `url('${imageUrl}') center/cover`);
+        localStorage.setItem('selectedBackground', imageUrl);
+      }
+      const storedBackground = localStorage.getItem('selectedBackground');
+      if (storedBackground) {
+        setBackgroundImage(storedBackground);
+      }
+
+      $('.switcher-btn').click(function () {
+        const colorSwitcher = $('.color-switcher');
+        colorSwitcher.toggleClass('active');
+
+        const isSwitcherActive = colorSwitcher.hasClass('active');
+        colorSwitcher.css('right', isSwitcherActive ? '0' : '-200px');
+      });
+
+      $('.theme-button').click(function () {
+        let dataImage = $(this).attr('data-image');
+        setBackgroundImage(dataImage);
+      });
+    });
+  </script>
+</body>
+
+</html>

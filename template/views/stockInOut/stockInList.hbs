@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Order List</title>
+    <link rel="stylesheet" href="css/newStyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+    <style>
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+        ul.breadcrumb li:last-child a {
+            color: #64748b;
+            /* Change the color to the grey color you prefer */
+
+        }
+
+        ul.breadcrumb li a:hover {
+
+            text-decoration: underline;
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 10px;
+            padding-left: 12px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+        #start-date,
+        #end-date {
+            width: 31.5%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+
+        @media (max-width:600px) {
+            ul.breadcrumb {
+                list-style: none;
+                padding-bottom: 5px;
+                padding-top: 1px;
+            }
+
+            form.over {
+                overflow-x: scroll;
+                overflow-y: scroll;
+            }
+        }
+
+        form.over {
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+
+            form.over {
+                overflow-x: scroll;
+                overflow-y: scroll;
+            }
+
+            .dataTables_length {
+                margin-bottom: 12px;
+                position: relative;
+                right: 46px;
+            }
+        }
+
+
+        @media (max-width:412px) {
+
+            ul.breadcrumb {
+                list-style: none;
+                padding-bottom: 5px;
+                padding-top: 30px;
+            }
+
+            #store {
+                min-width: 26vh;
+            }
+        }
+
+        
+
+        @media (max-width:375px) {
+            .dataTables_filter {
+                margin-left: -1px;
+            
+            }
+
+            .dataTables_length {
+                margin-left: 46px;
+            }
+        }
+
+        .fa-solid.fa-list {
+            margin-right: 4px;
+            width: 35px;
+            height: 35px;
+            position: relative;
+            bottom: 6px;
+        }
+
+        @media (min-width:300px) and (max-width: 370px) {
+            ul.breadcrumb li {
+                font-size: 10px !important;
+            }
+
+            .flex-grow-1 {
+                font-size: 20px !important;
+            }
+
+            ul.breadcrumb {
+                list-style: none;
+                padding-bottom: 5px;
+                padding-top: 9px;
+            }
+
+            #start-date{
+                    width: 12pc !important;
+            }
+
+            #end-date{
+                    width: 12pc !important;
+
+            }
+        }
+
+           @media (min-width:371px) and (max-width: 380px) {
+            #start-date{
+                    width: 11pc !important;
+            }
+
+            #end-date{
+                    width: 11pc !important;
+
+            }
+        }
+
+          @media (min-width:381px) and (max-width: 399px) {
+            #start-date{
+                    width: 14pc !important;
+            }
+
+            #end-date{
+                    width: 14pc !important;
+
+            }
+        }
+
+ @media (min-width:400px) and (max-width: 413px) {
+            #start-date{
+                    width: 15pc !important;
+            }
+
+            #end-date{
+                    width: 15pc !important;
+
+            }
+        }
+
+         @media (min-width:414px) and (max-width: 420px) {
+            #start-date{
+                    width: 13pc !important;
+            }
+
+            #end-date{
+                    width: 13pc !important;
+
+            }
+        }
+
+        @media (min-width:700px) and (max-width: 770px) {
+            #start-date{
+                    width: 6pc !important;
+            }
+
+            #end-date{
+                    width: 6pc !important;
+
+            }
+        }
+
+          @media (min-width:1000px) and (max-width: 1080px) {
+            #start-date{
+                    width: 9pc !important;
+            }
+
+            #end-date{
+                    width: 9pc !important;
+
+            }
+        }
+
+        @media (min-width:1200px) and (max-width: 1290px) {
+            #start-date{
+                    width: 13pc !important;
+            }
+
+            
+        }
+
+        @media (min-width:401px) and (max-width: 540px) {
+            ul.breadcrumb li {
+                font-size: 12px !important;
+            }
+
+            ul.breadcrumb {
+                padding-top: 7px;
+            }
+        }
+          @media (max-width: 600px) {
+            ul.breadcrumb {
+                list-style: none;
+                padding-bottom: 5px;
+                padding-top: 3px;
+            }
+        }
+
+
+
+
+
+    </style>
+</head>
+
+<body id="body-pd">
+
+    {{>side}}
+
+    <div class="soon">
+{{>theme}}
+ <div class="col-md-12 row-md-5 mx-0 main_container " style="padding-right:0px; margin-top:0px">
+
+
+        <div class="row-md-4 subtitle d-flex justify-content-between align-items-center" style="margin-top: 60px;">
+
+            <div class="row-md-4 subtitle d-flex justify-content-start align-items-center w-95"
+                style="margin-top: 5px;">
+                <div class="block">
+                    <div style="display: flex;">
+                        <img class="fa-solid fa-list" src="/images/order.png" width="30px" alt="">
+                        <h4 class="flex-grow-1 " style="font-size: 24px; color: #1e293b;
+    font-weight:800;">Purchase Order List </h4>
+                    </div>
+                </div>
+                <div id="line">
+                    <span id="line-content"></span> <!-- Content inside the div -->
+                </div>
+                <div class="breadcrumdiv">
+                    <ul class="breadcrumb">
+                        <li><a href="#"> Home</a></li>
+                        <li><a href="#">Transaction</a></li>
+                        <li><a href="#">Purchase Order List</a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-light btn-md  text-light h-25"
+                    style="background-color: #ff9f43;font-weight:500"><a href="/stockIn"
+                        style="text-decoration: none;color:white">+ Add Purchase Order</a></button>
+            </div>
+
+        </div>
+        {{#if message}}
+        <div class="alert alert-info">{{message}}</div>
+        {{/if}}
+
+
+        <div class="container col-md-12 me-class" style="padding-right:24px">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="shub-class">
+                        <label for="store" style="    position: relative;top: 10px;">Store</label>
+                        <div class="cons" style="position: relative; margin-top:10px;">
+                            <div class="icon-context input-field"
+                                style="position: absolute;margin-top: -3px; top:8px;left:10px ">
+                                <i class="fa-solid fa-store icons-icons" style="font-size: 15px;"></i>
+                            </div>
+
+                            <select name="outletId" id="store" class="store-select w-75 py-1 rounded-3 form-select"
+                                style="padding-left: 30px;font-size:14px p-0">
+                                {{#each store}}
+                                <option value={{outletId}}>{{storeName}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class=" py-2">
+
+                        <div class="filter-date">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="start-date">Start</label>
+                                    <input type="date" id="start-date" class="form-control " name="start-date"
+                                        style="    width:14pc;">
+                                </div>
+                                <div class="col-md-6">
+
+                                    <label for="end-date">End</label>
+                                    <input type="date" id="end-date" class="form-control" name="end-date"
+                                        style="    width: 14pc;">
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="form-inline d-flex">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="container-table pt-2 p-0 mt-4 table-responsive">
+                <form class="over">
+                    <table class="table table-custom " id="order_table">
+                        <thead>
+                            <tr>
+                                {{!-- <th scope="col"><i class="fa-regular fa-square-check"></i></th>
+                                <th scope="col"><input class="form-check-input border-2" type="checkbox" value=""
+                                        id="flexCheckDefault"></th> --}}
+                                {{!-- <th scope="col ">ID</th> --}}
+                                <th scope="col ">OrderId</th>
+                                <th scope="col ">Store Name</th>
+                                <th scope="col ">Supplier Name</th>
+                                {{!-- <th scope="col ">Stock Qty</th> --}}
+                                {{!-- <th scope="col ">Sale Price</th> --}}
+                                <th scope="col ">Order Amount</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    </div>
+   
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+    {{!--
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"></script>
+    <script src="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css"></script> --}}
+
+
+    <script>
+        $(document).ready(function () {
+
+            const dataTable = $('#order_table').DataTable({
+                "language": {
+                    "lengthMenu": "Show _MENU_ Entries"
+                },
+                responsive: true,
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'get',
+                'ajax': {
+                    'url': '/stockInListData',
+                    'data': function (d) {
+                        d.startDate = $('#start-date').val();
+                        d.endDate = $('#end-date').val();
+                        d.outletId = $('#store').val();
+                    }
+                },
+                'aaSorting': [],
+                'columns': [
+                    { data: 'orderId' },
+                    { data: 'storeName' },
+                    { data: 'customerName' },
+                    { data: 'totalAmount' },
+                    {
+                        data: "rowguid",
+                        render: function (data, type, row) {
+                            if (row.approve_b === 'approved') {
+                                return "<a href='/stockInView/" + data + "'><img src='/images/view.png' width='32px' alt='View'></a>"
+                            } else {
+                                return "<a href='/stockInUpdate/" + data + "'><img src='/images/edit.png' width='30px' alt='Edit'></a> | <a href='#'  class='delete-link' data-id='" + data + "'><img src='/images/bin.png' width = '30px' alt='Delete' class='delete-icon'</a>";
+                            }
+                        }
+                    }
+                ]
+
+            });
+            //new $.fn.dataTable.FixedHeader(table);
+            // Reload DataTable when date values change
+            $('#start-date, #end-date').on('change', function () {
+                dataTable.ajax.reload();
+            });
+
+            // Update the DataTable when the store selection changes
+            $('#store').on('change', function () {
+                dataTable.ajax.reload();
+            });
+
+        });
+
+                       // Add this code outside the document.ready block
+$(document).on('click', '.delete-link', function() {
+  
+    var rowguid = $(this).data('id');
+
+    // Perform the delete action using a POST request
+    $.post('/deletePurchaseOrder/' + rowguid, function(response) {
+        // Handle the response, e.g., show a success message
+        console.log(response);
+        // Optionally, you can reload the DataTable after deletion
+        location.reload();
+    });
+});
+
+
+
+    </script>
+</body>
+
+</html>

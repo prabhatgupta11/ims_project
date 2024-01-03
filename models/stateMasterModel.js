@@ -16,13 +16,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    DisplayOrder: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
+    DisplayOrder: { 
+      type: DataTypes.STRING(255)
     },
     Status: {
       type: DataTypes.ENUM('Active', 'Inactive'), 
       defaultValue: 'Active',
+    },
+    isDeleted: {
+      type: DataTypes.STRING, 
+      defaultValue: '0',
     },
     created_by: {
       type: DataTypes.STRING(255),
@@ -42,9 +45,6 @@ module.exports = (sequelize, DataTypes) => {
     approved_by: {
       type: DataTypes.STRING(255),
     },
-    // displayorder: {
-    //   type: DataTypes.INTEGER,
-    // },
     rowguid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,

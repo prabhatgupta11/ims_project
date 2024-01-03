@@ -10,27 +10,26 @@ module.exports = (sequelize, DataTypes) => {
         },
         Tax_Code: {
             type: DataTypes.STRING(255),
-            allowNull: false,
         },
         HSN_Code: {
             type: DataTypes.STRING(255),
-            allowNull: false,
         },
         Tax_percentage: {
             type: DataTypes.STRING(255),
-            allowNull: false,
         },
         Description: {
             type: DataTypes.TEXT,
-            allowNull: false,
         },
         Status: {
             type: DataTypes.ENUM('Active', 'Inactive'),
             defaultValue: 'Active',
         },
+        isDeleted: {
+            type: DataTypes.STRING, 
+            defaultValue: '0',
+          },
         State_Code: {
             type: DataTypes.INTEGER,
-            allowNull: false,
         },        
         Tax_Type:
         {

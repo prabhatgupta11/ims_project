@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Add Store</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <style>
+    .color-container {
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      height: 200px;
+      width: 100%;
+      background-color: #9096de;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    {{>navbar}}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_settings-panel.html -->
+      {{>setting}}
+      <!-- partial -->
+      <!-- partial:../../partials/_sidebar.html -->
+      {{>side}}
+      <!-- partial -->
+
+      <div class="main-panel">
+        <div class="color-container"></div>
+        <div class="content-wrapper">
+
+          <div class="row">
+            <div class="d-flex mt-2 mb-3">
+              <a href="/newStoreList" class="text-white" style="z-index: 3;"><i class="fa-solid fa-angle-left "></i></a>
+              <h3 class="card-title ml-4 my-0 font-weight-semibold text-white" style="z-index: 3;">Add Store</h3>
+
+
+            </div>
+            {{#if message}}
+            <div class="alert alert-info">{{message}}</div>
+            {{/if}}
+            <div id="flash-message" class="alert alert-danger" style="display: none;"></div>
+            <form action="/createNewStore" method="post">
+              <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card col-md-11 wrapper">
+                    <div class="card-body p-0">
+                      <div class="row justify-content-around mx-auto ">
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1" class=" mr-3">Code</label>
+                            <input class="form-control input-field" placeholder="Enter Your Code" name="code" id="code">
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1" class=" mr-3">Store Name <span
+                                class="text-danger">*</span></label>
+                            <input class="form-control input-field" placeholder="Enter Your Store Name " type="text"
+                              name="storeName" id="name" required oninput="AlphabateValidate(this)">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-around mx-auto ">
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlSelect1">Business Type <span
+                                class="text-danger">*</span></label>
+                            <select id="businessType" name="businessType" class="form-control input-field" required>
+                              <option value="" disabled selected>Select Business Type</option>
+                              <option value="FRANCHISE">FRANCHISE</option>
+                              <option value="DISTRIBUTION CENTER">DISTRIBUTION CENTER</option>
+                              <option value="BRANCH">BRANCH</option>
+                            </select>
+                          </div>
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1">Address1</label>
+
+                            <textarea class="form-control input-field" cols="" rows="" type="text"
+                              placeholder="Enter Your Address " name="address1" id="address1"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1">Address2</label>
+                            <textarea class="form-control input-field px-1" type="text"
+                              placeholder=" Enter Your Address " name="address2" id="address2"></textarea>
+                          </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group mb-2 ">
+                              <label for="exampleFormControlSelect1">State</label>
+                              <select id="state" name="state" class="form-control input-field">
+                                <option value="">Select State</option>
+                                {{#each state}}
+                                <option value="{{id}}">{{Name}}</option>
+                                {{/each}}
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group mb-2">
+                              <label for="PAN">Pin Code</label>
+                              <input class="form-control input-field" type="text"
+                                placeholder="Enter Your Pin Code here " name="pincode" id="pinCode" maxlength="6"
+                                oninput="pinCodeValidate(this)" />
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group mb-2">
+                              <label for="PAN">Contact Person Name</label>
+                              <input class="form-control input-field" type="text" placeholder="Enter Your Name "
+                                name="contactPersonName" id="contactPersonName" title="Please enter only letters" />
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group mb-2">
+                              <label for="PAN">Pin Code</label>
+                              <input class="form-control input-field validateContact1" type="tel"
+                                placeholder="0-987-654-321" name="contactNo1" id="contactNo"
+                                title="Please enter a 10-digit contact number" oninput="pinCodeValidate(this)"
+                                maxlength="10" required />
+                            </div>
+                          </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card col-md-11 wrapper">
+                    <div class="card-body p-0">
+                      <div class="row justify-content-around mx-auto ">
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                         <label for="contactNo">Contact No 1 <span class="text-danger">*</span></label>
+            <input class="form-control input-field validateContact1" type="tel" placeholder="0-987-654-321"
+              name="contactNo1" id="contactNo" title="Please enter a 10-digit contact number"
+              oninput="contactNoValidate(this)" maxlength="10" required/>
+                            
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1">Contact No 2</label>
+                            <input class="form-control input-field validateContact2" type="text"
+                              placeholder="0-987-654-321 " name="contactNo2" id="contactNo" maxlength="10"
+                              oninput="contactNoValidate(this)"/>
+                            
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1">GST No</label>
+                            <input class="form-control input-field " type="text" placeholder="Enter Your GST number "
+                              name="GSTNo" id="gstNo" maxlength="15" oninput="gstNoValidate(this)" />
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1">PAN No</label>
+                            <input class="form-control input-field" type="text" placeholder="Enter Your Contact number "
+                              name="panNo" id="panNo" maxlength="10" oninput="convertToUpperCase(this)"
+                              onblur="panNoValidate(this)" />
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlSelect1">Category<span class="text-danger">*</span></label>
+                            <input type="text" id="category-search" placeholder="Search Categories"
+                              class="form-control input-field" />
+                            <div class="checkbox-options  " id="category-checkboxes">
+                              {{#each category}}
+                              <div class="d-flex">
+                                <input type="checkbox" id="category-{{this}}" name="category[]" value="{{this.id}}">
+                                <label for="category-{{this}}" class="mt-1 ml-2">{{this.code_name}}</label>
+                              </div>
+
+                              {{/each}}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlSelect1">Tax State</label>
+                            <select id="taxState" name="taxState" class="form-control input-field">
+                              <option value="">Select Tax State</option>
+                              {{#each state}}
+                              <option value="{{id}}">{{Name}}</option>
+                              {{/each}}
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlSelect1">Status</label>
+                            <select id="status" name="status" class="form-control input-field">
+                              <option value="Active">Active</option>
+                              <option value="Inactive">Inactive</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1">Display Order</label>
+                            <input class="form-control input-field" type="number" placeholder="Display Order "
+                              name="displayOrder" id="displayOrder">
+                          </div>
+                        </div>
+                        <div class="inner-cont p-0 col-md-11 col-lg-11 flex-column  flex-wrap col-12 d-flex  justify-content-between align-content-start">
+                         <div class="d-flex align-items-center justify-content-start my-2  col-md-12 p-0" >
+                         <button class="btn btn-primary mr-2 " role="button" type="submit" style="padding: 9px 20px;
+    border-radius: 6px;">Save</button>
+                    <button class="btn btn-light" role="button" type="reset" style=" padding: 9px 20px;
+    border-radius: 6px;">Reset</button>
+    </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../../vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script src="../../vendors/select2/select2.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../../js/off-canvas.js"></script>
+  <script src="../../js/hoverable-collapse.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/settings.js"></script>
+  <script src="../../js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../../js/file-upload.js"></script>
+  <script src="../../js/typeahead.js"></script>
+  <script src="../../js/select2.js"></script>
+  <!-- End custom js for this page-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+
+</html>
+<script>
+  $.get(`/storeCode`, function (reffnum) {
+    function generateUniqueIdentifier(response) {
+      if (response && response.length === 1) {
+        const item = response[0];
+        const { id, prefix, lastNo, suffix } = item;
+
+        // Increment the lastno value and pad it to 6 digits
+        const newLastNo = (parseInt(lastNo) + 1).toString().padStart(6, '0');
+
+        // Construct the unique identifier string
+        const uniqueIdentifier = `${prefix}/${newLastNo}/${suffix}`;
+
+        // Update the lastno value in the response
+        item.lastNo = newLastNo;
+
+        // Update the lastno value in the database
+        $.ajax({
+          url: `/updateLastNo/${id}`, // Replace with the actual API endpoint for updating lastno
+          method: 'POST',
+          data: { lastNo: newLastNo },
+          success: function (response) {
+            console.log('Updated lastno in the database');
+          },
+          error: function (error) {
+            console.error('Failed to update lastno in the database', error);
+          }
+        });
+        // Update the input field value with the uniqueIdentifier
+        $('#code').val(uniqueIdentifier);
+
+
+        return uniqueIdentifier;
+      } else {
+        return null; // Handle invalid response
+      }
+    }
+
+    const uniqueIdentifier = generateUniqueIdentifier(reffnum);
+    console.log('Generated Unique Identifier:', uniqueIdentifier);
+  });
+</script>
+<script>
+  // Handle category checkboxes and search
+  const categoryCheckboxes = document.querySelectorAll('input[name="category[]"]');
+  const categoryLabels = document.querySelectorAll('label[for^="category"]'); // Assuming your labels have "for" attributes starting with "category"
+  const categorySearchInput = document.getElementById('category-search');
+
+  categorySearchInput.addEventListener('input', () => {
+    const searchValue = categorySearchInput.value.trim().toLowerCase();
+
+    categoryCheckboxes.forEach((checkbox, index) => {
+      const label = categoryLabels[index];
+      const category = label.textContent.toLowerCase();
+
+      if (category.includes(searchValue)) {
+        label.style.display = 'block'; // Show the label
+        checkbox.style.display = 'block'; // Show the checkbox
+      } else {
+        label.style.display = 'none'; // Hide the label
+        checkbox.style.display = 'none'; // Hide the checkbox
+        checkbox.checked = false; // Uncheck hidden checkboxes
+      }
+    });
+  });
+
+  categoryCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', () => {
+      const selectedCategories = Array.from(categoryCheckboxes)
+        .filter((checkbox) => checkbox.checked)
+        .map((checkbox) => checkbox.value);
+
+      console.log('Selected Categories:', selectedCategories);
+    });
+  });
+
+</script>
+<script>
+  // Only Text Input Validation
+  function AlphabateValidate(inputElement) {
+    let pattern = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\\-="'\s]+$/
+    if (pattern.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid Name");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!pattern.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
+
+
+  // Pin Code number validation
+  function pinCodeValidate(inputElement) {
+    if (/^[0-9]{6}$/.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid Contact Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^[0-9]{6}$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
+
+  // contact number validation
+  function contactNoValidate(inputElement) {
+    if (/^[9876]\d{9}$/.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid Contact Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^[9876]\d{9}$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
+
+  // Convert into upper case
+  function convertToUpperCase(input) {
+    input.value = input.value.toUpperCase();
+  }
+
+  // GST Code number validation
+  function gstNoValidate(inputElement) {
+    function convertToUpperCase(inputElement) {
+      input.value = input.value.toUpperCase();
+    }
+    convertToUpperCase();
+    if (/^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid Contact Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
+
+  // PAN number validation
+  function panNoValidate(inputElement) {
+    if (/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid PAN Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
+
+</script>

@@ -1,7 +1,16 @@
 const db = require("../models")
 const SupplierMaster =db.supplier;
+const AutoGenerateNumber = db.autoGenerateNumber
 
 const createSuplier = async (req, res) => {
+  const code=req.body.Code.split("/")
+  const lastNo=code[1]
+
+   // Update the lastno value in the database
+   const updatedRefNum = await AutoGenerateNumber.update(
+    { lastNo },
+    { where: { prefix: code[0] }}
+  );
 try {
   console.log(4678,req.body.outletId)
     const newSupplier = await SupplierMaster.create({...req.body,storeFk:req.body.outletId});

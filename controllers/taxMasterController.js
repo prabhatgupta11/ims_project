@@ -1,7 +1,16 @@
 const db = require("../models")
 const TaxMaster = db.tax;
-
+const AutoGenerateNumber = db.autoGenerateNumber
 const createTax = async (req, res) => {
+ // return console.log(req.body)
+  const code=req.body.Tax_Code.split("/")
+  const lastNo=code[1]
+
+   // Update the lastno value in the database
+   const updatedRefNum = await AutoGenerateNumber.update(
+    { lastNo },
+    { where: { prefix: code[0] }}
+  );
 try {
     const newtax = await TaxMaster.create(req.body);
     console.log(79846512489798465)

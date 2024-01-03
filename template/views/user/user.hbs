@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Skydash Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="/vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    {{>navbar}}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_settings-panel.html -->
+      {{>setting}}
+      <!-- partial -->
+      <!-- partial:../../partials/_sidebar.html -->
+      {{>side}}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="color-container"></div>
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="d-flex mb-3">
+              <a href="/userList" class="text-white" style="z-index: 3;"><i class="fa-solid fa-angle-left "></i></a>
+              <h3 class="card-title ml-4 my-0 font-weight-semibold text-white ls-tighter" style="z-index: 3;">Add User
+              </h3>
+
+
+            </div>
+            <div class="col-md-12  grid-margin stretch-card p-0">
+
+              <div class="card">
+                <div class="card-body col-md-6 p-0">
+
+                  <div class="wrapper pl-3 py-4  col-md-12">
+
+                    <form action="/createUser" method="post">
+                      <div
+                        class="form-context  px-0 col-md-12 col-12  d-flex justify-content-start flex-column align-items-start">
+                        <div
+                          class="inner-cont p-0 col-md-6 col-lg-12 flex-wrap col-12 flex-column d-flex justify-content-between align-content-start">
+                          <div class=" mb-1 col-md-12 p-0 ">
+                            <label for="fname" class=" mb-2 block text-nowrap p-0 col-md-2">Firstname<span
+                                class="text-danger">*</span></label>
+                            <input type="text" class="form-control input-field  col-md-12 col-12"
+                              placeholder="Enter Your First Name" name="firstName" id="firstName" required
+                              oninput="AlphabateValidate(this)" />
+                          </div>
+                          <div class=" mb-1 p-0 col-md-12 p-0">
+                            <label for="lname" class="m-0 mb-2 text-nowrap block d-flex col-md-2 p-0">Lastname <span
+                                class="text-danger">*</span></label>
+                            <input type="text" class="form-control input-field col-md-12 col-12"
+                              placeholder="Enter Your Last Name " name="lastName" id="exampleFormControlTextarea1"
+                              oninput="AlphabateValidate(this)" required>
+                          </div>
+                        </div>
+                        <div
+                          class="inner-cont p-0 col-md-6 col-lg-12 flex-column  flex-wrap col-12 d-flex  justify-content-between align-content-start">
+                          <div class=" mb-1 col-md-12  p-0 ">
+                            <label for="email" class="m-0 mb-2 text-nowrap d-flex col-md-2 p-0 col-md-2">Email<span
+                                class="text-danger">*</span></label>
+                            <input type="email" class="form-control input-field col-md-12 col-12"
+                              placeholder="Enter Your Email " name="email" id="exampleFormControlTextarea1"
+                              oninput="EmailValidate(this)" required>
+                          </div>
+                          <div class=" mb-1 col-md-12 p-0">
+                            <label for="number" class="m-0 mb-1 text-nowrap block col-md-2 p-0 col-md-2"> Mobile</label>
+                            <input class="form-control input-field col-md-12 col-12 " type="number"
+                              placeholder="Enter Your Number " name="mobileNumber" id="mobileNo" required
+                              oninput="MobileValidate(this)">
+                          </div>
+                        </div>
+                        <div
+                          class="inner-cont p-0 col-md-6 col-lg-12 flex-column  flex-wrap col-12 d-flex  justify-content-between align-content-start">
+                          <div class=" mb-1 col-md-12 p-0">
+                            <label for="password" class="m-0 text-nowrap block col-md-2 p-0">Password</label>
+                            <input class="form-control input-field col-md-12 col-12" type="password"
+                              placeholder="Enter Your Password " name="password" id="exampleFormControlTextarea1"
+                              required>
+                          </div>
+                          <div class=" mb-1  col-md-12 p-0">
+                            <label for="number" class="m-0 text-nowrap block col-md-2 p-0 col-md-2">Role</label>
+                            <select id="roleSelect" name="role" class="form-control input-field col-md-12 col-12  "
+                              required>
+                              <option value="" disabled selected>Select Role</option>
+                              <option value="super admin">Super Admin</option>
+                              <option value="admin">Admin</option>
+                              <option value="user">User</option>
+                            </select>
+
+                          </div>
+                        </div>
+                        <div
+                          class="inner-cont p-0 col-md-6 col-lg-12 flex-column  flex-wrap col-12 d-flex  justify-content-between align-content-start">
+                          <div class=" mb-1 col-md-12  p-0 ">
+                            <label for="manager" class="m-0 mb-1 text-nowrap block col-md-2 p-0">Manager</label>
+                            <select class="form-control input-field  col-md-12 col-12" id="managerSelect"
+                              name="managerFk" class="form-control ">
+                              <option value="-1">Manage Role Wise</option>
+                              {{!-- {{#each user}}
+                              <option>Select Manager</option>
+                              <option value="id">{{ email }}</option>
+                              {{/each}} --}}
+                            </select>
+                          </div>
+                          {{!-- <div class="d-flex align-items-center  flex-column  mb-1 col-md-12 p-0">
+                          </div> --}}
+                          <div class="d-flex align-items-center justify-content-start mb-1  col-md-12 p-0 col-12">
+                            <label class="formlabel fw-bold" style="display: block;">Select Store<span
+                                class="text-danger">*</span></label>
+                            <div class="md-form mb-4  active-pink-textarea-2" style="display: inherit;" id="storeList">
+                            </div>
+
+
+                          </div>
+
+
+                        </div>
+                        <div
+                          class="inner-cont p-0 col-md-6 col-lg-6 flex-column  flex-wrap col-12 d-flex  justify-content-between align-content-start">
+                          <div class="d-flex align-items-center justify-content-start my-2  col-md-12 p-0">
+                            <button class="btn btn-primary mr-2 " role="button" type="submit" style="padding: 9px 20px;
+    border-radius: 6px;">Save</button>
+                            <button class="btn btn-light" role="button" type="reset" style=" padding: 9px 20px;
+    border-radius: 6px;">Reset</button>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+  
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../../vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script src="../../vendors/select2/select2.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../../js/off-canvas.js"></script>
+  <script src="../../js/hoverable-collapse.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/settings.js"></script>
+  <script src="../../js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../../js/file-upload.js"></script>
+  <script src="../../js/typeahead.js"></script>
+  <script src="../../js/select2.js"></script>
+  <!-- End custom js for this page-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+
+</html>
+
+<script>
+  $(document).ready(function () {
+    const roleSelect = $('#roleSelect');
+    const managerSelect = $('#managerSelect');
+    const storeList = $('#storeList');
+
+    let lastCheckedStore = null; // Variable to store the last checked store
+
+    roleSelect.on('change', function () {
+      const selectedRole = roleSelect.val();
+
+      if (selectedRole === 'super admin') {
+        // Hide the manager select
+        managerSelect.hide();
+
+        // Clear the store list when changing roles
+        storeList.empty();
+
+        // Populate all stores with checked checkboxes
+        populateAllStores(true);
+      } else if (selectedRole === 'admin' || selectedRole === 'user') {
+        // Show the manager select
+        managerSelect.show();
+
+        // Clear the store list when changing roles
+        storeList.empty();
+
+        if (selectedRole === 'admin') {
+          // Populate manager options with super admin emails for the "admin" role
+          populateManagerOptions('super admin');
+        } else if (selectedRole === 'user') {
+          // Populate manager options with admin emails for the "user" role
+          populateManagerOptions('admin');
+        }
+      }
+    });
+
+    managerSelect.on('change', function () {
+      const userId = managerSelect.val();
+
+      // Use an API endpoint to fetch the user's selected stores based on userId
+      $.get(`/getSelectedStores/${userId}`, function (selectedStores) {
+        // Clear the previous content in #storeList
+        storeList.empty();
+
+        // Loop through the selectedStores and create checkboxes with labels
+        selectedStores.forEach(function (data) {
+          const checkbox = $('<input>').prop({
+            id: 'myCheckBox_' + data.outletId,
+            name: 'outletId',
+            value: data.outletId,
+            type: 'checkbox',
+            checked: data.checked,
+          });
+
+          checkbox.on('change', function () {
+            if (lastCheckedStore && lastCheckedStore !== this) {
+              lastCheckedStore.checked = false; // Uncheck the last checked store
+            }
+            lastCheckedStore = this; // Update the last checked store
+          });
+
+          const label = $('<label>').prop({
+            for: 'myCheckBox_' + data.outletId,
+          }).html(data.storeName);
+
+          storeList.append(checkbox)
+            .append(label)
+            .append($('<br>'));
+        });
+      });
+    });
+
+    // Function to populate manager options based on role
+    function populateManagerOptions(role) {
+      // Use an API endpoint to fetch the managers based on role
+      $.get(`/getManagers/${role}`, function (managers) {
+        managerSelect.empty();
+        managerSelect.append($('<option>').val('-1').text('Select Manager'));
+
+        managers.forEach(function (manager) {
+          managerSelect.append($('<option>').val(manager.id).text(manager.email));
+        });
+      });
+    }
+
+    // Function to populate all stores with checkboxes
+    function populateAllStores(checked) {
+      // Use an API endpoint to fetch all stores
+      $.get('/getAllStores', function (stores) {
+        storeList.empty();
+
+        stores.forEach(function (store) {
+          const checkbox = $('<input>').prop({
+            id: 'myCheckBox_' + store.outletId,
+            name: 'outletId',
+            value: store.outletId,
+            type: 'checkbox',
+            checked: checked,
+          });
+
+          checkbox.on('change', function () {
+            if (lastCheckedStore && lastCheckedStore !== this) {
+              lastCheckedStore.checked = false; // Uncheck the last checked store
+            }
+            lastCheckedStore = this; // Update the last checked store
+          });
+
+          const label = $('<label>').prop({
+            for: 'myCheckBox_' + store.outletId,
+          }).html(store.storeName);
+
+          storeList.append(checkbox)
+            .append(label)
+            .append($('<br>'));
+        });
+      });
+    }
+  });
+
+</script>
+<script>
+
+  // Contact Number Validations
+
+  function MobileValidate(inputElement) {
+    // Check only 10 digit number validation
+    inputElement.addEventListener('input', () => {
+      const maxlength = 10;
+      let input = inputElement.value;
+      if (input.length > maxlength) {
+        inputval = input.slice(0, maxlength)
+        inputElement.value = inputval
+      }
+    })
+    //check pattern
+    if (/^[9876]\d{9}$/.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid Mobile Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^[9876]\d{9}$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+
+
+  }
+
+  // Only Text Input Validation
+  function AlphabateValidate(inputElement) {
+    if (/^[a-zA-Z]+$/.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid Name");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^[9876]\d{9}$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
+
+  // Email Input Validation
+  function EmailValidate(inputElement) {
+    if (/^^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid Email Address");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
+
+
+</script>
+<script>
+  // Password Eye Code for hide and unhide
+  const EyeButton = () => {
+    const eye = document.getElementById('eye')
+    const eyeinput = document.querySelector('.pass-field')
+    eye.addEventListener('click', () => {
+      if (eyeinput.value !== '') {
+        if (eyeinput.getAttribute('type') === 'password') {
+          eyeinput.setAttribute('type', 'text')
+          eye.childNodes[0].classList.remove("fa-eye-slash")
+          eye.childNodes[0].classList.add("fa-eye")
+        }
+        else {
+          eyeinput.setAttribute('type', 'password');
+          eye.childNodes[0].classList.add("fa-eye-slash")
+          eye.childNodes[0].classList.remove("fa-eye")
+        }
+
+      }
+
+    })
+  }
+  EyeButton()
+</script>

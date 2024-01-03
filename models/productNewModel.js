@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement : true
         },
+        hsnCode : {
+            type : DataTypes.STRING(50),
+        },
         category: {
             type: DataTypes.BIGINT(20),
         },
@@ -38,8 +41,13 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue : 'standard'
         },
         status : {
-            type : DataTypes.STRING(250)
+            type : DataTypes.STRING(250),
+            defaultValue : "Active"
         },
+        isDeleted: {
+            type: DataTypes.STRING, 
+            defaultValue: '0',
+          },
         sellingPricePolicy : {
             type : DataTypes.STRING(250),
             defaultValue : 'BatchMaster'

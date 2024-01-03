@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet" />
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script>
+</head>
+
+<body>
+    <section
+        style="background-color: #eee; background: url(/images/b.svg);background-size: cover; height:100vh">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                        </ol>
+                        <i style="float: inline-end;margin-block: -18px; cursor:pointer"
+                            class="fas fa-right-from-bracket" onclick="goBack()"></i>
+
+                    </nav>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <img src="/images/admin.png" id="imagePath" alt="avatar" class="rounded-circle img-fluid"
+                                style="width: 150px;height: 146px;">
+                            <h5 class="my-3">{{userNameCapital}}</h5>
+                            <p class="text-primary mb-2">{{userRole}}</p>  
+                            <div class="d-flex justify-content-center mb-2 my-3">
+                                <button type="button" class="btn btn-primary" onclick="makeCall()">Call</button>
+                                <button type="button" class="btn btn-outline-primary ms-1"
+                                    onclick="openWhatsApp()">Message</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4 mb-lg-0">
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush rounded-3">
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fas fa-globe fa-lg text-warning"></i>
+                                    <p class="mb-0"><a href="https://ims.scaleedge.in"
+                                            target="_blank">https://ims.scaleedge.in</a></p>
+                                </li>
+                                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fas fa-globe fa-lg text-warning"></i>
+                                    <p class="mb-0"><a href="https://sorex.scaleedge.in"
+                                            target="_blank">https://sorex.scaleedge.in</a></p>
+                                </li>
+                                {{!-- <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                                    <p class="mb-0">@mdbootstrap</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                                    <p class="mb-0">mdbootstrap</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                                    <p class="mb-0">mdbootstrap</p> --}}
+                                </li> 
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Full Name</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{userNameCapital}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Role</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{userRole}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{user.email}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Mobile</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{user.mobileNumber}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Password</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0"><a href="/emailValidate">Forget Password ?</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-none">
+                        <div class="col-md-6">
+                            <div class="card mb-4 mb-md-0">
+                                <div class="card-body">
+                                    <p class="mb-4"><span class="text-primary font-italic me-1">Employement</span>
+                                        Details
+
+                                    </p>
+                                    <p class="mb-1" style="font-size: .77rem;">Joining Date -: <span
+                                            style="cursor:pointer; color:blue" id="joiningDate"></span> </p>
+
+                                    {{!-- <div class="progress rounded" style="height: 5px;">
+                                        <div class="progress-bar" role="progressbar" style="width: 80%"
+                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div> --}}
+                                    <p class="mt-4 mb-1" style="font-size: .77rem;">Birth_date -: <span
+                                            style="cursor:pointer; color:blue" id="birthDate"></span></p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4 mb-md-0">
+                                <div class="card-body">
+                                    <p class="mb-4"><span class="text-primary font-italic me-1">Uploaded</span>
+                                        Documents
+                                    </p>
+                                    <p class="mb-1" style="font-size: .77rem;">Adhar Card :- <span
+                                            style="cursor:pointer; color:blue" id="userAdhar"></span></p>
+                                    <p class="mt-4 mb-1" style="font-size: .77rem;">Pan Card :- <span
+                                            style="cursor:pointer; color:blue" id="userPancard"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
+{{!-- <script>
+
+
+
+    var userRole = {{user.role}}
+    var role = capitalizeEachWord(userRole)
+    var formattedDate1 = birthDate.toISOString().split('T')[0];
+    document.getElementById("username1").innerText = {{capitalizedName}}
+    document.getElementById("role").innerText = role;
+    document.getElementById("email").innerText = {{user.email}};
+    document.getElementById("usertype").innerText = capitalizeFirst(userType);
+    document.getElementById("location").innerText = userCity + ", " + userPincode;
+    document.getElementById("address").innerText = userCity + ", " + userPincode;
+    document.getElementById("mobile").innerText = {{user.mobileNumber}};
+    document.getElementById("joiningDate").innerText = formattedDate;
+    document.getElementById("birthDate").innerText = formattedDate1;
+    document.getElementById("userAdhar").innerText = userAdhar;
+    document.getElementById("userPancard").innerText = userPancard;
+    document.getElementById("userEmployeeId").innerText = userEmployeeId;
+
+</script> --}}
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+    function openWhatsApp() {
+        var phoneNumber = "+918949859527";
+        var whatsappLink = "https://wa.me/" + phoneNumber;
+        window.open(whatsappLink);
+    }
+    function makeCall() {
+        window.location.href = "tel:+918949859527";
+    }
+</script>

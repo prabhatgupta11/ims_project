@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/public/css/newStyle.css">
+    <link rel="stylesheet" href="/public/css/product.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        .popup-message {
+            display: none;
+            position: fixed;
+            top: 45%;
+            left: 62%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            background: #4723d9;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .popup-message::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 7px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 20px solid #4723d9;
+            transform: rotate(-90deg);
+        }
+
+        .input-field-three {
+            padding-left: 40px !important;
+        }
+
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+
+        ul.breadcrumb li:last-child a {
+            color: grey;
+            /* Change the color to the grey color you prefer */
+
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+        ul.breadcrumb li:last-child a {
+            color: #64748b;
+            /* Change the color to the grey color you prefer */
+
+        }
+
+        ul.breadcrumb li a:hover {
+
+            text-decoration: underline;
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 0px;
+            padding-left: 22px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+        .icon-input {
+            position: absolute;
+            left: 4%;
+            top: 47%;
+            color: gray;
+        }
+
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 30px;
+
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+        ul.breadcrumb li:last-child a {
+            color: #64748b;
+            /* Change the color to the grey color you prefer */
+
+        }
+
+        ul.breadcrumb li a:hover {
+
+            text-decoration: underline;
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 10px;
+            padding-left: 12px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+
+        .breadcrumdiv {
+            margin-left: -12px;
+            margin-bottom: 14px;
+        }
+
+
+        @media (max-width: 767px) {
+            .me-two {
+                display: block;
+            }
+
+            .breadcrumdiv {
+                margin-top: -33px;
+
+            }
+        }
+
+        @media (min-width: 767px) {
+            .me-two {
+                display: flex;
+            }
+        }
+
+        ul.breadcrumb li+li:before {
+            position: relative;
+            top: 1px;
+            padding: 3px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        @media (max-width: 600px) {
+            ul.breadcrumb li {
+                font-size: 12px;
+            }
+
+        }
+
+        .fa-solid.fa-list {
+            margin-right: 4px;
+            width: 40px;
+            height: 35px;
+            position: relative;
+            bottom: 6px;
+        }
+
+        @media (min-width:300px) and (max-width:400px) {
+            .text-start {
+                position: relative !important;
+                bottom: 10px !important;
+            }
+        }
+
+        @media (min-width:390px) and (max-width:570px) {
+            .text-start {
+                position: relative !important;
+                bottom: -10px !important;
+            }
+
+            .responsive {
+                margin-top: 15px !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="body-pd">
+    <div class="breadcrumdiv">
+        <ul class="breadcrumb">
+            <li><i class="fa-solid fa-house"></i><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Product List</a></li>
+            <li><a href="#">Add Product</a></li>
+        </ul>
+    </div>
+    {{>side}}
+
+    <div class="soon">
+        {{>theme}}
+
+        <div class="row-md-4 subtitle d-grid  w-100" style="margin-top: 10px;padding-bottom: 0px;">
+            <a href="/newProductList" style="text-decoration: none" class="text-start"> <i
+                    class="fa-arrow-left fa-solid text-dark fs-3 mb-3"></i></a>
+
+
+            <div class="row-md-4 subtitle responsive d-flex justify-content-start align-items-center w-100"
+                style="margin-top: -10px; margin-bottom : -20px;">
+                <div class="block">
+                    <div style="display: flex;">
+                        <img class="fa-solid fa-list" src="/images/product.png" width="30px" alt="">
+                        <h4 class="flex-grow-1 " style="font-size: 24px color: #1e293b;
+    font-weight:800;">Add Product</h4>
+                    </div>
+                </div>
+                <div id="line">
+                    <span id="line-content"></span> <!-- Content inside the div -->
+                </div>
+                <div class="breadcrumdiv">
+                    <ul class="breadcrumb" style="background-color: transparent;">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Master</a></li>
+                        <li><a href="#">Product List</a></li>
+                        <li><a href="#">Add Product</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {{#if message}}
+        <div class="alert alert-info">{{message}}</div>
+        {{/if}}
+        <div id="flash-message" class="alert alert-danger" style="display: none;"></div>
+
+
+
+        <form id="imageForm" action="/createNewProduct" method="post" enctype="multipart/form-data"
+            style="display:block;">
+            <div class="lineone-main-contianer col-md-11">
+                <div class="row">
+                    <div class="border-gen col-md-9 ">
+                        <div class="ger-title col-md-9 my-2">
+                            <i class="fa-solid fa-layer-group" style="color: #5102e3;"></i>
+                            <div class="ger-subtitle">
+                                <h3 class="m-0">Product Details</h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-9 first-gen-section" >
+                            <div class="row mt-3">
+                                <div class="item-section-gen col-md-12">
+                                    <label for="exampleInputEmail1">Category <span class="text-danger">*</span></label>
+                                    <select class="form-select " id="categoryDropdown" name="category"
+                                        aria-label="Default select example"
+                                        style="border-radius: 10px; padding-left: 40px;" required>
+                                        <option value="" disabled selected>Select Category</option>
+                                        {{#each category}}
+                                        <option value="{{id}}"> {{ code_name }} </option>
+                                        {{/each}}
+                                    </select>
+                                    <div class="icon-context input-field">
+                                        <i class="fa-solid fa-store icon-input"></i>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <section id="grocery" class="imageForm hidden" style="padding: 0 12px;">
+                            <div class="row">
+                                <div class="col-md-9 ">
+                                    <div class="row">
+                                        <div class="item-section-gen col-md-12">
+                                            <label for="exampleInputEmail1">Department <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-select departmentDropdown " id="departmentDropdown" name="department"
+                                                aria-label="Default select example"
+                                                style="border-radius: 10px; padding-left: 40px;" required>
+                                                <option value="" disabled selected>Select Department</option>
+                                                {{#each department}}
+                                                <option value="{{id}}"> {{ code_name }} </option>
+                                                {{/each}}
+                                            </select>
+                                            <div class="icon-context input-field">
+                                                <i class="fa-solid fa-store icon-input"></i>
+                                            </div>
+
+                                        </div>
+                                        <div class="item-section-gen col-md-12">
+                                            <label for="exampleInputEmail1">Group <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-select " id="groupDropdown" name="group"
+                                                aria-label="Default select example"
+                                                style="border-radius: 10px; padding-left: 40px;" required>
+                                                <option value="" disabled selected>Select Group</option>
+                                                {{#each group}}
+                                                <option value="{{id}}"> {{ code_name }} </option>
+                                                {{/each}}
+                                            </select>
+                                            <div class="icon-context input-field">
+                                                <i class="fa-solid fa-store icon-input"></i>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="item-section-gen col-md-12 d-none">
+                                            <label for="exampleInputEmail1">Item Type <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-select " id="itemTypeDropdown" name="itemType"
+                                                aria-label="Default select example"
+                                                style="border-radius: 10px; padding-left: 40px;">
+                                                <option value="" disabled selected>Select Item Type</option>
+                                                {{#each itemType}}
+                                                <option value="{{id}}"> {{ code_name }} </option>
+                                                {{/each}}
+                                            </select>
+                                            <div class="icon-context input-field">
+                                                <i class="fa-solid fa-store icon-input"></i>
+                                            </div>
+
+                                        </div>
+                                        <div class="item-section-gen col-md-12">
+                                            <label for="exampleInputEmail1">Brand <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-select " name="brand"
+                                                aria-label="Default select example"
+                                                style="border-radius: 10px; padding-left: 40px;" required>
+                                                <option value="" disabled selected>Select Brand</option>
+                                                {{#each manufacturer}}
+                                                <option value="{{manufacturerId}}"> {{ shortDescription }} </option>
+                                                {{/each}}
+                                            </select>
+                                            <div class="icon-context input-field">
+                                                <i class="fa-solid fa-store icon-input"></i>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="item-section-gen-second col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Item Code</label>
+                                                <input type="text" class="form-control input-field-three"
+                                                    id="exampleInputEmail1" aria-describedby="emailHelp" name="itemCode"
+                                                    placeholder="Enter Item Code " readonly>
+                                                <div class="icon-context">
+                                                    <i class="fa-solid fa-filter icons-short"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-section-gen-second col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Item Name <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control input-field-three"
+                                                    id="exampleInputEmail1" aria-describedby="emailHelp" name="itemName"
+                                                    placeholder="Enter Item Name" required>
+                                                <div class="icon-context">
+                                                    <i class="fa-solid fa-font icons-short"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row ">
+                                        <div class="item-section-gen-second col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Bar Code</label>
+                                                <input type="text" class="form-control input-field-three"
+                                                    id="exampleInputEmail1" aria-describedby="emailHelp" name="barCode"
+                                                    placeholder="Enter Bar Code ">
+                                                <div class="icon-context">
+                                                    <i class="fa-solid fa-filter icons-short"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-section-gen col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">HSN Code<span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control input-field-three" id="hsnCode"
+                                                    aria-describedby="emailHelp" name="hsnCode"
+                                                    placeholder="Enter HSN Code" required>
+                                                <div class="icon-context">
+                                                    <i class="fa-solid fa-user icons-short"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mt-2 mb-3 p-0 ">
+                                        <div id="uploaded-image-container upload col-md-12  ">
+                                            <div class="hv-centered flex">
+                                                <div for="" class="formlabel text-start"><label for="">Images</label>
+                                                </div>
+                                                <input type="file" name="imageUrl" accept="image/*" id="fileI"
+                                                    class="pl-1" style="float: left;">
+                                            </div>
+                                            <button id="uploadButton" disabled class="button-15 d-none"
+                                                style="float: right;position: absolute;right:100px;bottom: 0px;"
+                                                type="button">Upload
+                                                Image</button>
+
+                                        </div>
+
+                                    </div>
+                                    <div id="popupMessage" class="popup-message fw-semibold text-white rounded-3">
+                                        <p id="popupText">Image uploaded successfully</p>
+                                    </div>
+
+                                    <div class="col-md-12 ">
+                                        <table class="table">
+                                            <thead class="d-none">
+                                                <tr class="d-none">
+                                                    <th scope="col" class="fw-bold ">Image Url</th>
+                                                    <th scope="col" class="fw-bold">Image</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="imageTableBody">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row ">
+
+                                        <div class="col-md-12 first-gen-section">
+                                            <div class="row mt-3">
+                                                <div class="item-section-gen col-md-12">
+                                                    <label for="exampleInputEmail1">Status</label>
+                                                    <select class="form-select " name="status"
+                                                        aria-label="Default select example"
+                                                        style="border-radius: 10px; padding-left: 40px;">
+                                                        <option value="Active">Active</option>
+                                                        <option value="Inactive">Inactive</option>
+
+                                                    </select>
+                                                    <div class="icon-context input-field">
+                                                        <i class="fa-solid fa-store icon-input"></i>
+                                                    </div>
+
+                                                </div>
+                                                <div class="item-section-gen col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Weight <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control input-field-three"
+                                                            id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                            name="weight" placeholder="Enter Weight in kg" required>
+                                                        <div class="icon-context">
+                                                            <i class="fa-solid fa-user icons-short"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item-section-gen-second col-md-6 ">
+                                                    <label for="exampleInputEmail1">Description</label>
+                                                    <div class="form-outline"
+                                                        style="border: 1px solid lightgray;border-radius:10px ">
+                                                        <textarea class="form-control"
+                                                            placeholder="Enter Description Here" name="description"
+                                                            id="textAreaExample1" rows="1"></textarea>
+                                                        {{!-- <label class="form-label"
+                                                            for="textAreaExample">Description</label>
+                                                        --}}
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="item-section-gen col-md-12">
+                                                    <label for="exampleInputEmail1">Tax Percentage <span
+                                                            class="text-danger">*</span></label>
+                                                    <select class="form-select " name="tax"
+                                                        aria-label="Default select example"
+                                                        style="border-radius: 10px; padding-left: 40px;" required>
+                                                        <option value="" disabled selected>Select Tax</option>
+                                                        {{#each tax}}
+                                                        <option value="{{id}}"> {{ Tax_percentage }} </option>
+                                                        {{/each}}
+                                                    </select>
+                                                    <div class="icon-context input-field">
+                                                        <i class="fa-solid fa-store icon-input"></i>
+                                                    </div>
+
+                                                </div>
+                                                <div class="container btn-context" style="padding-left: 20px;">
+                                                    <div class="row">
+                                                        <div class="col-md-12 form-buttons p-0 m-0 d-flex">
+                                                            <button class="button-15" role="button" type="submit"
+                                                                style="margin:10px">Save</button>
+
+                                                            <button class="button-15" role="button" type="reset"
+                                                                style="margin:10px 0px">Reset</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="electronics" class="imageForm hidden" style="padding:0 12px;">
+                            <div class="row">
+                                <div class=" col-md-9 ">
+                                    <div class="row">
+                                        <div class="item-section-gen col-md-12">
+                                            <label for="exampleInputEmail1">Department <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-select departmentDropdown " id="departmentDropdown" name="department"
+                                                aria-label="Default select example"
+                                                style="border-radius: 10px; padding-left: 40px;" required>
+                                                <option value="" disabled selected>Select Department</option>
+                                                {{#each department}}
+                                                <option value="{{id}}"> {{ code_name }} </option>
+                                                {{/each}}
+                                            </select>
+                                            <div class="icon-context input-field">
+                                                <i class="fa-solid fa-store icon-input"></i>
+                                            </div>
+
+                                        </div>
+                                        <div class="item-section-gen col-md-12">
+                                            <label for="exampleInputEmail1">Group <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-select " id="groupDropdown" name="group"
+                                                aria-label="Default select example"
+                                                style="border-radius: 10px; padding-left: 40px;" required>
+                                                <option value="" disabled selected>Select Group</option>
+                                                {{#each group}}
+                                                <option value="{{id}}"> {{ code_name }} </option>
+                                                {{/each}}
+                                            </select>
+                                            <div class="icon-context input-field">
+                                                <i class="fa-solid fa-store icon-input"></i>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="item-section-gen col-md-12 d-none">
+                                            <label for="exampleInputEmail1">Item Type <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-select " id="itemTypeDropdown" name="itemType"
+                                                aria-label="Default select example"
+                                                style="border-radius: 10px; padding-left: 40px;">
+                                                <option value="" disabled selected>Select Item Type</option>
+                                                {{#each itemType}}
+                                                <option value="{{id}}"> {{ code_name }} </option>
+                                                {{/each}}
+                                            </select>
+                                            <div class="icon-context input-field">
+                                                <i class="fa-solid fa-store icon-input"></i>
+                                            </div>
+
+                                        </div>
+                                        <div class="item-section-gen col-md-12">
+                                            <label for="exampleInputEmail1">Brand <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-select " name="brand"
+                                                aria-label="Default select example"
+                                                style="border-radius: 10px; padding-left: 40px;" required>
+                                                <option value="" disabled selected>Select Brand</option>
+                                                {{#each manufacturer}}
+                                                <option value="{{manufacturerId}}"> {{ shortDescription }} </option>
+                                                {{/each}}
+                                            </select>
+                                            <div class="icon-context input-field">
+                                                <i class="fa-solid fa-store icon-input"></i>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="item-section-gen-second col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Item Code</label>
+                                                <input type="text" class="form-control input-field-three"
+                                                    id="exampleInputEmail1" aria-describedby="emailHelp" name="itemCode"
+                                                    placeholder="Enter Item Code " readonly>
+                                                <div class="icon-context">
+                                                    <i class="fa-solid fa-filter icons-short"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-section-gen-second col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Item Name <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control input-field-three"
+                                                    id="exampleInputEmail1" aria-describedby="emailHelp" name="itemName"
+                                                    placeholder="Enter Item Name" required>
+                                                <div class="icon-context">
+                                                    <i class="fa-solid fa-font icons-short"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row ">
+                                        <div class="item-section-gen-second col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Bar Code</label>
+                                                <input type="text" class="form-control input-field-three"
+                                                    id="exampleInputEmail1" aria-describedby="emailHelp" name="barCode"
+                                                    placeholder="Enter Bar Code ">
+                                                <div class="icon-context">
+                                                    <i class="fa-solid fa-filter icons-short"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-section-gen col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">HSN Code<span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control input-field-three" id="hsnCode"
+                                                    aria-describedby="emailHelp" name="hsnCode"
+                                                    placeholder="Enter HSN Code" required>
+                                                <div class="icon-context">
+                                                    <i class="fa-solid fa-user icons-short"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mt-2 mb-3 p-0 ">
+                                        <div id="uploaded-image-container upload col-md-12  ">
+                                            <div class="hv-centered flex">
+                                                <div for="" class="formlabel text-start"><label for="">Images</label>
+                                                </div>
+                                                <input type="file" name="imageUrl" accept="image/*" id="fileI"
+                                                    class="pl-1" style="float: left;">
+                                            </div>
+                                            <button id="uploadButton" disabled class="button-15 d-none"
+                                                style="float: right;position: absolute;right:100px;bottom: 0px;"
+                                                type="button">Upload
+                                                Image</button>
+
+                                        </div>
+
+                                    </div>
+                                    <div id="popupMessage" class="popup-message fw-semibold text-white rounded-3">
+                                        <p id="popupText">Image uploaded successfully</p>
+                                    </div>
+
+                                    <div class="col-md-12 ">
+                                        <table class="table">
+                                            <thead class="d-none">
+                                                <tr class="d-none">
+                                                    <th scope="col" class="fw-bold ">Image Url</th>
+                                                    <th scope="col" class="fw-bold">Image</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="imageTableBody">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row ">
+
+                                        <div class="col-md-12 first-gen-section">
+                                            <div class="row mt-3">
+                                                <div class="item-section-gen col-md-12">
+                                                    <label for="exampleInputEmail1">Status</label>
+                                                    <select class="form-select " name="status"
+                                                        aria-label="Default select example"
+                                                        style="border-radius: 10px; padding-left: 40px;">
+                                                        <option value="Active">Active</option>
+                                                        <option value="Inactive">Inactive</option>
+
+                                                    </select>
+                                                    <div class="icon-context input-field">
+                                                        <i class="fa-solid fa-store icon-input"></i>
+                                                    </div>
+
+                                                </div>
+                                                <div class="item-section-gen col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Weight <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control input-field-three"
+                                                            id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                            name="weight" placeholder="Enter Weight in kg" required>
+                                                        <div class="icon-context">
+                                                            <i class="fa-solid fa-user icons-short"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item-section-gen-second col-md-6 ">
+                                                    <label for="exampleInputEmail1">Description</label>
+                                                    <div class="form-outline"
+                                                        style="border: 1px solid lightgray;border-radius:10px ">
+                                                        <textarea class="form-control"
+                                                            placeholder="Enter Description Here" name="description"
+                                                            id="textAreaExample1" rows="1"></textarea>
+                                                        {{!-- <label class="form-label"
+                                                            for="textAreaExample">Description</label>
+                                                        --}}
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="item-section-gen col-md-12">
+                                                    <label for="exampleInputEmail1">Tax Percentage <span
+                                                            class="text-danger">*</span></label>
+                                                    <select class="form-select " name="tax"
+                                                        aria-label="Default select example"
+                                                        style="border-radius: 10px; padding-left: 40px;" required>
+                                                        <option value="" disabled selected>Select Tax</option>
+                                                        {{#each tax}}
+                                                        <option value="{{id}}"> {{ Tax_percentage }} </option>
+                                                        {{/each}}
+                                                    </select>
+                                                    <div class="icon-context input-field">
+                                                        <i class="fa-solid fa-store icon-input"></i>
+                                                    </div>
+
+                                                </div>
+                                                <div class="container btn-context" style="padding-left: 20px;">
+                                                    <div class="row">
+                                                        <div class="col-md-12 form-buttons p-0 m-0 d-flex">
+                                                            <button class="button-15" role="button" type="submit"
+                                                                style="margin:10px">Save</button>
+
+                                                            <button class="button-15" role="button" type="reset"
+                                                                style="margin:10px 0px">Reset</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </form>
+      
+
+    </div>
+
+
+    <script>
+        $.get(`/productCode`, function (reffnum) {
+            function generateUniqueIdentifier(response) {
+                if (response && response.length === 1) {
+                    const item = response[0];
+                    const { id, prefix, lastNo, suffix } = item;
+
+                    // Increment the lastno value and pad it to 6 digits
+                    const newLastNo = (parseInt(lastNo) + 1).toString().padStart(6, '0');
+
+                    // Construct the unique identifier string
+                    const uniqueIdentifier = `${prefix}/${newLastNo}/${suffix}`;
+
+                    // Update the lastno value in the response
+                    item.lastNo = newLastNo;
+
+
+                    // Update the input field value with the uniqueIdentifier
+                    $('#exampleInputEmail1').val(uniqueIdentifier);
+
+
+                    return uniqueIdentifier;
+                } else {
+                    return null; // Handle invalid response
+                }
+            }
+
+            const uniqueIdentifier = generateUniqueIdentifier(reffnum);
+            console.log('Generated Unique Identifier:', uniqueIdentifier);
+        });
+    </script>
+
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initially hide all forms except the first one
+            document.querySelectorAll(".imageForm:not(#imageForm)").forEach(function (form) {
+                form.classList.add("hidden");
+            });
+
+            // Function to toggle forms
+            function toggleForms(currentFormId, nextFormId) {
+                document.querySelector(currentFormId).classList.add("hidden");
+                document.querySelector(nextFormId).classList.remove("hidden");
+
+                // Set position for the visible form
+                document.querySelector(nextFormId).style.position = "";
+                document.querySelector(nextFormId).style.top = "";
+            }
+
+            // Event listener for category selection
+            document.getElementById("categoryDropdown").addEventListener("change", function () {
+                var selectedCategory = this.value
+                console.log(123, selectedCategory)
+
+
+                // Hide all forms
+                document.querySelectorAll(".imageForm").forEach(function (form) {
+                    form.classList.add("hidden");
+                });
+
+                if (selectedCategory === "1") {
+                    toggleForms("#imageForm", "#grocery");
+                } else if (selectedCategory === "2") {
+                    toggleForms("#imageForm", "#grocery");
+                } else if (selectedCategory === "4") {
+                    toggleForms("#imageForm", "#electronics");
+                }
+            });
+
+            // Event listener for form submission
+            document.querySelectorAll(".imageForm").forEach(function (form) {
+                form.addEventListener("submit", function (event) {
+                    event.preventDefault();
+
+                    if (this.id === "grocery") {
+                        toggleForms("#grocery", "#grocery");
+                    } else if (this.id === "grocery") {
+                        // Handle form submission for imageForm2 if needed
+                    }
+                });
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>
+
+
+<link rel="stylesheet" href="css/product.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    // Function to populate the department dropdown based on the selected category
+    function populateDepartments() {
+        const categoryId = $('#categoryDropdown').val();
+        $.get(`/departments/${categoryId}`, function (departments) {
+            const departmentDropdown = $('.departmentDropdown');
+            departmentDropdown.empty();
+            departmentDropdown.append('<option value="">Select Department</option>');
+            departments.forEach(function (department) {
+                departmentDropdown.append(`<option value="${department.id}">${department.code_name}</option>`);
+            });
+        });
+    }
+
+    // Event listener for category dropdown
+    $('#categoryDropdown').change(populateDepartments);
+
+    // Function to populate the group dropdown based on the selected department
+    function populateGroups() {
+        const departmentId = $('#departmentDropdown').val();
+        $.get(`/groups/${departmentId}`, function (groups) {
+            const groupDropdown = $('#groupDropdown');
+            groupDropdown.empty();
+            groupDropdown.append('<option value="">Select Group</option>');
+            groups.forEach(function (group) {
+                groupDropdown.append(`<option value="${group.id}">${group.code_name}</option>`);
+            });
+        });
+    }
+
+    // Event listener for department dropdown
+    $('#departmentDropdown').change(populateGroups);
+
+    // Function to populate the item type dropdown based on the selected group
+    function populateItemTypes() {
+        const groupId = $('#groupDropdown').val();
+        $.get(`/itemTypes/${groupId}`, function (itemTypes) {
+            const itemTypeDropdown = $('#itemTypeDropdown');
+            itemTypeDropdown.empty();
+            itemTypeDropdown.append('<option value="">Select Item Type</option>');
+            itemTypes.forEach(function (itemType) {
+                itemTypeDropdown.append(`<option value="${itemType.id}">${itemType.code_name}</option>`);
+            });
+        });
+    }
+
+    // Event listener for group dropdown
+    $('#groupDropdown').change(populateItemTypes);
+</script>
+
+<script>
+    const fileInput = document.getElementById('fileI');
+    const popupMessage = document.getElementById('popupMessage');
+    const popupText = document.getElementById('popupText');
+    const imageTable = document.querySelector('#imageTableBody');
+    const arr = [];
+
+    let isFileSelected = false;
+
+    // Function to hide the popup message after 2 seconds
+    function hidePopupMessage() {
+        setTimeout(() => {
+            popupMessage.style.display = 'none';
+        }, 2000); // 2000 milliseconds (2 seconds)
+    }
+
+    fileInput.addEventListener('change', function (event) {
+        const files = event.target.files;
+        for (const file of files) {
+            let filen = file.name;
+            filen = `${new Date().getTime()}_${filen}`;
+            console.log(789, filen)
+            localStorage.setItem("newImageName", filen);
+            console.log(456, filen);
+            const img = localStorage.getItem("newImageName")
+            const imageUr = URL.createObjectURL(file);
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${filen}</td>
+                <td>
+                    <img src="${imageUr}" name="${filen}" width="100px">
+                    <i class="fa-regular fa-circle-xmark  right-0 delete-row ml-2" style="position:absolute !important"></i>
+                </td>
+            `;
+
+            imageTable.appendChild(row);
+            arr.push({
+                imageName: filen,
+                imageUrl: imageUr
+            });
+            removeRow(row, arr); // Pass the 'arr' array as a parameter
+        }
+        console.log(arr);
+    });
+
+    function removeRow(row, arr) {
+        const deleteBtn = row.querySelector(".delete-row");
+        deleteBtn.addEventListener("click", function () {
+            const index = Array.from(row.parentNode.children).indexOf(row);
+            const image = row.querySelector('img').getAttribute('name');
+            deleteImage(image, row);
+            if (index !== -1) {
+                // Remove the item from the array at the specified index
+                arr.splice(index, 1);
+                row.remove()
+                console.log("Item removed from array");
+            } else {
+                console.log("Item not found in array.");
+            }
+        });
+    }
+
+    // Enable the file input after the user selects a file and trigger upload
+    fileInput.addEventListener('change', () => {
+        const imageName = localStorage.getItem("newImageName")
+        console.log(imageName, 123)
+        const file = fileInput.files[0];
+
+        if (file) {
+            // Create a new File object with the same data but a different name (imageName)
+            const modifiedFile = new File([file], imageName, { type: file.type });
+
+            const formData = new FormData();
+            formData.append('imageUrl', modifiedFile);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(123456, data);
+                    popupText.textContent = 'Image uploaded successfully';
+                    popupMessage.style.display = 'block'; // Show the popup
+                    fileInput.disabled = false;
+                    hidePopupMessage();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    popupText.textContent = 'Error storing image in public folder';
+                    popupMessage.style.display = 'block'; // Show the popup
+                    hidePopupMessage();
+                });
+        } else {
+            console.log('No file selected.');
+            popupText.textContent = 'No file selected';
+            popupMessage.style.display = 'block'; // Show the popup
+            hidePopupMessage();
+        }
+    });
+
+
+    function deleteImage(image, row) {
+        $.post(`/deleteImageWithoutItemId/${image}`, function (data) {
+            if (data.success == true) {
+                row.remove(); // Remove the row from the frontend
+            } else {
+                // Handle error
+            }
+        });
+    }
+
+    document.getElementById('imageForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        // Append the image data from the 'arr' array to the FormData
+        arr.forEach((image, index) => {
+            console.log(image.imageUrl)
+            formData.append('imageUrl[]', image.imageName);
+        });
+        try {
+            const response = await fetch('/createNewProduct', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                window.location.href = '/newProductList';
+                // Handle a successful response from the server
+                console.log('Images uploaded successfully.');
+            } else {
+                // Handle errors
+                console.error('Failed to upload images.');
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    });
+</script>

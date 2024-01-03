@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Update Sale Return</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+    <style>
+        .scrollmenu {
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
+            border-radius: 10px !important;
+
+        }
+
+
+
+        .new-icon-short {
+            position: absolute;
+            left: 4% !important;
+            top: 50%;
+            color: gray;
+        }
+
+        label,
+        a,
+        span {
+            font-size: 13px !important;
+            font-weight: 600 !important;
+        }
+
+
+        .tr-head th {
+            font-weight: 800 !important;
+        }
+
+        /*  th {
+            text-align: center !important;
+        } */
+
+
+
+        div.scrollmenu {
+            background-color: #ffffff;
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+            white-space: nowrap;
+            max-width: 100%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        @media (max-width:430px) {
+            .scrollmenu {
+                overflow-x: auto;
+                white-space: nowrap;
+                max-width: 100%;
+            }
+        }
+
+
+        div.scrollmenu table {
+            width: 100%;
+            /* Set the table to be 100% width */
+            min-width: 800px;
+        }
+
+        div.scrollmenu a {
+            display: inline-block;
+            color: black;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+        }
+
+        div.scrollmenu a:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+        }
+
+        ul.breadcrumb {
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+
+        .scrollmenu::-webkit-scrollbar {
+            width: 5px;
+            height: 8px;
+
+
+        }
+
+
+
+        .scrollmenu::-webkit-scrollbar-thumb {
+            background: #eee
+        }
+
+        ​ #line {
+            padding-bottom: 5px;
+            padding-right: 0px;
+            padding-left: 22px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+        .icon-input {
+            position: absolute;
+            left: 4%;
+            top: 47%;
+            color: gray;
+        }
+
+        @media screen and (max-width: 767px) {
+            .detail-con {
+                display: none !important;
+            }
+
+            .main-purchase-section {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:../../partials/_navbar.html -->
+        {{>navbar}}
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:../../partials/_settings-panel.html -->
+            {{>setting}}
+            <!-- partial -->
+            <!-- partial:../../partials/_sidebar.html -->
+            {{>side}}
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="color-container"></div>
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="d-flex mb-3">
+                            <a href="/salesReturnList" class="text-white" style="z-index: 3;"><i
+                                    class="fa-solid fa-angle-left "></i></a>
+                            <h3 class="card-title ml-4 my-0 font-weight-semibold text-white ls-tighter"
+                                style="z-index: 3;">Update Sale Return 
+                            </h3>
+
+
+                        </div>
+                        <div class="col-md-12  grid-margin stretch-card p-0 m-0">
+
+                            <div class="card">
+                                <div class="card-body col-md-12 p-0">
+
+
+                                    <form action="/updateSaleQuotationEntry/{{order.rowguid}}" method="post">
+                                        <div class="col-md-12 d-flex justify-content-between main-purchase-section  p-0"
+                                            style="gap: 10px;">
+                                            <div class="col-md-8 px-0">
+                                                <div class="wrapper pl-3 py-4  col-md-12">
+                                                    <div
+                                                        class="form-context  px-0 col-md-12 col-12  d-flex justify-content-start flex-column align-items-start">
+                                                        <div class="inner-cont p-0 col-md-12 col-lg-12 flex-wrap col-12  d-flex justify-content-around align-content-start"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 p-0 d-none ">
+                                                                <label for="exampleInputEmail1">Stock Type <span
+                                                                        class="text-danger">*</span></label>
+                                                                <select class="form-select " name="stockType"
+                                                                    aria-label="Default select example"
+                                                                    style="border-radius: 10px; padding-left: 40px;">
+                                                                    {{!-- <option value="">select Stock</option> --}}
+                                                                    <option value="Out">Stock Out</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class=" mb-1 col-md-5 p-0 ">
+                                                                <label for="fname"
+                                                                    class=" mb-1 block text-nowrap p-0 col-md-2">Sales
+                                                                    Return No<span class="text-danger">*</span></label>
+                                                                <input type="text" value="{{order.referenceNumber}}"
+                                                                    class="form-control input-field  col-md-12 col-12"
+                                                                    id="salesReturnNo" aria-describedby="emailHelp"
+                                                                    name="referenceNumber"
+                                                                    placeholder="Enter Invoice Number" required
+                                                                    readonly />
+                                                            </div>
+                                                            <div class=" mb-1 p-0 col-md-5 p-0">
+                                                                <label for="lname"
+                                                                    class="m-0 mb-1 text-nowrap block d-flex col-md-2 p-0">Date
+                                                                    <span class="text-danger">*</span></label>
+                                                                <input type="date"
+                                                                    class="form-control input-field  col-md-12 col-12"
+                                                                    id="orderDate" aria-describedby="emailHelp"
+                                                                    value="{{order.orderDate}}" name="orderDate"
+                                                                    placeholder="Enter Order Date" required />
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="inner-cont p-0 col-md-6 col-lg-12 flex-wrap col-12 d-flex  mb-1 justify-content-around  align-items-center"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="number"
+                                                                    class="m-0 mb-1 text-nowrap block col-md-2 p-0 col-md-2">
+                                                                    Customer</label>
+                                                                <div
+                                                                    class="d-flex justify-content-start align-items-center">
+                                                                    <input type="text" id="supplierSearch"
+                                                                        class="form-control input-field col-md-6 col-6 "
+                                                                        placeholder="Search for a Customer"
+                                                                        onkeyup="searchSuppliers()">
+                                                                    <button
+                                                                        class="btn col-md-5 btn-primary mx-3 px-1 py-2"
+                                                                        role="button" type="button"
+                                                                        style="border-radius:5px;font-size:14px;padding:10px"><a
+                                                                            href="/customerMaster"
+                                                                            class="text-white text-decoration-none "> +
+                                                                            New
+                                                                            Customer</a></button>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class=" mb-1 col-md-5 col-12  p-0 ">
+                                                                <label for="manager"
+                                                                    class="m-0 mb-1 text-nowrap block col-md-2 p-0">Store</label>
+                                                                <select id="storeDropdown" name="outletId"
+                                                                    class="form-control input-field  col-md-12 col-12"
+                                                                    aria-label="Default select example" required>
+                                                                    <option value="{{previousStore.outletId}}">
+                                                                        {{previousStore.storeName}}</option>
+                                                                    {{#each store}}
+                                                                    <option value="{{outletId}}"> {{ storeName }}
+                                                                    </option>
+                                                                    {{/each}}
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="inner-cont p-0 col-md-6 col-lg-12   flex-wrap col-12 d-flex  justify-content-around  align-items-center"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5  p-0 ">
+
+                                                                <select id="supplierDropdown" name="supplierCustomer"
+                                                                    class="form-control input-field  col-md-12 col-12"
+                                                                    aria-label="Default select example" required>
+                                                                    <option class="opt" value="{{previousCustomer.id}}">
+                                                                        {{previousCustomer.Name}}
+                                                                    </option>
+                                                                    {{#each customer}}
+                                                                    <option value="{{id}}">{{Name}}</option>
+                                                                    {{/each}}
+                                                                </select>
+                                                            </div>
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Sales
+                                                                    Executive</label>
+                                                                <select
+                                                                    class="form-control input-field  col-md-12 col-12"
+                                                                    id="saleExecutiveDropdown" name="saleExecutive"
+                                                                    aria-label="Default select example">
+                                                                    <option value="{{order.saleExecutive}}">
+                                                                        {{order.saleExecutive}}</option>
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="inner-cont p-0 col-md-12 col-lg-12   flex-wrap col-12 d-flex  justify-content-around  align-items-cemter"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Customer
+                                                                    Name</label>
+                                                                <input class="form-control input-field col-md-12 col-12"
+                                                                    type="text" id="supplierName"
+                                                                    value="{{previousCustomer.Name}}"
+                                                                    aria-describedby="emailHelp"
+                                                                    aria-describedby="emailHelp" name="name"
+                                                                    placeholder=" Enter Customer Name">
+                                                            </div>
+
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Email</label>
+                                                                <input class="form-control input-field col-md-12 col-12"
+                                                                    type="email" placeholder="Enter Customer Email"
+                                                                    aria-describedby="emailHelp" name="email"
+                                                                    value="{{previousCustomer.Email}}"
+                                                                    id="supplierEmail" required readonly>
+                                                            </div>
+
+
+
+                                                        </div>
+
+                                                        <div class="inner-cont p-0 col-md-12 col-lg-12   flex-wrap col-12 d-flex  justify-content-around  align-items-cemter"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Sales
+                                                                    Invoice No.<span
+                                                                        class="text-danger">*</span></label>
+                                                                <input type="text"
+                                                                    class="form-control input-field col-md-12 col-12"
+                                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                                    name="referenceNumber"
+                                                                    placeholder="Enter Reference Number"
+                                                                    value="{{order.salesInvoiceNo}}" required readonly>
+                                                            </div>
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Mobile</label>
+                                                                <input class="form-control input-field col-md-12 col-12"
+                                                                    type="number"
+                                                                    value="{{previousCustomer.ContactNo1}}"
+                                                                    placeholder="Enter Customer Mobile Number"
+                                                                    aria-describedby="emailHelp" name="mobileNo"
+                                                                    id="supplierMobile" required readonly>
+
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <div class="inner-cont p-0 col-md-12 col-lg-12   flex-wrap col-12 d-flex  justify-content-around  align-items-cemter"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Payment
+                                                                    Status<span class="text-danger">*</span></label>
+                                                                <select
+                                                                    class="form-control input-field col-md-12 col-12"
+                                                                    name="paymentStatus"
+                                                                    aria-label="Default select example" required>
+                                                                    <option value="{{order.paymentStatus}}">
+                                                                        {{order.paymentStatus}}</option>
+                                                                    <option value="Paid">Paid</option>
+                                                                    <option value="Unpaid">Unpaid</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Remarks</label>
+                                                                <textarea type="text"
+                                                                    class="form-control input-field-three"
+                                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                                    rows="2" name="remarks"
+                                                                    placeholder="Enter remark here......">{{order.remarks}}</textarea>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <div class="inner-cont p-0 col-md-12 col-lg-12   flex-wrap col-12 d-flex  ml-4"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Return
+                                                                    Policy</label>
+                                                                <textarea type="text"
+                                                                    class="form-control input-field-three"
+                                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                                    rows="2" name="remarks"
+                                                                    placeholder="Enter remark here......">{{order.returnPolicy}}</textarea>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 broder wrapper ">
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>PO Date :</b></label>
+                                                    <input type="date" class="col-md-7 col-6 newid border-0" disabled
+                                                        style="font-size: 12px;"></input>
+
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0" disabled><b>PO
+                                                            No. :</b></label>
+                                                    <input class="col-md-7 col-6 border-0" id="purOrdNo"
+                                                        style="font-size: 12px;"></input>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0" disabled><b>Supplier
+                                                            :</b></label>
+                                                    <input class="col-md-7 col-6 border-0" id="suppName"
+                                                        style="font-size: 12px;"></input>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>Disc. Per. :</b></label>
+                                                    <span class="col-md-7 col-6" style="font-size: 12px;">value</span>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>Disc. Amt :</b></label>
+                                                    <span class="col-md-7 col-6" style="font-size: 12px;">value</span>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>GST Amt :</b></label>
+                                                    <span class="col-md-7 col-6" style="font-size: 12px;">value</span>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>Grand Total
+                                                            :</b></label>
+                                                    <input class="col-md-7 col-6 border-0" id="gTotal"
+                                                        style="font-size: 12px;"></input>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                        {{!-- table section --}}
+                                        <div class="scrollmenu" style="margin-top: 29px;"
+                                            onmouseover="this.style.overflow-x='scroll'"
+                                            onmouseout="this.style.overflow-x='hidden'">
+                                            <table id="product-table" class="table over" style="position: relative;">
+
+                                                <thead>
+                                                    <div class="row">
+                                                        <tr class="tr-head" style="text-align: center;">
+
+                                                            <div class="col-md-2">
+                                                                <th style="font-size: 12px;" >Product</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th style="font-size: 12px;" >Batch No</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th style="font-size: 12px;" >Available Stock Quantiy</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th class="d-none" style="font-size: 12px;" >HSN Code</th>
+                                                            </div>
+
+                                                            <div class="col-md-1">
+                                                                <th class="d-none" style="font-size: 12px;" >Mfg Date</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th style="font-size: 12px;" >Exp Date</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th class="d-none" style="font-size: 12px;" >Free Qty</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th style="font-size: 12px;" >Quantity</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th style="font-size: 12px;" >Return Qty</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th class="d-none" style="font-size: 12px;" >Purchase Price</th>
+                                                            </div>
+                                                            <div class="col-md-1 d-none">
+                                                                <th class="d-none" style="font-size: 12px;" >Discount Type</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th style="font-size: 12px;" >Sale Price(Excl Tax)</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th style="font-size: 12px;" >Discount</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th class="d-none" style="font-size: 12px;" >Original Price</th>
+                                                            </div>
+                                                            <div class="col">
+                                                                <th class="col-md-3 d-none" style="font-size: 12px;" >Market Price</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th class="d-none" style="font-size: 12px;" >Sale Price(Incl Tax)</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th class="d-none" style="font-size: 12px;" >Cost Price Without Tax</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th class="d-none" style="font-size: 12px;" >Tax Percentage</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th style="font-size: 12px;" >Tax Amount </th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th class='d-none' style="font-size: 12px;" >Base UOM / packing</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th class='d-none' style="font-size: 12px;" >Base UOM Volume / pack</th>
+                                                            </div>
+                                                            <div class="col-md-2 ">
+                                                                <th style="padding: 12px 43px; font-size: 12px;">Total</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th class='d-none' style="font-size: 12px;" >Action</th>
+                                                            </div>
+                                                        </tr>
+                                                    </div>
+                                                </thead>
+                                                <tbody id="product-list">
+
+                                                </tbody>
+                                                {{!-- --}}
+                                            </table>
+
+                                        </div>
+
+                                        <div
+                                            class="col-md-12 col-12 totals-con grand-total-cls m-2 d-flex flex-row-reverse   justify-content-around flex-wrap align-items-center">
+                                            <div class="d-flex align-items-center col-md-3 col-12 my-2 detail-con">
+                                                <span class="fw-1 col-4 "><b>Grand Total </b></span>
+                                                <input type="text" id="grand-total" name="grandTotal" value="0"
+                                                    class="px-2 py-1 ml-2 col-md-4 col-8 rounded border-0 w-25"
+                                                    readonly>
+                                            </div>
+                                            <div class="d-flex align-items-center col-md-3 col-12 my-2 detail-con ">
+                                                <span class="fw-1 col-4 "><b>Total</b></span>
+                                                <input type="text" id="" value="0"
+                                                    class="px-2 py-1 ml-2  rounded border-0 col-md-4 col-8 " readonly>
+                                            </div>
+                                            <div class="d-flex align-items-center col-md-3 col-12 my-2 detail-con ">
+                                                <span class="fw-1 col-4 "><b>Quantity</b></span>
+                                                <input type="text" id="" value="0"
+                                                    class="px-2 py-1 ml-2  col-md-4 col-8  rounded border-0" readonly>
+                                            </div>
+                                            <div
+                                                class="inner-cont p-0 col-md-3 col-12 my-2 mt-2 flex-column   flex-wrap col-12 d-flex  justify-content-around align-content-start">
+                                                <div class="d-flex align-items-center  w-full ">
+
+                                                    <button class="btn btn-primary mr-2  rounded-sm" role="button"
+                                                        type="submit" style="padding:5px 15px;width:80px">Save</button>
+                                                    <button class="btn btn-primary mr-2  rounded-sm" role="button"
+                                                        type="reset" style="padding:5px 15px;width:80px">Cancel</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="../../vendors/select2/select2.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/template.js"></script>
+    <script src="../../js/settings.js"></script>
+    <script src="../../js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="../../js/file-upload.js"></script>
+    <script src="../../js/typeahead.js"></script>
+    <script src="../../js/select2.js"></script>
+    <!-- End custom js for this page-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+
+</html>
+<script>
+    // Customer Populate Function
+    function searchSuppliers() {
+        var input, filter, select, option, txtValue;
+        input = document.getElementById('supplierSearch');
+        filter = input.value.toUpperCase();
+        select = document.getElementById('supplierDropdown');
+        option = select.getElementsByTagName('option');
+
+        for (var i = 0; i < option.length; i++) {
+            txtValue = option[i].textContent;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                option[i].style.display = '';
+                console.log(txtValue.toUpperCase().indexOf(filter))
+            }
+            else {
+                option[i].style.display = 'none';
+            }
+
+        }
+    }
+
+    $('#supplierDropdown').change(function () {
+        // Get the selected supplier value when the store dropdown changes
+        const supplierId = $('#supplierDropdown').val();
+        $.get(`/allCustomer/${supplierId}`, function (suppliers) {
+            if (suppliers.length > 0) {
+                const supplier = suppliers[0]; // Get the first (and only) object in the array
+                const supplierNameInput = $('#supplierName');
+                const supplierEmailInput = $('#supplierEmail');
+                const supplierMobileInput = $('#supplierMobile');
+
+                // Populate the input fields with the supplier data
+                supplierNameInput.val(supplier.Name);
+                supplierEmailInput.val(supplier.Email);
+                supplierMobileInput.val(supplier.ContactNo1);
+            }
+        });
+    });
+
+</script>
+
+<script>
+    let addbtn = document.getElementById("add-product-btn");
+    let tablebody = document.getElementById("product-list")
+    let grandTotal = document.getElementById("grand-total");
+
+    function addNewRow() {
+        const newRow = document.createElement("tr");
+
+        newRow.innerHTML = `
+            <td class="px-0" style="width:20%">
+
+                <select name="itemId[]" id='productDropdown' class=" form-control item-select rounded-3 p-1 mx-2" style="font-size:12px;" >
+
+                    <option value="">Select Product</option>
+                    <!-- Dynamically populates -->
+                </select>
+            </td>
+             <td class="px-0" style="width:20%">
+                <select name="batchNo[]" id='batchDropdown' class=" form-control product-select rounded-3 p-1 mx-2" onchange="populateProductDetails(this)" style="font-size:12px;" >
+                    <option value="">Select Batch No</option>
+                    <!-- Dynamically populates -->
+                </select>
+            </td>
+            <td><input type="text" id ='stockQuantity' name="stockQuantity" class=" form-control col-md-12 p-1 mx-2" readonly style="font-size:12px;" ></td>
+            <td class="d-none"><input type="text" name="hsnCode[]" class=" form-control col-md-12 p-1 mx-2" style="font-size:12px;" ></td>     
+            <td class="d-none"><input type="date" name="mfgDate[]" class=" form-control  col-md-12 p-1 mx-2" style="font-size:12px;" ></td>
+            <td><input type="date" name="expDate[]" class=" form-control col-md-12 p-1 mx-2" readonly style="font-size:12px;" ></td>
+            <td class="px-0 d-none" style="width:20%">
+                <select name="freeQty[]" class=" form-control product-select rounded-3 p-1 mx-2" style="font-size:12px;" >
+                    <option value="">Select Free Qty</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </td>
+            <td><input type="number" name="qty[]" class=" form-control  col-md-12  p-1 mx-2" style="font-size:12px;" ></td>
+            <td class="d-none"><input type="number" name="purchasePrice[]" step="0.01" class=" form-control  col-md-12  p-1 mx-2 " style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="text"  name="discountType[]" step="0.01" class="col-md-12  p-1 mx-2" value = "percentage"></td>
+            <td ><input type="number" name="salePriceExclTax[]" step="0.01" class=" col-md-12 p-1 mx-2 " readonly></td>
+            <td><input type="number" name="discount[]" step="0.01" class=" col-md-12 p-1 mx-2 "></td>
+            <td class="d-none"><input type="number" name="originalPrice[]" step="0.01" class=" col-md-12 p-1 mx-2 " readonly></td>
+            <td class="d-none"><input type="number" name="mrp[]" step="0.01" class=" col-md-12 p-1 mx-2 "></td> 
+            <td class = 'd-none'><input type="number" name="salePriceInclTax[]" step="0.01" class=" col-md-12 p-1 mx-2 "></td>
+            <td class="d-none"><input type="number" name="costPriceWithoutTax[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="number" name="taxPercentage[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " style="font-size:12px;" ></td>
+            <td><input type="number" name="taxAmount[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " readonly style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="number" name="packing[]" class=" form-control  col-md-12 p-1 mx-2 " style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="number" name="pack[]" class=" form-control  col-md-12 p-1 mx-2 " style="font-size:12px;" ></td>
+            <td><input type="number" name="totalAmount[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " readonly style="font-size:12px;" ></td>
+            <td><i class="fa-solid fa-plus mr-3 fa-2xl add-new-btn"  ></i><i class="fa-solid fa-trash-arrow-up fa-xl delete-row-btn  text-danger ml-auto"></i> </td>
+        `;
+        tablebody.appendChild(newRow);
+        addNewRowButton(newRow)
+        removeRow(newRow);
+
+        const productDropdown = $(newRow).find('select[name="itemId[]"]');
+        populateProducts(productDropdown);
+        productDropdown.change(function () {
+            console.log("Product dropdown changed.");
+            const itemId = $(this).val();
+            console.log(itemId)
+            const close = $(this).closest('tr')
+            const batchDropdown = close.find('select[name="batchNo[]"]');
+            console.log(123456,batchDropdown.val())
+            // Clear and populate the batchDropdown based on the selected itemId
+            populateBatchNo(itemId,batchDropdown);
+        });
+
+        // Attach event listeners for Quantity, Purchase Price, and Discount Percentage
+        const quantityInput = newRow.querySelector('input[name="qty[]"]');
+      /*  const purchasePriceInput = newRow.querySelector('input[name="purchasePrice[]"]');
+        const discountPercentageInput = newRow.querySelector('input[name="discount[]"]');
+        const originalPriceInput = newRow.querySelector('input[name="originalPrice[]"]'); */
+        const salePriceInput = newRow.querySelector('input[name="salePrice[]"]');
+        const taxPercentageInput = newRow.querySelector('input[name="taxPercentage[]"]');
+        const taxAmountInput = newRow.querySelector('input[name="taxAmount[]"]');
+        const totalAmountInput = newRow.querySelector('input[name="totalAmount[]"]');
+
+
+        quantityInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+      //  purchasePriceInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+      //  discountPercentageInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        taxPercentageInput.addEventListener("input", () => updateOriginalPrice.call(newRow))
+
+
+        // Initial calculation when adding a new row
+        updateOriginalPrice.call(newRow);
+        updateGrandTotal();
+    }
+
+    // Function to populate a row with existing data
+    function populateRowWithData(newRow, existingData) {
+        newRow.innerHTML = `
+            <td class="px-0" style="width:20%">
+                <select name="itemId[]" id="productDropdown" class=" form-control item-select rounded-3 " style="font-size:12px;"  >
+                    //dynamically populate according to selected outletId
+                </select>
+            </td>
+            <td class="px-0" style="width:20%">
+                <select name="batchNo[]" id = 'batchDropdown' class=" form-control product-select rounded-3 p-1 mx-2" onchange="populateProductDetails(this)" style="font-size:12px;" >
+                    <option value="${existingData.batchNo}">${existingData.batchNo}</option>
+                    // Dynamically Populate Batch according to product select
+                </select>
+            </td>
+            <td><input type="text" id ='stockQuantity' name="stockQuantity" class=" form-control col-md-12 p-1 mx-2" readonly style="font-size:12px;" ></td>
+            <td class="d-none"><input type="text" name="hsnCode[]" class=" form-control col-md-12 p-1 mx-2" value="${existingData.hsnCode}" style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="date" name="mfgDate[]" class=" form-control  col-md-12 p-1 mx-2" value="${existingData.mfgDate}" style="font-size:12px;" ></td>
+            <td><input type="date" name="expDate[]" class=" form-control col-md-12 p-1 mx-2" value="${existingData.expDate}" readonly style="font-size:12px;" ></td>
+            <td class="px-0 d-none" style="width:20%">
+                <select name="freeQty[]" class=" form-control free-qty-select rounded-3 p-1 mx-2" style="font-size:12px;" >
+                    <option value="${existingData.freeQty}">${existingData.freeQty}</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </td>
+            <td><input type="number" name="qty[]" class=" form-control  col-m form-control d-12  p-1 mx-2" value="${existingData.qty}" style="font-size:12px;" ></td>
+            <td><input type="number" name="returnQty[]" class=" col-md-12  p-1 mx-2" value="${existingData.returnQty}" style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="number" name="purchasePrice[]" step="0.01" class=" form-control  col-md-12  p-1 mx-2" value="${existingData.purchasePrice}" style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="text"   name="discountType[]" class=" form-control col-md-12  p-1 mx-2" value = "percentage" value="${existingData.discountType}" style="font-size:12px;" ></td>
+            <td ><input type="number" name="salePriceExclTax[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " value="${existingData.salePriceExclTax}" readonly style="font-size:12px;" ></td>
+            <td><input type="number" name="discount[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2" value="${existingData.discount}" style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="number" name="originalPrice[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " value="${existingData.originalPrice}" readonly style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="number" name="mrp[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " value="${existingData.mrp}" style="font-size:12px;" ></td> 
+            <td class = 'd-none' ><input type="number" name="salePriceInclTax[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " value="${existingData.salePriceInclTax}" style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="number" name="costPriceWithoutTax[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " value="${existingData.costPriceWithoutTax}" style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="number" name="taxPercentage[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " value="${existingData.taxPercentage}" style="font-size:12px;" ></td>
+            <td><input type="number" name="taxAmount[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " value="${existingData.taxAmount}" readonly style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="number" name="packing[]" class=" form-control  col-md-12 p-1 mx-2 " value="${existingData.packing}" style="font-size:12px;" ></td>
+            <td class = 'd-none'><input type="number" name="pack[]" class=" form-control  col-md-12 p-1 mx-2 " value="${existingData.pack}" style="font-size:12px;" ></td>
+            <td><input type="number" name="totalAmount[]" step="0.01" class=" form-control  col-md-12 p-1 mx-2 " value="${existingData.totalAmount}" readonly style="font-size:12px;" ></td>
+            <td class = "d-none"><i class="fa-solid fa-plus mr-3 fa-2xl add-new-btn"  ></i><i class="fa-solid fa-trash-arrow-up fa-xl delete-row-btn  text-danger ml-auto"></i> </td>
+        `;
+        tablebody.appendChild(newRow);
+        addNewRowButton(newRow)
+        removeRow(newRow);
+
+        const productDropdown = $(newRow).find('select[name="itemId[]"]');
+        populateProducts(productDropdown);
+        productDropdown.change(function () {
+            console.log("Product dropdown changed.");
+            const itemId = $(this).val();
+            const close = $(this).closest('tr')
+            const batchDropdown = close.find('select[name="batchNo[]"]');
+            console.log(batchDropdown.val())
+            // Clear and populate the batchDropdown based on the selected itemId
+            populateBatchNo(itemId, batchDropdown);
+        });
+        
+
+
+        // Attach event listeners for Quantity, Purchase Price, and Discount Percentage
+        const quantityInput = newRow.querySelector('input[name="qty[]"]');
+        const returnQtyInput = newRow.querySelector('input[name="returnQty[]"]');
+      /*  const purchasePriceInput = newRow.querySelector('input[name="purchasePrice[]"]');
+        const originalPriceInput = newRow.querySelector('input[name="originalPrice[]"]'); */
+        const salePriceExclTaxInput = newRow.querySelector('input[name="salePriceExclTax[]"]');
+        const discountPercentageInput = newRow.querySelector('input[name="discount[]"]');
+        const taxPercentageInput = newRow.querySelector('input[name="taxPercentage[]"]');
+        const taxAmountInput = newRow.querySelector('input[name="taxAmount[]"]');
+        const totalAmountInput = newRow.querySelector('input[name="totalAmount[]"]');
+
+
+        quantityInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        returnQtyInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+      //  purchasePriceInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        discountPercentageInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        taxPercentageInput.addEventListener("input", () => updateOriginalPrice.call(newRow))
+
+        // Calculate original price, tax amount, and total amount for the populated row
+        updateOriginalPrice.call(newRow);
+
+        // Update the grand total
+        updateGrandTotal();
+    }
+
+
+
+
+
+    // fundtion to populate existing product when window load
+    window.addEventListener("load", () => {
+        
+        const productId = {{ productPrice.orderFk }};
+
+    fetchExistingStockData(productId)
+
+        .then((existingData) => {
+            // Assuming existingData is an array of products
+            existingData.forEach((productData) => {
+                // Create a new row for each product
+                const newRow = document.createElement("tr");
+
+                // Fetch the product name for the current product ID
+                fetchProductName(productData.itemId)
+                    .then((productName) => {
+                        //console.log(111, productName.itemName)
+                        // Populate the product name into the table cell
+                        //  populateProductName(newRow, productName);
+
+                        // Populate the product name into the table cell
+                        const selectElement = newRow.querySelector('select[name="itemId[]"]')
+
+                        // Create an option element for the product name
+                        const optionElement = document.createElement('option');
+                        optionElement.value = productData.itemId; // Set the value to the product's ID
+                        optionElement.textContent = productName.itemName; // Set the text content to the product's name
+                        // Check if this option is the one you want to be selected and set the selected attribute
+                        optionElement.selected = true;
+                        selectElement.appendChild(optionElement);
+                    })
+                    .catch((error) => {
+                        console.log("Error fetching product name:", error);
+                    });
+
+                    // Fetch the stock quantity for the current product
+                    fetchStockQuantity(productData.itemId, productData.batchNo)
+                    .then((stockQuantity) => {
+                        // Populate the stock quantity input field
+                        newRow.querySelector('input[name="stockQuantity"]').value = stockQuantity.toFixed(2);
+                    })
+                    .catch((error) => {
+                        console.log("Error fetching stock quantity:", error);
+                    });
+
+                    // Populate the other fields with data for each product
+                        populateRowWithData(newRow, productData);
+
+                                        // Get the input field for Quantity
+                const quantityInput = newRow.querySelector('input[name="qty[]"]');
+                 quantityInput.addEventListener("input", () => {
+                    const stockQuantity = parseFloat(newRow.querySelector('input[name="stockQuantity"]').value) || 0;
+                    const enteredQuantity = parseFloat(quantityInput.value) || 0;
+                    if (enteredQuantity > stockQuantity) {
+                        alert('Quantity cannot be greater than stock quantity');
+                        // Optionally, you can clear the input field or take other actions
+                        quantityInput.value = stockQuantity.toFixed(2);
+                    }
+                });
+
+
+            });
+        })
+    });
+
+    // populates empty row wehn click on add button 
+    addbtn.addEventListener("click", () => {
+        addNewRow();
+    });
+
+
+
+    //  All functions which are used 
+
+ function fetchStockQuantity(itemId, batchNo) {
+    return new Promise((resolve, reject) => {
+        // Make an HTTP request to your backend to fetch the stock quantity
+        fetch(`/getStockQuantity/${itemId}/${batchNo}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Request failed with status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // Assuming the response contains the stock quantity
+                const stockQuantity = data.stockQuantity;
+                resolve(stockQuantity);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
+
+// Calculation for original price, tax amount, total amount and grand total
+    function updateOriginalPrice() {
+    // Get the input fields for Quantity, Purchase Price, Discount Percentage, and Original Price
+        const quantityInput = this.querySelector('input[name="qty[]"]');
+        const returnQuantityInput = this.querySelector('input[name="returnQty[]"]');
+      //  const purchasePriceInput = this.querySelector('input[name="purchasePrice[]"]');
+        const discountPercentageInput = this.querySelector('input[name="discount[]"]');
+    //    const originalPriceInput = this.querySelector('input[name="originalPrice[]"]');
+        const salePriceExclTaxInput = this.querySelector('input[name="salePriceExclTax[]"]');
+        const taxPercentageInput = this.querySelector('input[name="taxPercentage[]"]');
+        const taxAmountInput = this.querySelector('input[name="taxAmount[]"]');
+        const totalAmountInput = this.querySelector('input[name="totalAmount[]"]');
+
+        // Parse the values from input fields
+        const quantity = parseFloat(quantityInput.value) || 0;
+        const returnQuantity = parseFloat(returnQuantityInput.value) || 0;
+      //  const purchasePrice = parseFloat(purchasePriceInput.value) || 0;
+        const discountPercentage = parseFloat(discountPercentageInput.value) || 0;
+        const salePriceExclTax = parseFloat(salePriceExclTaxInput.value) || 0;
+        const taxPercentage = parseFloat(taxPercentageInput.value) || 0;
+        const taxAmount = parseFloat(taxAmountInput.value) || 0;
+      //  console.log(11, taxPercentage)
+        // Calculate Original Price
+       // const originalPrice = purchasePrice - (purchasePrice * (discountPercentage / 100));
+      //  console.log(12, originalPrice)
+
+        const salePriceWithDiscount = salePriceExclTax - (salePriceExclTax * (discountPercentage / 100));
+        const  taxAmountNew = salePriceWithDiscount * (taxPercentage / 100)
+        const totalAmount = returnQuantity * (salePriceWithDiscount + taxAmountNew)
+        
+        // Update the Original Price field,tax amount field and total amount field with the calculated value
+      //  originalPriceInput.value = originalPrice.toFixed(2); // Format to two decimal places
+        taxAmountInput.value = taxAmountNew.toFixed(2)
+        totalAmountInput.value = totalAmount.toFixed(2)
+        updateGrandTotal();
+    }
+
+
+    // Grand Total Calculation 
+    function updateGrandTotal() {
+        let rows = tablebody.querySelectorAll("tr");
+        let total = 0;
+
+        rows.forEach(row => {
+            const totalAmountInput = row.querySelector('input[name="totalAmount[]"]');
+            const totalAmount = parseFloat(totalAmountInput.value) || 0;
+            total += totalAmount;
+        });
+        grandTotal.value = total.toFixed(2); // Update the grand total in your HTML
+    }
+
+
+     // function to remove row
+    function removeRow(row) {
+        const deleteBtn = row.querySelector(".delete-row-btn");
+        
+        deleteBtn.addEventListener("click", function () {
+            const orderId = {{order.orderId}}
+            const itemId = row.querySelector('select[name="itemId[]"]').value;
+            const batchNo = row.querySelector('select[name="batchNo[]"]').value;
+                    row.remove();
+                    updateGrandTotal();
+            // Make an AJAX request to delete row from the database
+            $.ajax({
+                url: `/deleteRowDataStockOut/${itemId}/${batchNo}/${orderId}`,
+                method: 'POST',
+            });
+        });
+    }
+
+
+        // function for plus button to add new product row
+    function addNewRowButton(row) {
+        const addBtn = row.querySelector(".add-new-btn");
+
+        addBtn.addEventListener("click", function () {
+            // Clone the current row
+            const newRow = row.cloneNode(true);
+
+            // Clear the values in the cloned row
+            const inputs = newRow.querySelectorAll('input');
+            for (const input of inputs) {
+                input.value = "";
+            }
+
+        // Add the "Select Batch No" option to the batch number select dropdown in the cloned row
+        const batchNoSelect = newRow.querySelector('select[name="batchNo[]"]');
+        const selectOption = document.createElement("option");
+        selectOption.value = "";
+        selectOption.text = "Select Batch No";
+        batchNoSelect.innerHTML = ""; // Clear existing options
+        batchNoSelect.appendChild(selectOption); // Append the new option
+
+            // Append the cloned row to the table body
+            tablebody.appendChild(newRow);
+
+            const productDropdown = $(newRow).find('select[name="itemId[]"]');
+            populateProducts(productDropdown);
+            productDropdown.change(function () {
+            const itemId = $(this).val();
+            const batchDropdown = $(this).closest('tr').find('select[name="batchNo[]"]');
+            // Clear and populate the batchDropdown based on the selected itemId
+            populateBatchNo(itemId, batchDropdown);
+            });
+
+        // Attach event listeners for Quantity, Purchase Price, and Discount Percentage
+        const quantityInput = newRow.querySelector('input[name="qty[]"]');
+      /*  const purchasePriceInput = newRow.querySelector('input[name="purchasePrice[]"]');
+        const originalPriceInput = newRow.querySelector('input[name="originalPrice[]"]'); */
+        const salePriceExclTaxInput = newRow.querySelector('input[name="salePriceExclTax[]"]');
+        const discountPercentageInput = newRow.querySelector('input[name="discount[]"]');
+        const taxPercentageInput = newRow.querySelector('input[name="taxPercentage[]"]');
+        const taxAmountInput = newRow.querySelector('input[name="taxAmount[]"]');
+        const totalAmountInput = newRow.querySelector('input[name="totalAmount[]"]');
+
+
+        quantityInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+      //  purchasePriceInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        discountPercentageInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        taxPercentageInput.addEventListener("input", () => updateOriginalPrice.call(newRow))
+
+
+            // Attach event listeners for the new row
+            updateOriginalPrice.call(newRow);
+            removeRow(newRow);
+            addNewRowButton(newRow);
+
+            // Update the grand total
+            updateGrandTotal();
+        });
+    }
+
+    // function to populate ptoduct based on selected store
+    function populateProducts(productDropdown) {
+        let outletId = $('#storeDropdown').val();
+
+        // Clear the product dropdown before fetching new products
+        productDropdown.empty();
+        productDropdown.append('<option value="">Select Product</option>');
+
+        $.get(`/products/${outletId}`, function (products) {
+
+            products.forEach(function (product) {
+                productDropdown.append(`<option value="${product.itemId}">${product.itemName}</option>`);
+            });
+        });
+    }
+
+    //function to populate batch no based on selected itemId
+
+    function populateBatchNo(itemId, batchDropdown) {
+        // console.log(111, itemId)
+        let outletId = $('#storeDropdown').val();
+        // const batchDropdown = $('#batchDropdown');
+        console.log(batchDropdown)
+
+        batchDropdown.empty();
+        batchDropdown.append('<option value="">Select Batch No</option>');
+
+        $.get(`/allBatchNo/${itemId}/${outletId}`, function (batchNo) {
+            batchNo.forEach(function (batchNo) {
+                console.log(batchNo)
+                batchDropdown.append(`<option value="${batchNo.batchNo}">${batchNo.batchNo}</option>`);
+            });
+        });
+
+        // Add an event listener to the batchDropdown for onchange
+        batchDropdown.change(function () {
+            // Store the selected batchNo
+            const selectedBatchNo = $(this).val();
+            // Call populateProductDetails with the selected itemId and batchNo
+            populateProductDetails(this, itemId, selectedBatchNo);
+        });
+    }
+
+    // get product details based on item Id and batch no 
+    function populateProductDetails(selectElement, itemId, batchNo) {
+
+        const productName = selectElement.options[selectElement.selectedIndex].text;
+
+        fetch(`/getProductDetails/${itemId}/${batchNo}`)
+            .then(response => response.json())
+            .then(data => {
+                const row = selectElement.closest('tr');
+                // Populate the corresponding fields in the row with fetched data
+
+                // Assuming data[0] contains other properties like 'mfgDate', 'expDate', etc.
+                // Update other fields based on the fetched data
+                row.querySelector('input[name="hsnCode[]"]').value = data[0].hsnCode;
+                row.querySelector('input[name="mfgDate[]"]').value = data[0].mfgDate;
+                row.querySelector('input[name="expDate[]"]').value = data[0].expDate;
+                row.querySelector('select[name="freeQty[]"]').value = data[0].freeQty;
+                row.querySelector('input[name="qty[]"]').value = '';
+                row.querySelector('input[name="purchasePrice[]"]').value = data[0].purchasePrice;
+                row.querySelector('input[name="discountType[]"]').value = data[0].discountType;
+                row.querySelector('input[name="salePriceExclTax[]"]').value = data[0].salePriceExclTax;
+                row.querySelector('input[name="discount[]"]').value = data[0].discount;
+                row.querySelector('input[name="originalPrice[]"]').value = data[0].originalPrice;
+                row.querySelector('input[name="mrp[]"]').value = data[0].mrp;
+                row.querySelector('input[name="salePriceInclTax[]"]').value = data[0].salePriceInclTax;
+                row.querySelector('input[name="costPriceWithoutTax[]"]').value = data[0].costPriceWithoutTax;
+                row.querySelector('input[name="taxPercentage[]"]').value = data[0].taxPercentage;
+                row.querySelector('input[name="taxAmount[]"]').value = data[0].taxAmount;
+                row.querySelector('input[name="totalAmount[]"]').value = data[0].totalAmount;
+                row.querySelector('input[name="packing[]"]').value = data[0].packing;
+                row.querySelector('input[name="pack[]"]').value = data[0].pack;
+
+                // Attach event listeners for Quantity, Purchase Price, and Discount Percentage
+                const quantityInput = row.querySelector('input[name="qty[]"]');
+            /*  const purchasePriceInput = row.querySelector('input[name="purchasePrice[]"]');
+                const originalPriceInput = row.querySelector('input[name="originalPrice[]"]'); */
+                const salePriceExclTaxInput = row.querySelector('input[name="salePriceExclTax[]"]');
+                const discountPercentageInput = row.querySelector('input[name="discount[]"]');
+                const taxPercentageInput = row.querySelector('input[name="taxPercentage[]"]');
+                const taxAmountInput = row.querySelector('input[name="taxAmount[]"]');
+                const totalAmountInput = row.querySelector('input[name="totalAmount[]"]');
+
+
+                quantityInput.addEventListener("input", () => updateOriginalPrice.call(row));
+            //  purchasePriceInput.addEventListener("input", () => updateOriginalPrice.call(row));
+                discountPercentageInput.addEventListener("input", () => updateOriginalPrice.call(row));
+                taxPercentageInput.addEventListener("input", () => updateOriginalPrice.call(row))
+
+                // Calculate original price, tax amount, and total amount for the populated row
+                updateOriginalPrice.call(row);
+
+                // Update the grand total
+                updateGrandTotal();
+                // Fetch stock in and out quantities based on selected product and batchNo
+                fetch(`/getStockQuantity/${itemId}/${batchNo}`)
+                    .then(response => response.json())
+                    .then(stockData => {
+                        const row = selectElement.closest('tr');
+
+                        const stockInQty = parseFloat(stockData.stockIn) || 0;
+                        const stockOutQty = parseFloat(stockData.stockOut) || 0;
+                        const stockQuantity = stockInQty - stockOutQty;
+
+                        // Update the stock quantity input field
+                        row.querySelector('input[name="stockQuantity"]').value = stockQuantity.toFixed(2);
+
+                        // Get the input field for Quantity
+                        const quantityInput = row.querySelector('input[name="qty[]"]');
+
+                        // add event listener for comparing the available stock quantity and enter quantity
+                        quantityInput.addEventListener("input", () => {
+                            const enteredQuantity = parseFloat(quantityInput.value) || 0;
+                            if (enteredQuantity > stockQuantity) {
+                                alert('Quantity cannot be greater than Available Stock Quantity');
+                                // Optionally, you can clear the input field or take other actions
+                                quantityInput.value = stockQuantity.toFixed(2);
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching stock quantity:", error);
+                    });
+            })
+            .catch(error => {
+                console.error("Error fetching product details:", error);
+            });
+    }
+
+   // Function to fetch available stock quantity
+   
+
+    // Function to fetch existing stock data for a product from the server
+    function fetchExistingStockData(productId) {
+        return fetch(`/existingProductDetails/${productId}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .catch((error) => {
+                console.error("Error fetching existing data:", error);
+            });
+    }
+
+    // Function to fetch product name based on product ID
+    function fetchProductName(productId) {
+        return fetch(`/existingProductName/${productId}`) // Replace with your actual API endpoint
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .catch((error) => {
+                console.error("Error fetching product name:", error);
+            });
+    }
+
+
+</script>
+
+
+
+<script>
+
+    $(document).on('click', '#saveBtn', function () {
+        // Serialize the entire form data
+        var formData = $('#saleReturnForm').serialize();
+
+        // Show the delete confirmation modal
+        $('#deleteModal').modal('show');
+
+        // Handle the click on the "Delete" button in the modal
+        $('#confirmDelete').on('click', function () {
+            var remark = $('#remark').val();
+            var errorContainer = $('#remarkError');
+
+            // Check if the remark is not empty
+            if (remark.trim() === '') {
+                errorContainer.text('Remark is required. Please enter a remark.');
+                return; // Do not proceed with deletion if remark is empty
+            } else {
+                errorContainer.text(''); // Clear any previous error message
+            }
+
+            // Append the 'remark' value to the serialized form data
+            formData += '&deleteRemark=' + encodeURIComponent(remark);
+
+            // Perform the delete action using a POST request
+            $.post('/createSalesReturn', formData, function (response) {
+                // Handle the response, e.g., show a success message
+                // console.log(response);
+                // Optionally, you can reload the DataTable after deletion
+                location.href = '/saleReturnList';
+            });
+
+            // Close the modal after clicking the "Delete" button
+            $('#deleteModal').modal('hide');
+        });
+
+        // Handle modal close events (cross button and close icon)
+        $('#deleteModal').on('hide.bs.modal', function () {
+            // Clear the error message when the modal is closed
+            $('#remarkError').text('');
+        });
+    });
+
+
+
+
+
+    $(document).ready(function () {
+        // Attach a click event listener to the close button
+        $('.modal-footer .btn-secondary').on('click', function () {
+            // Use jQuery to find the modal and trigger the close event
+            $('#deleteModal').modal('hide');
+        });
+    });
+
+    $(document).ready(function () {
+        // Attach a click event listener to the close button
+        $('.modal-header .close').on('click', function () {
+            // Use jQuery to find the modal and trigger the close event
+            $('#deleteModal').modal('hide');
+        });
+    });
+</script>

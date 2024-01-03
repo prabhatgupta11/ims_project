@@ -1,4 +1,95 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300&family=Satisfy&family=Ubuntu:wght@300;400&display=swap');
+
+body{
+    background-color: rgb(244, 244, 247) !important;
+}
+
+.soon{
+    height: 62rem;
+  
+
+}
+
+/* .soon::before{
+    opacity: 0.2 ;
+    top: 0;
+    content: "";
+    position: absolute;
+    
+    filter: brightness(0.5);
+    width: 80%;
+    height: 100%;
+    background-image: url(../images/1.jpg);
+} */
+
+.color-switcher{
+    position: fixed;
+    top: 25px;
+    right: -200px;
+    width: 200px;
+    padding: 10px;
+    background: #fff;
+    z-index: 1000;
+
+}
+
+.color-switcher h5{
+    color: black;
+    margin-top: 29px;
+    font-size: 20px;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #3333;
+    padding: 5px 0;
+    text-align: center;
+    background: white;
+}
+
+.color-switcher .switcher-btn{
+    position: absolute;
+    top: 39px;
+    left: -38px;
+    color: var(--main-color);
+    background: #fff;
+    padding: 6px 15px 3px 15px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 10px 0px 0px 10px;
+} 
+
+.fa-cog:before, .fa-gear:before {
+    content: "\f013";
+    color: black;
+}
+
+
+
+.color-switcher .switcher-btn i{
+animation:rotate 2s linear infinite;
+}
+
+@keyframes rotate{
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.color-switcher .theme-button-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: white;
+}
+
+ .theme-button{
+
+    display: block;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+
+}
 .main-table-data{
     background-color: #fff;
     margin-top: 15px;
@@ -26,12 +117,12 @@
 
 body{
     background-color: rgb(244, 244, 247) !important;
-    font-family:'Poppins', sans-serif !important;
+  
    
 }
-.height-100{
+/* .height-100{
     background-color: rgb(244, 244, 247) !important;
-}
+} */
 
 .main-table-box{
     padding: 10px 35px !important;
@@ -51,21 +142,14 @@ input,textarea::placeholder{
     font-size: 14px !important;
 }
 
-.height-100{
+/* .height-100{
     background-color: rgb(244, 244, 247);
-}
+} */
 .row{
     margin:0;
 }
 
-.handler-container{
-    /* padding:15px 90px; */
-}
 
-#form17{
-    /* box-shadow: 0px 1px 6px 0px #afa7ca; */
-    /* width:30%; */
-}
 .textalign i{
     float: none !important;
 }

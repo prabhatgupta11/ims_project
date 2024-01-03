@@ -14,9 +14,10 @@ const session = require('express-session');
 const getUserStoreData = async (req, res) => {
   console.log(456)
   const userId = req.params.userId;
-  try {
+  console.log(0,userId)
+  try {  
 
-    const user = await User.findOne({ id: userId })
+    const user = await User.findOne({where : { id: userId }})
     if (!user) {
       console.log(123, 'user not found')
     }
@@ -28,16 +29,16 @@ const getUserStoreData = async (req, res) => {
     if (userRole === 'super admin') {
       const userStoreMapping = await UserStoreMapping.findAll({ where: { userFk: userId } })
       storeIdsToFetch = userStoreMapping.map(mapping => mapping.storeFk)
-      console.log(123456, storeIdsToFetch)
+     // console.log(123456, storeIdsToFetch)
     } else if (userRole === 'admin') {
       const managedStoreIds = await UserStoreMapping.findAll({ where: { userFk: userId } });
       storeIdsToFetch = managedStoreIds.map(mapping => mapping.storeFk);
     }
 
-    const store = await Store.findAll({ where: { outletId: storeIdsToFetch} })
+    const store = await Store.findAll({ where: { outletId: storeIdsToFetch, status : 'Active'} })
 
     // let selectedStore = await UserStoreMapping.findAll({ where: { userFk: userId } })
-    console.log(123, storeIdsToFetch, store)
+   // console.log(123, storeIdsToFetch, store)
 
     let arr = []
     let userStoreIds = []
@@ -69,8 +70,6 @@ const getUserStoreData = async (req, res) => {
       //   arr.push({ ...store[i].dataValues, checked: false })
       // }
     }
-
-
     res.json(arr);
   } catch (error) {
     console.log(error)
@@ -138,7 +137,7 @@ const getManagerStore = async (req, res) => {
   const managerId = req.params.managerId;
   
 
-  const store = await Store.findAll();
+  const store = await Store.findAll({where : {status : 'Active'}});
   const userStoreMapping = await UserStoreMapping.findAll({ where: { userFk: managerId } });
 
   const managerSelectedStore = [];
@@ -172,34 +171,34 @@ const getManagerStore = async (req, res) => {
 };
 
 
-const addUserStoreMapping = async (req, res) => {
-  console.log(123456789)
-  const selectedUserId = req.body.id;
-  const selectedStoreIds = req.body.outletId; // An array of selected ouletIds
-  try {
-    // Find the user by selectedUserId
-    const user = await User.findByPk(selectedUserId);
+// const addUserStoreMapping = async (req, res) => {
+//   console.log(123456789)
+//   const selectedUserId = req.body.id;
+//   const selectedStoreIds = req.body.outletId; // An array of selected ouletIds
+//   try {
+//     // Find the user by selectedUserId
+//     const user = await User.findByPk(selectedUserId);
 
-    // Create associations between the user and selected stores
-    for (const selectedStoreId of selectedStoreIds) {
-      const store = await Store.findByPk(selectedStoreId);
-      if (store) {
-        // Create a UserStoreMapping entry
-        await UserStoreMapping.create({
-          userFk: user.id,
-          storeFk: store.outletId
-        });
-      }
-    }
-    req.flash('message', 'Added stores for this user Sucessfully.');
-    return res.redirect('/userStoreMapping')
+//     // Create associations between the user and selected stores
+//     for (const selectedStoreId of selectedStoreIds) {
+//       const store = await Store.findByPk(selectedStoreId);
+//       if (store) {
+//         // Create a UserStoreMapping entry
+//         await UserStoreMapping.create({
+//           userFk: user.id,
+//           storeFk: store.outletId
+//         });
+//       }
+//     }
+//     req.flash('message', 'Added stores for this user Sucessfully.');
+//     return res.redirect('/userStoreMapping')
 
-  } catch (error) {
-    console.log(error)
-    req.flash('message', 'Something went wrong');
-    return res.redirect('/userStoreMapping')
-  }
-}
+//   } catch (error) {
+//     console.log(error)
+//     req.flash('message', 'Something went wrong');
+//     return res.redirect('/userStoreMapping')
+//   }
+// }
 
 
 // deselect a store 
@@ -267,7 +266,7 @@ const updateUserStoreMappingApprovalStatus = async (req, res) => {
 
 
 module.exports = {
-  addUserStoreMapping,
+  // addUserStoreMapping,
   getUserStoreData,
   getManagerStore,
   deselectStore,

@@ -1,9 +1,11 @@
 const db = require("../models")
 // const Store = db.store;
 const Store = db.store
+const User = db.user
 const CodeMaster = db.codeMaster
 const StoreCategoryMapping = db.storeCategoryMapping
 const UserStoreMapping = db.userStoreMapping
+const AutoGenerateNumber = db.autoGenerateNumber
 
 
 // const createStore = async (req, res) => {
@@ -120,6 +122,10 @@ const updateStoreApprovalStatus = async (req, res) => {
 
 
 const createNewStore = async function (req, res) {
+  if(req.session.userDetail.role == undefined){
+    req.flash('message', "Session is expired please login again")
+    return res.redirect('/')
+  }
 
   if(req.session.userDetail.role == 'admin' || req.session.userDetail.role == 'user' ){
     req.flash('message', 'You can not create store only super admin can do this')
@@ -192,10 +198,162 @@ return res.redirect('/newStore')
 
 }
 
+// api for application create store
+const createAppStore = async function (req, res) {
+  try {
+
+    const userId = req.params.userId
+    const user = await User.findOne({where : {id :userId}})
+
+    if (!user) {
+      return res.status(404).json({
+        success : false,
+        message : 'User not found'
+      });
+    }
+  
+    // Role Check
+    if (user.role === 'admin' || user.role === 'user') {
+      return res.status(403).json({ 
+        success : false,
+        message: 'You cannot create a store, only super admin can do this' });
+    }
+    let getCode = await AutoGenerateNumber.findOne({ where: { prefix: "STO" } })
+
+        // Increment the lastno value and pad it to 6 digits
+        const newLastNo = (parseInt(getCode.lastNo) + 1).toString().padStart(6, '0');
+        
+        // Construct the unique identifier string
+        const generateCode = `${getCode.prefix}/${newLastNo}/${getCode.suffix}`;
+
+          // Update the lastno value in the database
+          const updateGenerateCode = await AutoGenerateNumber.update(
+            { lastNo: newLastNo  },
+            { where: { id: getCode.id } }
+          );
+
+    const {
+      outletId,
+      storeName,
+      businessType,
+      address1,
+      address2,
+      state,
+      pincode,
+      contactPersonName,
+      contactNo1,
+      contactNo2,
+      GSTNo,
+      panNo,
+      taxState,
+      status,
+      displayOrder,
+      edit_by,
+      edit_on,
+      approve_b,
+      approve_by,
+      rowguid
+    } = req.body
+
+    const info = {
+      outletId,
+      code : generateCode,
+      storeName,
+      businessType,
+      address1,
+      address2,
+      state,
+      pincode,
+      contactPersonName,
+      contactNo1,
+      contactNo2,
+      GSTNo,
+      panNo,
+      taxState,
+      status,
+      displayOrder,
+      edit_by,
+      edit_on,
+      approve_b,
+      approve_by,
+      rowguid
+    }
+    
+
+    const selectedCategoryIds = req.body.category;
+
+    // Category Check
+    if (!selectedCategoryIds || selectedCategoryIds.length === 0) {
+      return res.status(400).json(
+      { 
+        success : false,
+        message: 'Please select a category. If the category is not showing, create a category first' 
+      });
+    }
+
+    if(!req.body.storeName){
+      return res.status(400).json({ 
+        success : false,
+        message: 'Store Name field can not be blank'
+       });
+    }
+
+    if(!req.body.businessType){
+      return res.status(400).json({ 
+        success : false,
+        message: 'Business Type field can not be blank'
+       });
+    }
+
+    if(!req.body.contactNo1){
+      return res.status(400).json({ 
+        success : false,
+        message: 'Contact No.1 field can not be blank'
+       });
+    }
+
+
+    const newStore = await Store.create(info)
+
+     const selectedStoreId = newStore.outletId; 
+    
+     const store = await Store.findByPk(selectedStoreId);
+
+    // Create associations between the user and selected stores
+    for (const selectedCategoryId of selectedCategoryIds) {
+      const category = await CodeMaster.findByPk(selectedCategoryId);
+      if (category) {
+        // Create a UserStoreMapping entry
+        await StoreCategoryMapping.create({
+          storeFk: store.outletId,
+          categoryFk: category.id
+        });
+      }
+    }
+    // If the user has the role of 'super admin', create a UserStoreMapping entry
+    if (user.role === 'super admin') {
+      await UserStoreMapping.create({
+        userFk: user.id,
+        storeFk: newStore.outletId
+      });
+    }
+
+    return res.status(201).json({
+      success : true, 
+      message: 'Store added successfully', 
+      store: newStore 
+    });
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ 
+      success : false,
+      message: "Something went wrong" });
+  }
+}
 
 const updateNewStore = async (req, res) => {
   try {
-
+    
     if(req.session.userDetail.role == 'admin' || req.session.userDetail.role == 'user' ){
       req.flash('message', 'You can not update store only super admin can do this')
       return res.redirect('/newStoreList')
@@ -209,10 +367,18 @@ const updateNewStore = async (req, res) => {
       return res.redirect('/newStoreList');
     }
 
+    
+    const selectedCategoryIds = req.body.category; 
+
+    if(selectedCategoryIds == undefined){
+      req.flash('message', 'Please Select Category for this Store');
+      return res.redirect(`/updateNewStore/${req.params.id}`);
+    }
+
     // Update the store's information
     await store.update({ ...req.body, approve_b: 'pending' });
 
-    const selectedCategoryIds = req.body.id || []; // Default to an empty array if no categories are selected
+   
 
     if (selectedCategoryIds.length === 0) {
       // If no categories are selected, remove all existing category associations
@@ -245,16 +411,108 @@ const updateNewStore = async (req, res) => {
   }
 };
 
+// api for application update store
 
+const updateAppStore = async (req, res) => {
+  try {
 
+    const userId = req.params.userId
+    const user = await User.findOne({where : {id :userId}})
+
+    if (!user) {
+      return res.status(404).json({
+        success : false,
+        message : 'User not found'
+      });
+    }
+  
+    // Role Check
+    if (user.role === 'admin' || user.role === 'user') {
+      return res.status(400).json({ 
+        success : false,
+        message: 'You cannot update a store, only super admin can do this' });
+    }
+
+    const store = await Store.findOne({ where: { rowguid: req.params.storeId } });
+
+    if (!store) {
+      return res.status(404).json({ 
+        success : false,
+        message: 'Store not found' });
+    }
+
+    const selectedCategoryIds = req.body.category;
+
+    if (selectedCategoryIds === undefined || selectedCategoryIds.length === 0) {
+      return res.status(400).json({ 
+        success : false,
+        message: 'Please select a category for this store' });
+    }
+
+    if (!req.body.storeName){
+      return res.status(400).json({ 
+        success : false,
+        message: 'Store Name field can not be blank'
+       });
+    }
+
+    if (!req.body.businessType){
+      return res.status(400).json({ 
+        success : false,
+        message: 'Business Type field can not be blank'
+       });
+    }
+
+    if (!req.body.contactNo1){
+      return res.status(400).json({ 
+        success : false,
+        message: 'Contact No.1 field can not be blank'
+       });
+    }
+
+    // Update the store's information
+   const updateStore = await store.update({ ...req.body, approve_b: 'pending' });
+
+    if (selectedCategoryIds.length === 0) {
+      // If no categories are selected, remove all existing category associations
+      await StoreCategoryMapping.destroy({ where: { storeFk: store.outletId } });
+      return res.status(200).json({ message: 'Store category updated successfully' });
+    } else {
+      // Remove existing category associations for this store
+      await StoreCategoryMapping.destroy({ where: { storeFk: store.outletId } });
+
+      // Create associations between the store and selected categories
+      for (const selectedCategoryId of selectedCategoryIds) {
+        const category = await CodeMaster.findByPk(selectedCategoryId);
+
+        if (category) {
+          // Create a StoreCategoryMapping entry
+          await StoreCategoryMapping.create({
+            storeFk: store.outletId,
+            categoryFk: category.id
+          });
+        }
+      }
+      return res.status(200).json({
+         success : true,
+         message: 'Store updated successfully',
+         store : updateStore });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ 
+      success : false,
+      message: 'Something went wrong' });
+  }
+};
 
 
 module.exports = {
   createNewStore,
   updateNewStore,
-  // createStore,
+  createAppStore,
   getAllStoreDetails,
-  // updateStore,
+  updateAppStore,
   storeApprovalList,
   updateStoreApprovalStatus
 }

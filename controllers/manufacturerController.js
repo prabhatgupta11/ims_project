@@ -11,6 +11,7 @@ const addManufacturer = async (req, res) => {
       manufacturerId,
       shortDescription,
       longDescription,
+      status,
       approve_b,
       approve_by,
       approve_date

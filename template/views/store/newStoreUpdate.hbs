@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Add Store</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <style>
+    .color-container {
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      height: 200px;
+      width: 100%;
+      background-color: #9096de;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    {{>navbar}}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_settings-panel.html -->
+      {{>setting}}
+      <!-- partial -->
+      <!-- partial:../../partials/_sidebar.html -->
+      {{>side}}
+      <!-- partial -->
+
+      <div class="main-panel">
+        <div class="color-container"></div>
+        <div class="content-wrapper">
+
+          <div class="row">
+            <div class="d-flex mt-2 mb-3">
+              <a href="/newStoreList" class="text-white" style="z-index: 3;"><i class="fa-solid fa-angle-left "></i></a>
+              <h3 class="card-title ml-4 my-0 font-weight-semibold text-white" style="z-index: 3;">Update Store</h3>
+            </div>
+            {{#if message}}
+            <div class="alert alert-info">{{message}}</div>
+            {{/if}}
+            <div id="flash-message" class="alert alert-danger" style="display: none;"></div>
+            <form action="/updateNewStore/{{newStore.rowguid}}" method="post">
+              <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card col-md-11 wrapper">
+                    <div class="card-body">
+                      <div class="row justify-content-around mx-auto ">
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1" class=" mr-3">Code</label>
+                            <input class="form-control input-field " placeholder="Enter Your Code" name="code" id="code"
+                              value="{{newStore.code}}" />
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1" class=" mr-3">Store Name <span
+                                class="text-danger">*</span></label>
+                            <input class="form-control input-field" placeholder="Enter Your Store Name " type="text"
+                              name="storeName" id="name" value="{{newStore.storeName}}" required />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-around mx-auto ">
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlSelect1">Business Type <span
+                                class="text-danger">*</span></label>
+                            <select id="businessType" name="businessType" class="form-control input-field" required>
+                              <option value="{{newStore.businessType}}">{{newStore.businessType}}</option>
+                              <option value="FRANCHISE">FRANCHISE</option>
+                              <option value="DISTRIBUTION CENTER">DISTRIBUTION CENTER</option>
+                              <option value="BRANCH">BRANCH</option>
+                            </select>
+                          </div>
+                          <div class="form-group mb-2">
+                            <label for="exampleFormControlTextarea1">Address1</label>
+                            <textarea class="form-control input-field px-1" cols="" rows="" type="text"
+                              placeholder="&#9751; Enter Your Address " name="address1"
+                              id="address1">{{newStore.address1}}</textarea>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1">Address2</label>
+                            <textarea class="form-control input-field px-1" type="text"
+                              placeholder="&#9751; Enter Your Address " name="address2"
+                              id="address2">{{newStore.address2}}</textarea>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlSelect1">State</label>
+                            <select id="state" name="state" class="form-control input-field">
+                              {{!-- <option value="{{newStore.state}}">{{newStore.state}}</option> --}}
+                              {{#each state}}
+                              <option value="{{id}}">{{Name}}</option>
+                              {{/each}}
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2">
+                            <label for="PAN">Contact Person Name</label>
+                            <input class="form-control input-field" type="text" placeholder="Enter Your Name "
+                              name="contactPersonName" id="contactPersonName" value="{{newStore.contactPersonName}}" />
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2">
+                            <label for="PAN">Pin Code</label>
+                            <input class="form-control input-field" type="text" placeholder="Enter Your Pin Code here "
+                              name="pincode" id="pinCode" maxlength="6" value="{{newStore.pincode}}" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card col-md-11 wrapper">
+                    <div class="card-body">
+                      <div class="row justify-content-around mx-auto ">
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="contactNo">Contact No 1 <span class="text-danger">*</span></label>
+                            <input class="form-control input-field validateContact1" type="tel"
+                              placeholder="0-987-654-321" name="contactNo1" id="contactNo"
+                              title="Please enter a 10-digit contact number" onblur="validateContact1(this)"
+                              maxlength="10" value="{{newStore.contactNo1}}" required />
+
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1">Contact No 2</label>
+                            <input class="form-control input-field validateContact2" type="text"
+                              placeholder="0-987-654-321 " name="contactNo2" id="contactNo" maxlength="10"
+                              onblur="validateContact2(this)" value="{{newStore.contactNo2}}" />
+
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1">GST No</label>
+                            <input class="form-control input-field " type="text" placeholder="Enter Your GST number "
+                              name="GSTNo" id="gstNo" maxlength="15" oninput="convertToUpperCase(this)"
+                              value="{{newStore.GSTNo}}" />
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label for="exampleFormControlTextarea1">PAN No</label>
+                            <input class="form-control input-field" type="text" placeholder="Enter Your Contact number "
+                              name="panNo" id="panNo" maxlength="10" oninput="convertToUpperCase(this)"
+                              value="{{newStore.panNo}}" />
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group mb-2 ">
+                            <label class="formlabel " style="display: block">Category<span
+                                class="text-danger">*</span></label>
+                            <input type="text" id="category-search" placeholder="Search Categories" class="form-control input-field"
+                              style='border:1px solid #bdbdbd'>
+                            <div class="md-form active-pink-textarea-2 " id="categoryList">
+                            </div>
+                          </div>
+                          <div class="col-md-12 p-0">
+                            <div class="form-group mb-2 ">
+                              <label for="exampleFormControlSelect1">Tax State</label>
+                              <select id="taxState" name="taxState" class="form-control input-field">
+                                {{!-- <option value="{{newStore.id}}">{{newStore.taxState}}</option> --}}
+                                {{#each state}}
+                                <option value="{{id}}">{{Name}}</option>
+                                {{/each}}
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-12 p-0">
+                            <div class="form-group mb-2 ">
+                              <label for="exampleFormControlSelect1">Status</label>
+                              <select id="status" name="status" class="form-control input-field">
+                                <option value="{{newStore.status}}">{{newStore.status}}</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-12 p-0">
+                            <div class="form-group mb-2 ">
+                              <label for="exampleFormControlTextarea1">Display Order</label>
+                              <input class="form-control input-field" type="number" placeholder="Display Order "
+                                name="displayOrder" id="displayOrder" value="{{newStore.displayOrder}}">
+                            </div>
+                          </div>
+                          <div class="inner-cont p-0 col-md-11 col-lg-11 flex-column  flex-wrap col-12 d-flex  justify-content-between align-content-start">
+                         <div class="d-flex align-items-center justify-content-start my-2  col-md-12 p-0" >
+                         <button class="btn btn-primary mr-2 " role="button" type="submit" style="padding: 9px 20px;
+    border-radius: 6px;">Save</button>
+                    <button class="btn btn-light" role="button" type="reset" style=" padding: 9px 20px;
+    border-radius: 6px;">Reset</button>
+    </div>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </form>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../../vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script src="../../vendors/select2/select2.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../../js/off-canvas.js"></script>
+  <script src="../../js/hoverable-collapse.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/settings.js"></script>
+  <script src="../../js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../../js/file-upload.js"></script>
+  <script src="../../js/typeahead.js"></script>
+  <script src="../../js/select2.js"></script>
+  <!-- End custom js for this page-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+
+</html>
+<script>
+  function validateContact1(input) {
+    // Define a regular expression pattern for a valid mobile number.
+    var mobileNumberPattern = /^[9876]\d{9}$/;
+    const validateContact = document.querySelector('.input-validated1')
+
+    // Check if the entered value matches the pattern.
+    if (!mobileNumberPattern.test(input.value)) {
+      document.querySelector('.validateContact1').style.border = '1px solid red'
+      validateContact.style.display = 'block'
+      validateContact.style.color = 'red'
+      validateContact.innerText = 'Invalid mobile number'
+    } else {
+      document.querySelector('.validateContact1').style.border = ''
+      validateContact.innerHTML = '';
+    }
+  }
+
+    function validateContact2(input) {
+    // Define a regular expression pattern for a valid mobile number.
+    var mobileNumberPattern = /^[9876]\d{9}$/;
+    const validateContact = document.querySelector('.input-validated2')
+
+    // Check if the entered value matches the pattern.
+    if (!mobileNumberPattern.test(input.value)) {
+      document.querySelector('.validateContact2').style.border = '1px solid red'
+      validateContact.style.display = 'block'
+      validateContact.style.color = 'red'
+      validateContact.innerText = 'Invalid mobile number'
+    } else {
+      document.querySelector('.validateContact2').style.border = ''
+      validateContact.innerHTML = '';
+    }
+  }
+</script>
+
+
+<script>
+
+
+  // Convert into upper case
+  function convertToUpperCase(input) {
+    input.value = input.value.toUpperCase();
+  }
+
+  // Validation for contact number 
+/*  const contactNo1Validation = document.getElementById('contactNo1');
+
+  contactNo1Validation.addEventListener('input', () => {
+    const contactNoValue = contactNo1Validation.value;
+
+    if (/^[9876]\d{9}$/.test(contactNoValue)) {
+      contactNo1Validation.setCustomValidity('');
+    } else {
+      contactNo1Validation.setCustomValidity('Please enter a valid 10-digit contact number');
+    }
+  });
+
+
+  // Validation for contact number 2
+
+  const contactNo2Validation = document.getElementById('contactNo2');
+
+  contactNo2Validation.addEventListener('input', () => {
+    const contactNoValue = contactNo2Validation.value;
+
+    if (/^[9876]\d{9}$/.test(contactNoValue)) {
+      contactNo2Validation.setCustomValidity('');
+    } else {
+      contactNo2Validation.setCustomValidity('Please enter a valid 10-digit contact number');
+    }
+  }); */
+
+  // PIN code validation 
+  const pinCodeValidation = document.getElementById('pinCode');
+
+  pinCodeValidation.addEventListener('input', () => {
+    const validPinCode = /^[0-9]{6}$/.test(pinCodeValidation.value);
+
+    if (validPinCode) {
+      pinCodeValidation.setCustomValidity('');
+    } else {
+      pinCodeValidation.setCustomValidity('Please enter a valid Pin Code number');
+    }
+  });
+
+  // PAN number validation 
+  const panNoValidation = document.getElementById('panNo');
+
+  panNoValidation.addEventListener('input', () => {
+    const validPanNo = /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(panNoValidation.value);
+
+    if (validPanNo) {
+      panNoValidation.setCustomValidity('');
+    } else {
+      panNoValidation.setCustomValidity('Please enter a valid PAN number');
+    }
+  });
+
+  // GST number validation 
+  const gstNoValidation = document.getElementById('gstNo');
+
+  gstNoValidation.addEventListener('input', () => {
+    const validGstNo = /^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(gstNoValidation.value);
+
+    if (validGstNo) {
+      gstNoValidation.setCustomValidity('');
+    } else {
+      gstNoValidation.setCustomValidity('Please enter a valid GST number');
+    }
+  });
+
+</script>
+<script>
+  $(document).ready(function () {
+    // Assuming you can obtain the outletId from your page's context or URL parameter
+    const outletId = {{newStore.outletId}}; // Replace with your logic
+
+    // Use an API endpoint to fetch the selected categories for the store you want to edit
+    $.get(`/getSelectedCategories/${outletId}`, function (selectedCategories) {
+      const categoryList = $('#categoryList');
+
+      // Create an array to store references to category checkboxes
+      const categoryCheckboxes = [];
+
+      // Loop through the selectedCategories and create checkboxes with labels
+      selectedCategories.forEach(function (data) {
+        const checkbox = $(document.createElement('input')).prop({
+          id: 'myCheckBox_' + data.id,
+          name: 'category',
+          value: data.id,
+          type: 'checkbox',
+          checked: data.checked,
+          // disabled: true // Set disabled to true to make it read-only
+        });
+
+        checkbox.on('change', function () {
+          const isChecked = $(this).prop('checked');
+          if (!isChecked) {
+            console.log(data.id);
+            // Handle deselection here
+            // Remove the category from the store's selection on the server-side
+            $.post(`/deselectCategory/${outletId}/${data.id}`, function (response) {
+              console.log(response);
+            });
+          }
+        });
+
+        // Store a reference to the checkbox in the array
+        categoryCheckboxes.push(checkbox);
+
+        categoryList.append(checkbox)
+          .append(
+            $(document.createElement('label')).prop({
+              for: 'myCheckBox_' + data.id
+            }).html(data.code_name)
+          )
+          .append(document.createElement('br'));
+      });
+
+      // Handle category search
+      const categorySearchInput = document.getElementById('category-search');
+      categorySearchInput.addEventListener('input', () => {
+        const searchValue = categorySearchInput.value.trim().toLowerCase();
+
+        // Filter category checkboxes based on the search value
+        categoryCheckboxes.forEach((checkbox) => {
+          const categoryLabel = checkbox.next('label'); // Get the associated label
+          const categoryText = categoryLabel.text().toLowerCase();
+
+          if (categoryText.includes(searchValue)) {
+            checkbox.show(); // Show the checkbox
+            categoryLabel.show(); // Show the label
+          } else {
+            checkbox.hide(); // Hide the checkbox
+            categoryLabel.hide(); // Hide the label
+            checkbox.prop('checked', false); // Uncheck hidden checkboxes
+          }
+        });
+      });
+    });
+  });
+</script>

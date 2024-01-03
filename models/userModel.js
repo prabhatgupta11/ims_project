@@ -38,6 +38,13 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.STRING,
             defaultValue : 'user'
         },
+        resetToken : {
+            type : DataTypes.STRING,
+        },
+        isDeleted : {
+            type : DataTypes.STRING,
+            defaultValue : '0' 
+        }
     })
 
     return User

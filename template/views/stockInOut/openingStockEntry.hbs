@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Add Opening Stock</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+    <style>
+        .scrollmenu {
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
+            border-radius: 10px !important;
+
+        }
+
+
+
+        .new-icon-short {
+            position: absolute;
+            left: 4% !important;
+            top: 50%;
+            color: gray;
+        }
+
+        label,
+        a,
+        span {
+            font-size: 13px !important;
+            font-weight: 600 !important;
+        }
+
+
+        .tr-head th {
+            font-weight: 800 !important;
+        }
+
+        /*  th {
+            text-align: center !important;
+        } */
+
+
+
+        div.scrollmenu {
+            background-color: #ffffff;
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+            white-space: nowrap;
+            max-width: 100%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        @media (max-width:430px) {
+            .scrollmenu {
+                overflow-x: auto;
+                white-space: nowrap;
+                max-width: 100%;
+            }
+        }
+
+
+        div.scrollmenu table {
+            width: 100%;
+            /* Set the table to be 100% width */
+            min-width: 800px;
+        }
+
+        div.scrollmenu a {
+            display: inline-block;
+            color: black;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+        }
+
+        div.scrollmenu a:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+        }
+
+        ul.breadcrumb {
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+
+        .scrollmenu::-webkit-scrollbar {
+            width: 5px;
+            height: 8px;
+
+
+        }
+
+
+
+        .scrollmenu::-webkit-scrollbar-thumb {
+            background: #eee
+        }
+
+        ​ #line {
+            padding-bottom: 5px;
+            padding-right: 0px;
+            padding-left: 22px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+        .icon-input {
+            position: absolute;
+            left: 4%;
+            top: 47%;
+            color: gray;
+        }
+
+        @media screen and (max-width: 767px) {
+            .detail-con {
+                display: none !important;
+            }
+
+            .main-purchase-section {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:../../partials/_navbar.html -->
+        {{>navbar}}
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:../../partials/_settings-panel.html -->
+            {{>setting}}
+            <!-- partial -->
+            <!-- partial:../../partials/_sidebar.html -->
+            {{>side}}
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="color-container"></div>
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="d-flex mb-3">
+                            <a href="/openingStockList" class="text-white" style="z-index: 3;"><i
+                                    class="fa-solid fa-angle-left "></i></a>
+                            <h3 class="card-title ml-4 my-0 font-weight-semibold text-white ls-tighter"
+                                style="z-index: 3;">Add Opening Stock
+                            </h3>
+
+
+                        </div>
+                        <div class="col-md-12  grid-margin stretch-card p-0 m-0">
+
+                            <div class="card">
+                                <div class="card-body col-md-12 p-0">
+
+
+                                    <form action="/createOpeningStockEntryIn" method="post">
+                                        <div class="col-md-12 d-flex justify-content-between main-purchase-section  p-0"
+                                            style="gap: 10px;">
+                                            <div class="col-md-8 px-0">
+                                                <div class="wrapper pl-3 py-4  col-md-12">
+                                                    <div
+                                                        class="form-context  px-0 col-md-12 col-12  d-flex justify-content-start flex-column align-items-start">
+                                                        <div class="inner-cont p-0 col-md-12 col-lg-12 flex-wrap col-12  d-flex justify-content-around align-content-start"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 p-0 d-none ">
+                                                                <label for="exampleInputEmail1">Stock Type <span
+                                                                        class="text-danger">*</span></label>
+                                                                <select class="form-select " name="stockType"
+                                                                    aria-label="Default select example"
+                                                                    style="border-radius: 10px; padding-left: 40px;">
+                                                                    {{!-- <option value="">select Stock</option> --}}
+                                                                    <option value="Out">Stock Out</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class=" mb-1 col-md-5 p-0 ">
+                                                                <label for="fname"
+                                                                    class=" mb-1 block text-nowrap p-0 col-md-2">Reference
+                                                                    Number <span class="text-danger">*</span></label>
+                                                                <input type="text"
+                                                                    class="form-control input-field  col-md-12 col-12"
+                                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                                    name="referenceNumber"
+                                                                    placeholder="Enter Reference Number" required
+                                                                    readonly />
+                                                            </div>
+                                                            <div class=" mb-1 p-0 col-md-5 p-0">
+                                                                <label for="lname"
+                                                                    class="m-0 mb-1 text-nowrap block d-flex col-md-2 p-0">Date
+                                                                    <span class="text-danger">*</span></label>
+                                                                <input type="date"
+                                                                    class="form-control input-field  col-md-12 col-12"
+                                                                    id="orderDate" aria-describedby="emailHelp"
+                                                                    name="orderDate" placeholder="Enter Order Date"
+                                                                    required />
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="inner-cont p-0 col-md-12 col-lg-12   flex-wrap col-12 d-flex  justify-content-around  align-items-cemter"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Store<span
+                                                                        class="text-danger">*</span></label>
+                                                                <select
+                                                                    class="form-control input-field col-md-12 col-12"
+                                                                    id="storeDropdown" name="outletId"
+                                                                    aria-label="Default select example" required>
+                                                                    {{#each store}}
+                                                                    <option value=" {{outletId}}"> {{ storeName }}
+                                                                    </option>
+                                                                    {{/each}}
+                                                                </select>
+                                                            </div>
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Remarks</label>
+                                                                <textarea type="text"
+                                                                    class="form-control input-field-three"
+                                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                                    rows="2" name="remarks"
+                                                                    placeholder="Enter remark here......">{{order.remarks}}</textarea>
+                                                            </div>
+
+
+                                                        </div>
+
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 broder wrapper ">
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>PO Date :</b></label>
+                                                    <input type="date" class="col-md-7 col-6 newid border-0" disabled
+                                                        style="font-size: 12px;"></input>
+
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0" disabled><b>PO
+                                                            No. :</b></label>
+                                                    <input class="col-md-7 col-6 border-0" id="purOrdNo"
+                                                        style="font-size: 12px;"></input>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0" disabled><b>Supplier
+                                                            :</b></label>
+                                                    <input class="col-md-7 col-6 border-0" id="suppName"
+                                                        style="font-size: 12px;"></input>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>Disc. Per. :</b></label>
+                                                    <span class="col-md-7 col-6" style="font-size: 12px;">value</span>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>Disc. Amt :</b></label>
+                                                    <span class="col-md-7 col-6" style="font-size: 12px;">value</span>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>GST Amt :</b></label>
+                                                    <span class="col-md-7 col-6" style="font-size: 12px;">value</span>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>Grand Total
+                                                            :</b></label>
+                                                    <input class="col-md-7 col-6 border-0" id="gTotal"
+                                                        style="font-size: 12px;"></input>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                        {{!-- table section --}}
+                                        <div class="scrollmenu" style="margin-top: 29px;"
+                                            onmouseover="this.style.overflow-x='scroll'"
+                                            onmouseout="this.style.overflow-x='hidden'">
+                                            <table id="product-table" class="table over" style="position: relative;">
+
+                                                <thead>
+
+                                                    <div class="row">
+                                                        <tr class="tr-head text-center">
+
+                                                            <div class="col-md-2">
+                                                                <th style="font-size:12px;">Product</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th style="font-size:12px;">HSN Code</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th style="font-size:12px;">Batch No</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th style="font-size:12px;">Mfg Date</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th style="font-size:12px;">Exp Date</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th class='d-none' style="font-size:12px;">Free Qty</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th style="font-size:12px;">Quantity</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th style="font-size:12px;">Purchase Price</th>
+                                                            </div>
+                                                            <div class="col-md-1 d-none">
+                                                                <th class="d-none" style="font-size:12px;">Discount Type
+                                                                </th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th class="d-none" style="font-size:12px;">Discount</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th class="d-none" style="font-size:12px;">Original
+                                                                    Price</th>
+                                                            </div>
+                                                            <div class="col">
+                                                                <th class="col-md-3" style="font-size:12px;">Market
+                                                                    Price</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th style="font-size:12px;">Sale Price(Incl)</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th style="font-size:12px;">Tax Percentage</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th class="d-none" style="font-size:12px;">Tax Amount
+                                                                </th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th style="font-size:12px;">Sale Price(Excl)</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th class="d-none" style="font-size:12px;">Cost Price
+                                                                    Without Tax</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th class='d-none' style="font-size:12px;">Base UOM /
+                                                                    packing</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th class='d-none' style="font-size:12px;">Base UOM
+                                                                    Volume / pack</th>
+                                                            </div>
+                                                            <div class="col-md-2 ">
+                                                                <th style="padding: 12px 43px; font-size:12px;">Total
+                                                                </th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th>Action</th>
+                                                            </div>
+                                                        </tr>
+                                                    </div>
+                                                </thead>
+                                                <tbody id="product-list">
+
+                                                </tbody>
+                                                {{!-- --}}
+                                            </table>
+
+                                        </div>
+
+                                        <div
+                                            class="col-md-12 col-12 totals-con grand-total-cls m-2 d-flex flex-row-reverse   justify-content-around flex-wrap align-items-center">
+                                            <div class="d-flex align-items-center col-md-3 col-12 my-2 detail-con">
+                                                <span class="fw-1 col-4 "><b>Grand Total </b></span>
+                                                <input type="text" id="grand-total" name="grandTotal" value="0"
+                                                    class="px-2 py-1 ml-2 col-md-4 col-8 rounded border-0 w-25"
+                                                    readonly>
+                                            </div>
+                                            <div class="d-flex align-items-center col-md-3 col-12 my-2 detail-con ">
+                                                <span class="fw-1 col-4 "><b>Total</b></span>
+                                                <input type="text" id="" value="0"
+                                                    class="px-2 py-1 ml-2  rounded border-0 col-md-4 col-8 " readonly>
+                                            </div>
+                                            <div class="d-flex align-items-center col-md-3 col-12 my-2 detail-con ">
+                                                <span class="fw-1 col-4 "><b>Quantity</b></span>
+                                                <input type="text" id="" value="0"
+                                                    class="px-2 py-1 ml-2  col-md-4 col-8  rounded border-0" readonly>
+                                            </div>
+                                            <div
+                                                class="inner-cont p-0 col-md-3 col-12 my-2 mt-2 flex-column   flex-wrap col-12 d-flex  justify-content-around align-content-start">
+                                                <div class="d-flex align-items-center  w-full ">
+
+                                                    <button class="btn btn-primary mr-2  rounded-sm" role="button"
+                                                        type="submit" style="padding:5px 15px;width:80px">Save</button>
+                                                    <button class="btn btn-primary mr-2  rounded-sm" role="button"
+                                                        type="reset" style="padding:5px 15px;width:80px">Cancel</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="../../vendors/select2/select2.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/template.js"></script>
+    <script src="../../js/settings.js"></script>
+    <script src="../../js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="../../js/file-upload.js"></script>
+    <script src="../../js/typeahead.js"></script>
+    <script src="../../js/select2.js"></script>
+    <!-- End custom js for this page-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+
+<script>
+    $.get(`/openingStockEntryInvoiceNumber/`, function (reffnum) {
+        function generateUniqueIdentifier(response) {
+            if (response && response.length === 1) {
+                const item = response[0];
+                const { id, prefix, lastNo, suffix } = item;
+
+                // Increment the lastno value and pad it to 6 digits
+                const newLastNo = (parseInt(lastNo) + 1).toString().padStart(6, '0');
+
+                // Construct the unique identifier string
+                const uniqueIdentifier = `${prefix}/${newLastNo}/${suffix}`;
+
+                // Update the lastno value in the response
+                item.lastNo = newLastNo;
+
+
+                $('#exampleInputEmail1').val(uniqueIdentifier);
+
+
+                return uniqueIdentifier;
+            } else {
+                return null; // Handle invalid response
+            }
+        }
+
+        const uniqueIdentifier = generateUniqueIdentifier(reffnum);
+        console.log('Generated Unique Identifier:', uniqueIdentifier);
+    });
+</script>
+
+<script>
+    // Function to populate the Supplier dropdown based on the selected store
+    function populateSuppliers() {
+        const outletId = $('#storeDropdown').val();
+        $.get(`/suppliers/${outletId}`, function (suppliers) {
+            const supplierDropdown = $('#supplierDropdown');
+            supplierDropdown.empty();
+            supplierDropdown.append('<option value="">Select Supplier</option>');
+            suppliers.forEach(function (supplier) {
+                console.log(supplier.Name, 111111)
+                supplierDropdown.append(`<option value="${supplier.id}">${supplier.Name}</option>`);
+            });
+        });
+    }
+
+    // Event listener for store dropdown
+    $('#storeDropdown').change(populateSuppliers);
+
+    $('#supplierDropdown').change(function () {
+        // Get the selected supplier value when the store dropdown changes
+        const supplierId = $('#supplierDropdown').val();
+        $.get(`/allSuppliers/${supplierId}`, function (suppliers) {
+            if (suppliers.length > 0) {
+                const supplier = suppliers[0]; // Get the first (and only) object in the array
+                const supplierNameInput = $('#supplierName');
+                const supplierEmailInput = $('#supplierEmail');
+                const supplierMobileInput = $('#supplierMobile');
+
+                // Populate the input fields with the supplier data
+                supplierNameInput.val(supplier.Name);
+                supplierEmailInput.val(supplier.Email);
+                supplierMobileInput.val(supplier.ContactNo);
+            }
+        });
+    });
+
+</script>
+
+<script>
+    // current date into Order Date
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the current date in the format yyyy-mm-dd
+        const currentDate = new Date().toISOString().split("T")[0];
+
+        // Set the default value for the date input
+        document.getElementById("orderDate").value = currentDate;
+    });
+
+
+
+    let addbtn = document.getElementById("add-product-btn");
+    let tablebody = document.getElementById("product-list")
+    let grandTotal = document.getElementById("grand-total");
+
+    window.addEventListener("load", () => {
+        const newRow = document.createElement("tr");
+
+        newRow.innerHTML = `
+    <td class="px-0" style="width:20%">
+      <select name="itemId[]" class=" form-control product-select rounded-3 p-1 mx-2"style="font-size:12px;min-width: 100px;">
+        <option value="">Select Product</option>
+        {{#each product}}
+        <option value='{{itemId}}'>{{itemName}}</option>
+        {{/each}}
+      </select>
+    </td>
+    <td><input type="text" name="hsnCode[]" class=" form-control col-md-12 p-1 mx-2" readonly style="font-size:12px;"></td>
+    <td><input type="text" name="batchNo[]" class=" form-control  col-md-12 p-1 mx-2"style="font-size:12px;"></td>
+    <td><input type="date" name="mfgDate[]" class=" form-control  col-md-12 p-1 mx-2"style="font-size:12px;"></td>
+    <td><input type="date" name="expDate[]" class=" form-control col-md-12 p-1 mx-2"style="font-size:12px;"></td>
+    <td class="px-0 d-none" style="width:20%">
+      <select name="freeQty[]" class=" form-control product-select rounded-3 " style="font-size:12px;" >
+        <option value="">Select Free Qty</option>
+         <option value="Yes">Yes</option>style="font-size:12px"
+          <option value="No">No</option> 
+      </select>
+    </td>
+    <td><input type="number" name="qty[]" class=" form-control  col-md-12  p-1 mx-2" style="font-size:12px" ></td>
+    <td><input type="number" name="purchasePrice[]" step='0.01' class=" form-control  col-md-12  p-1 mx-2 " style="font-size:12px" ></td>
+    <td class = 'd-none'><input type="text"  name="discountType[]" class=" form-control col-md-12  p-1 mx-2" value = "percentage" style="font-size:12px" ></td>
+    <td class="d-none"><input type="number" name="discount[]" step='0.01' class=" form-control  col-md-12 p-1 mx-2 " style="font-size:12px" ></td>
+    <td class="d-none"><input type="number" name="originalPrice[]" step='0.01' class=" form-control  col-md-12 p-1 mx-2 " readonly style="font-size:12px" ></td>
+    <td><input type="number" name="mrp[]" class=" form-control  step='0.01' col-md-12 p-1 mx-2 "></td> 
+    <td><input type="number" name="salePriceInclTax[]" step='0.01' class=" form-control  col-md-12 p-1 mx-2 " style="font-size:12px" ></td>
+    <td><input type="number" name="taxPercentage[]" step='0.01' class=" form-control  col-md-12 p-1 mx-2 " readonly style="font-size:12px" ></td>
+    <td class="d-none"><input type="number" name="taxAmount[]" step='0.01' class=" form-control  col-md-12 p-1 mx-2 " readonly style="font-size:12px" ></td>
+    <td><input type="number" name="salePriceExclTax[]" step='0.01' class=" form-control  col-md-12 p-1 mx-2 " readonly style="font-size:12px" ></td>
+    <td class="d-none"><input type="number" name="costPriceWithoutTax[]" step='0.01' class=" form-control  col-md-12 p-1 mx-2 " style="font-size:12px" ></td>
+    <td class = 'd-none'><input type="number" name="packing[]" class=" form-control  col-md-12 p-1 mx-2 " style="font-size:12px" ></td>
+    <td class = 'd-none'><input type="number" name="pack[]" class=" form-control  col-md-12 p-1 mx-2 " style="font-size:12px" ></td>
+    <td><input type="number" name="totalAmount[]" step='0.01' class=" form-control  col-md-12 p-1 mx-2 " readonly style="font-size:12px" ></td>
+    <td><i class="fa-solid fa-plus mr-3 fa-2xl add-new-btn"  ></i><i class="fa-solid fa-trash-arrow-up fa-xl delete-row-btn  text-danger ml-auto"></i> </td>
+  `;
+        tablebody.appendChild(newRow);
+        addNewRowButton(newRow)
+        removeRow(newRow);
+
+        const productDropdown = $(newRow).find('select[name="itemId[]"]');
+        productDropdown.change(function () {
+            const itemId = $(this).val();
+            const hsnCode = $(this).closest('tr').find('input[name="hsnCode[]"]');
+            const taxPercentage = $(this).closest('tr').find('input[name="taxPercentage[]"]');
+            // Clear and populate the batchDropdown based on the selected itemId
+            populateHsnCode(itemId, hsnCode);
+            populateTaxPercentage(itemId, taxPercentage);
+        });
+
+        // Attach event listeners for Quantity, Purchase Price, and Discount Percentage
+        const quantityInput = newRow.querySelector('input[name="qty[]"]');
+        const purchasePriceInput = newRow.querySelector('input[name="purchasePrice[]"]');
+        // const discountPercentageInput = newRow.querySelector('input[name="discount[]"]');
+        //  const originalPriceInput = newRow.querySelector('input[name="originalPrice[]"]');
+        const salePriceInclTaxInput = newRow.querySelector('input[name="salePriceInclTax[]"]');
+        const salePriceExclTaxInput = newRow.querySelector('input[name="salePriceExclTax[]"]');
+        const taxPercentageInput = newRow.querySelector('input[name="taxPercentage[]"]');
+        const taxAmountInput = newRow.querySelector('input[name="taxAmount[]"]');
+        const totalAmountInput = newRow.querySelector('input[name="totalAmount[]"]');
+
+
+        quantityInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        purchasePriceInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        salePriceInclTaxInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        // discountPercentageInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        taxPercentageInput.addEventListener("input", () => updateOriginalPrice.call(newRow))
+
+
+        // Initial calculation when adding a new row
+        updateOriginalPrice.call(newRow);
+        updateGrandTotal();
+
+        // fetchProductsForSelectedStore(newRow);
+        // updateTotal();
+    });
+
+    //function to populate hsnCode based on selected itemId
+    function populateHsnCode(itemId, hsnCode) {
+        // Clear the previous content in the hsnCode input field
+        hsnCode.val(""); // Clear the value
+
+        // Make an AJAX request to fetch the HSN code based on the selected item
+        $.get(`/getHsnCode/${itemId}`, function (data) {
+
+            hsnCode.val(data.hsnCode);
+        })
+    }
+
+
+
+    //function to populate tax percentage based on selected itemId
+    function populateTaxPercentage(itemId, taxPercentage) {
+        // Clear the previous content in the tax percentage
+        taxPercentage.val("");
+
+        // Make an AJAX request to fetch the HSN code based on the selected item
+        $.get(`/getTaxPercentage/${itemId}`, function (data) {
+
+            taxPercentage.val(data.Tax_percentage)
+        });
+    }
+
+    function updateOriginalPrice() {
+        // Get the input fields for Quantity, Purchase Price, Discount Percentage, and Original Price
+        const quantityInput = this.querySelector('input[name="qty[]"]');
+        const purchasePriceInput = this.querySelector('input[name="purchasePrice[]"]');
+        // const discountPercentageInput = this.querySelector('input[name="discount[]"]');
+        // const originalPriceInput = this.querySelector('input[name="originalPrice[]"]');
+        const salePriceInclTaxInput = this.querySelector('input[name="salePriceInclTax[]"]');
+        const salePriceExclTaxInput = this.querySelector('input[name="salePriceExclTax[]"]');
+        const taxPercentageInput = this.querySelector('input[name="taxPercentage[]"]');
+        const taxAmountInput = this.querySelector('input[name="taxAmount[]"]');
+        const totalAmountInput = this.querySelector('input[name="totalAmount[]"]');
+
+        // Parse the values from input fields
+        const quantity = parseFloat(quantityInput.value) || 0;
+        const purchasePrice = parseFloat(purchasePriceInput.value) || 0;
+        // const discountPercentage = parseFloat(discountPercentageInput.value) || 0;
+        const taxPercentage = parseFloat(taxPercentageInput.value) || 0;
+        const salePriceInclTax = parseFloat(salePriceInclTaxInput.value) || 0;
+
+
+        // const originalPrice = purchasePrice - (purchasePrice * (discountPercentage / 100));
+        const salePriceExclTax = salePriceInclTax / (1 + taxPercentage / 100);
+        // const taxAmount = salePriceInclTax * (taxPercentage / 100);
+        const taxAmount = salePriceInclTax - salePriceExclTax
+        const totalAmount = quantity * purchasePrice
+
+        // Update the Original Price field,tax amount field and total amount field with the calculated value
+        //  originalPriceInput.value = parseFloat(originalPrice.toFixed(2)) // Format to two decimal places
+        salePriceExclTaxInput.value = parseFloat(salePriceExclTax.toFixed(2))
+        taxAmountInput.value = parseFloat(taxAmount.toFixed(2))
+        totalAmountInput.value = parseFloat(totalAmount.toFixed(2))
+        updateGrandTotal();
+    }
+
+    function updateGrandTotal() {
+        let rows = tablebody.querySelectorAll("tr");
+        let total = 0;
+
+
+        rows.forEach(row => {
+            const totalAmountInput = row.querySelector('input[name="totalAmount[]"]');
+            const totalAmount = parseFloat(totalAmountInput.value) || 0;
+            total += totalAmount;
+        });
+        grandTotal.value = total; // Update the grand total in your HTML
+    }
+
+    function removeRow(row) {
+        const deleteBtn = row.querySelector(".delete-row-btn");
+        deleteBtn.addEventListener("click", function () {
+            row.remove();
+            updateGrandTotal()
+        });
+    }
+
+    function addNewRowButton(row) {
+        const addBtn = row.querySelector(".add-new-btn");
+
+        addBtn.addEventListener("click", function () {
+            // Clone the current row
+            const newRow = row.cloneNode(true);
+
+            // Clear the values in the cloned row
+            const inputs = newRow.querySelectorAll('input');
+            for (const input of inputs) {
+                input.value = "";
+            }
+
+            const productDropdown = $(newRow).find('select[name="itemId[]"]');
+            productDropdown.change(function () {
+                const itemId = $(this).val();
+                const hsnCode = $(this).closest('tr').find('input[name="hsnCode[]"]');
+                const taxPercentage = $(this).closest('tr').find('input[name="taxPercentage[]"]');
+                // Clear and populate the batchDropdown based on the selected itemId
+                populateHsnCode(itemId, hsnCode);
+                populateTaxPercentage(itemId, taxPercentage);
+            });
+
+            // Attach event listeners for Quantity, Purchase Price, and Discount Percentage
+            const quantityInput = newRow.querySelector('input[name="qty[]"]');
+            const purchasePriceInput = newRow.querySelector('input[name="purchasePrice[]"]');
+            // const discountPercentageInput = newRow.querySelector('input[name="discount[]"]');
+            //  const originalPriceInput = newRow.querySelector('input[name="originalPrice[]"]');
+            const salePriceInclTaxInput = newRow.querySelector('input[name="salePriceInclTax[]"]');
+            const salePriceExclTaxInput = newRow.querySelector('input[name="salePriceExclTax[]"]');
+            const taxPercentageInput = newRow.querySelector('input[name="taxPercentage[]"]');
+            const taxAmountInput = newRow.querySelector('input[name="taxAmount[]"]');
+            const totalAmountInput = newRow.querySelector('input[name="totalAmount[]"]');
+
+
+            quantityInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+            purchasePriceInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+            salePriceInclTaxInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+            // discountPercentageInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+            taxPercentageInput.addEventListener("input", () => updateOriginalPrice.call(newRow))
+
+            // Append the cloned row to the table body
+            tablebody.appendChild(newRow);
+
+            // Attach event listeners for the new row
+            updateOriginalPrice.call(newRow);
+            removeRow(newRow);
+            addNewRowButton(newRow);
+
+            // Update the grand total
+            updateGrandTotal();
+        });
+    }
+
+
+
+</script>
+
+</html>

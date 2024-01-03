@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         stockType: {
             type: DataTypes.STRING,
         },
+        orderType: {
+            type: DataTypes.STRING,
+        },
         supplierCustomer: {
             type: DataTypes.STRING,
         },
@@ -38,11 +41,21 @@ module.exports = (sequelize, DataTypes) => {
         },
         freeQty: {
             type: DataTypes.STRING,
+            defaultValue:'No'
         },
         qty: {
             type: DataTypes.STRING,
         },
+        returnQty: {
+            type: DataTypes.STRING,
+        },
         purchasePrice: {
+            type: DataTypes.STRING,
+        },
+        salePriceInclTax: {
+            type: DataTypes.STRING,
+        },
+        salePriceExclTax: {
             type: DataTypes.STRING,
         },
         discountType: {
@@ -55,9 +68,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
         },
         mrp: {
-            type: DataTypes.STRING,
-        },
-        salePrice: {
             type: DataTypes.STRING,
         },
         costPriceWithoutTax: {

@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Add Sales Quotation</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+    <style>
+        .scrollmenu {
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
+            border-radius: 10px !important;
+
+        }
+
+
+
+        .new-icon-short {
+            position: absolute;
+            left: 4% !important;
+            top: 50%;
+            color: gray;
+        }
+
+        label,
+        a,
+        span {
+            font-size: 13px !important;
+            font-weight: 600 !important;
+        }
+
+
+        .tr-head th {
+            font-weight: 800 !important;
+        }
+
+        /*  th {
+            text-align: center !important;
+        } */
+
+
+
+        div.scrollmenu {
+            background-color: #ffffff;
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+            white-space: nowrap;
+            max-width: 100%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        @media (max-width:430px) {
+            .scrollmenu {
+                overflow-x: auto;
+                white-space: nowrap;
+                max-width: 100%;
+            }
+        }
+
+
+        div.scrollmenu table {
+            width: 100%;
+            /* Set the table to be 100% width */
+            min-width: 800px;
+        }
+
+        div.scrollmenu a {
+            display: inline-block;
+            color: black;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+        }
+
+        div.scrollmenu a:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+        }
+
+        ul.breadcrumb {
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+
+        .scrollmenu::-webkit-scrollbar {
+            width: 5px;
+            height: 8px;
+
+
+        }
+
+
+
+        .scrollmenu::-webkit-scrollbar-thumb {
+            background: #eee
+        }
+
+        ​ #line {
+            padding-bottom: 5px;
+            padding-right: 0px;
+            padding-left: 22px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+        .icon-input {
+            position: absolute;
+            left: 4%;
+            top: 47%;
+            color: gray;
+        }
+
+        @media screen and (max-width: 767px) {
+            .detail-con {
+                display: none !important;
+            }
+
+            .main-purchase-section {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:../../partials/_navbar.html -->
+        {{>navbar}}
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:../../partials/_settings-panel.html -->
+            {{>setting}}
+            <!-- partial -->
+            <!-- partial:../../partials/_sidebar.html -->
+            {{>side}}
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="color-container"></div>
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="d-flex mb-3">
+                            <a href="/saleQuotationList" class="text-white" style="z-index: 3;"><i
+                                    class="fa-solid fa-angle-left "></i></a>
+                            <h3 class="card-title ml-4 my-0 font-weight-semibold text-white ls-tighter"
+                                style="z-index: 3;">Add Sales Quotation
+                            </h3>
+
+
+                        </div>
+                        <div class="col-md-12  grid-margin stretch-card p-0 m-0">
+
+                            <div class="card">
+                                <div class="card-body col-md-12 p-0">
+
+
+                                    <form action="/createQuotationSale" method="post">
+                                        <div class="col-md-12 d-flex justify-content-between main-purchase-section  p-0"
+                                            style="gap: 10px;">
+                                            <div class="col-md-8 px-0">
+                                                <div class="wrapper pl-3 py-4  col-md-12">
+                                                    <div
+                                                        class="form-context  px-0 col-md-12 col-12  d-flex justify-content-start flex-column align-items-start">
+                                                        <div class="inner-cont p-0 col-md-12 col-lg-12 flex-wrap col-12  d-flex justify-content-around align-content-start"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 p-0 ">
+                                                                <label for="fname"
+                                                                    class=" mb-1 block text-nowrap p-0 col-md-2">Invoice
+                                                                    Number <span class="text-danger">*</span></label>
+                                                                <input type="text"
+                                                                    class="form-control input-field  col-md-12 col-12"
+                                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                                    name="referenceNumber"
+                                                                    placeholder="Enter Invoice Number" required />
+                                                            </div>
+                                                            <div class=" mb-1 p-0 col-md-5 p-0">
+                                                                <label for="lname"
+                                                                    class="m-0 mb-1 text-nowrap block d-flex col-md-2 p-0">Date
+                                                                    <span class="text-danger">*</span></label>
+                                                                <input type="date"
+                                                                    class="form-control input-field  col-md-12 col-12"
+                                                                    id="orderDate" aria-describedby="emailHelp"
+                                                                    name="orderDate" placeholder="Enter Order Date"
+                                                                    required />
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="inner-cont p-0 col-md-6 col-lg-12 flex-wrap col-12 d-flex  mb-1 justify-content-around  align-items-center"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="number"
+                                                                    class="m-0 mb-1 text-nowrap block col-md-2 p-0 col-md-2">
+                                                                    Customer</label>
+                                                                <div
+                                                                    class="d-flex justify-content-start align-items-center">
+                                                                    <input type="text" id="supplierSearch"
+                                                                        class="form-control input-field col-md-6 col-6 "
+                                                                        placeholder="Search for a Customer"
+                                                                        onkeyup="searchSuppliers()">
+                                                                    <button
+                                                                        class="btn col-md-5 btn-primary mx-3 px-1 py-2"
+                                                                        role="button" type="button"
+                                                                        style="border-radius:5px;font-size:14px;padding:10px"><a
+                                                                            href="/customerMaster"
+                                                                            class="text-white text-decoration-none "> +
+                                                                            New
+                                                                            Customer</a></button>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class=" mb-1 col-md-5 col-12  p-0 ">
+                                                                <label for="manager"
+                                                                    class="m-0 mb-1 text-nowrap block col-md-2 p-0">Store</label>
+                                                                <select id="storeDropdown" name="outletId"
+                                                                    class="form-control input-field  col-md-12 col-12"
+                                                                    aria-label="Default select example" required>
+                                                                    {{#each store}}
+                                                                    <option value="{{outletId}}"> {{ storeName }}
+                                                                    </option>
+                                                                    {{/each}}
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="inner-cont p-0 col-md-6 col-lg-12   flex-wrap col-12 d-flex  justify-content-around  align-items-center"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5  p-0 ">
+
+                                                                <select id="supplierDropdown" name="supplierCustomer"
+                                                                    class="form-control input-field  col-md-12 col-12"
+                                                                    aria-label="Default select example" required>
+                                                                    <option value="" disabled selected>Select Customer
+                                                                    </option>
+                                                                    {{#each customer}}
+                                                                    <option value="{{id}}">{{Name}}</option>
+                                                                    {{/each}}
+                                                                </select>
+                                                            </div>
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Customer
+                                                                    Name</label>
+                                                                <input class="form-control input-field col-md-12 col-12"
+                                                                    aria-describedby="emailHelp" type="text"
+                                                                    id="supplierName" name="name"
+                                                                    placeholder=" Enter Customer Name" required
+                                                                    readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="inner-cont p-0 col-md-12 col-lg-12   flex-wrap col-12 d-flex  justify-content-around  align-items-cemter"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Email</label>
+                                                                <input class="form-control input-field col-md-12 col-12"
+                                                                    type="email" placeholder="Enter Customer Email"
+                                                                    aria-describedby="emailHelp" name="email"
+                                                                    id="supplierEmail" required readonly>
+                                                            </div>
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Mobile</label>
+                                                                <input class="form-control input-field col-md-12 col-12"
+                                                                    type="number"
+                                                                    placeholder="Enter Customer Mobile Number"
+                                                                    aria-describedby="emailHelp" name="mobileNo"
+                                                                    id="supplierMobile" required readonly>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <div class="inner-cont p-0 col-md-12 col-lg-12   flex-wrap col-12 d-flex  justify-content-around  align-items-cemter"
+                                                            style="gap: 20px;">
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Payment
+                                                                    Status<span class="text-danger">*</span></label>
+                                                                <select
+                                                                    class="form-control input-field col-md-12 col-12"
+                                                                    name="paymentStatus"
+                                                                    aria-label="Default select example" required>
+                                                                    <option value="">Select Payment Status</option>
+                                                                    <option value="Paid">Paid</option>
+                                                                    <option value="Unpaid">Unpaid</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class=" mb-1 col-md-5 col-12 p-0">
+                                                                <label for="name"
+                                                                    class="m-0 text-nowrap block col-md-2 p-0">Remarks</label>
+                                                                <textarea type="text"
+                                                                    class="form-control input-field-three"
+                                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                                    rows="2" name="remarks"
+                                                                    placeholder="Enter remark here......"></textarea>
+                                                            </div>
+
+
+                                                        </div>
+                                           
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 broder wrapper ">
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>PO Date :</b></label>
+                                                    <input type="date" class="col-md-7 col-6 newid border-0" disabled
+                                                        style="font-size: 12px;"></input>
+
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0" disabled><b>PO
+                                                            No. :</b></label>
+                                                    <input class="col-md-7 col-6 border-0" id="purOrdNo"
+                                                        style="font-size: 12px;"></input>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0" disabled><b>Supplier
+                                                            :</b></label>
+                                                    <input class="col-md-7 col-6 border-0" id="suppName"
+                                                        style="font-size: 12px;"></input>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>Disc. Per. :</b></label>
+                                                    <span class="col-md-7 col-6" style="font-size: 12px;">value</span>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>Disc. Amt :</b></label>
+                                                    <span class="col-md-7 col-6" style="font-size: 12px;">value</span>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>GST Amt :</b></label>
+                                                    <span class="col-md-7 col-6" style="font-size: 12px;">value</span>
+                                                </div>
+                                                <div
+                                                    class="w-full d-flex align-items-center my-1 justify-content-start mb-4">
+                                                    <label for="" class="col-md-5 col-6 m-0"><b>Grand Total
+                                                            :</b></label>
+                                                    <input class="col-md-7 col-6 border-0" id="gTotal"
+                                                        style="font-size: 12px;"></input>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                        {{!-- table section --}}
+                                        <div class="scrollmenu" style="margin-top: 29px;"
+                                            onmouseover="this.style.overflow-x='scroll'"
+                                            onmouseout="this.style.overflow-x='hidden'">
+                                            <table id="product-table" class="table over" style="position: relative;">
+
+                                                <thead>
+
+                                                    <div class="row">
+                                                        <tr class="tr-head text-center">
+
+                                                            <div class="col-md-2">
+                                                                <th style="font-size: 12px;">Product</th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th style="font-size: 12px;">Description</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th style="font-size: 12px;">Quantity</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th style="font-size: 12px;">Purchase Price</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th style="font-size: 12px;">MRP</th>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <th>Sale Price</th>
+                                                            </div>
+                                                            <div class="col-md-2 ">
+                                                                <th style="padding: 12px 43px; font-size: 13px;">Total
+                                                                </th>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <th style="font-size: 12px;">Action</th>
+                                                            </div>
+                                                        </tr>
+                                                    </div>
+                                                </thead>
+                                                <tbody id="product-list">
+
+                                                </tbody>
+                                                {{!-- --}}
+                                            </table>
+
+                                        </div>
+
+                                        <div
+                                            class="col-md-12 col-12 totals-con grand-total-cls m-2 d-flex flex-row-reverse   justify-content-around flex-wrap align-items-center">
+                                            <div class="d-flex align-items-center col-md-3 col-12 my-2 detail-con">
+                                                <span class="fw-1 col-4 "><b>Grand Total </b></span>
+                                                <input type="text" id="grand-total" name="grandTotal" value="0"
+                                                    class="px-2 py-1 ml-2 col-md-4 col-8 rounded border-0 w-25"
+                                                    readonly>
+                                            </div>
+                                            <div class="d-flex align-items-center col-md-3 col-12 my-2 detail-con ">
+                                                <span class="fw-1 col-4 "><b>Total</b></span>
+                                                <input type="text" id="" value="0"
+                                                    class="px-2 py-1 ml-2  rounded border-0 col-md-4 col-8 " readonly>
+                                            </div>
+                                            <div class="d-flex align-items-center col-md-3 col-12 my-2 detail-con ">
+                                                <span class="fw-1 col-4 "><b>Quantity</b></span>
+                                                <input type="text" id="" value="0"
+                                                    class="px-2 py-1 ml-2  col-md-4 col-8  rounded border-0" readonly>
+                                            </div>
+                                            <div
+                                                class="inner-cont p-0 col-md-3 col-12 my-2 mt-2 flex-column   flex-wrap col-12 d-flex  justify-content-around align-content-start">
+                                                <div class="d-flex align-items-center  w-full ">
+
+                                                    <button class="btn btn-primary mr-2  rounded-sm" role="button"
+                                                        type="submit" style="padding:5px 15px;width:80px">Save</button>
+                                                    <button class="btn btn-primary mr-2  rounded-sm" role="button"
+                                                        type="reset" style="padding:5px 15px;width:80px">Cancel</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="../../vendors/select2/select2.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/template.js"></script>
+    <script src="../../js/settings.js"></script>
+    <script src="../../js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="../../js/file-upload.js"></script>
+    <script src="../../js/typeahead.js"></script>
+    <script src="../../js/select2.js"></script>
+    <!-- End custom js for this page-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+
+</html>
+<script>
+    $.get(`/saleQuotationInvoiceNumber/`, function (reffnum) {
+        function generateUniqueIdentifier(response) {
+            if (response && response.length === 1) {
+                const item = response[0];
+                const { id, prefix, lastNo, suffix } = item;
+                console.log(688, lastNo);
+
+                // Increment the lastno value and pad it to 6 digits
+                const newLastNo = (parseInt(lastNo) + 1).toString().padStart(6, '0');
+                console.log(692, newLastNo);
+
+                // Construct the unique identifier string
+                const uniqueIdentifier = `${prefix}/${newLastNo}/${suffix}`;
+
+                // Update the lastno value in the response
+                item.lastNo = newLastNo;
+                console.log(699, item.lastNo);
+
+                // Update the database record with the new lastNo value
+                $.ajax({
+                    type: 'POST',
+                    url: `/updateLastNo/${id}`,  // Replace with the actual route for updating lastNo
+                    data: { lastNo: newLastNo },
+                    success: function () {
+                        console.log('Successfully updated lastNo in the database.');
+                    },
+                    error: function () {
+                        console.error('Error updating lastNo in the database.');
+                    }
+                });
+
+                // Update the input field value with the uniqueIdentifier
+                $('#exampleInputEmail1').val(uniqueIdentifier);
+
+                return uniqueIdentifier;
+            } else {
+                return null; // Handle invalid response
+            }
+        }
+
+        const uniqueIdentifier = generateUniqueIdentifier(reffnum);
+        console.log('Generated Unique Identifier:', uniqueIdentifier);
+    });
+</script>
+
+<script>
+    // Customer Populate Function
+    function searchSuppliers() {
+        var input, filter, select, option, txtValue;
+        input = document.getElementById('supplierSearch');
+        filter = input.value.toUpperCase();
+        select = document.getElementById('supplierDropdown');
+        option = select.getElementsByTagName('option');
+
+        for (var i = 0; i < option.length; i++) {
+            txtValue = option[i].textContent;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                option[i].style.display = '';
+                console.log(txtValue.toUpperCase().indexOf(filter))
+            }
+            else {
+                option[i].style.display = 'none';
+            }
+
+        }
+    }
+
+    $('#supplierDropdown').change(function () {
+        // Get the selected supplier value when the store dropdown changes
+        const supplierId = $('#supplierDropdown').val();
+        $.get(`/allCustomer/${supplierId}`, function (suppliers) {
+            if (suppliers.length > 0) {
+                const supplier = suppliers[0]; // Get the first (and only) object in the array
+                const supplierNameInput = $('#supplierName');
+                const supplierEmailInput = $('#supplierEmail');
+                const supplierMobileInput = $('#supplierMobile');
+
+                // Populate the input fields with the supplier data
+                supplierNameInput.val(supplier.Name);
+                supplierEmailInput.val(supplier.Email);
+                supplierMobileInput.val(supplier.ContactNo1);
+            }
+        });
+    });
+
+</script>
+
+<script>
+
+    // current date into Order Date
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the current date in the format yyyy-mm-dd
+        const currentDate = new Date().toISOString().split("T")[0];
+
+        // Set the default value for the date input
+        document.getElementById("orderDate").value = currentDate;
+    });
+
+
+
+    // current date into Order Date
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the current date in the format yyyy-mm-dd
+        const currentDate = new Date().toISOString().split("T")[0];
+
+        // Set the default value for the date input
+        document.getElementById("orderDate").value = currentDate;
+    });
+
+
+    let addbtn = document.getElementById("add-product-btn");
+    let tablebody = document.getElementById("product-list")
+    let grandTotal = document.getElementById("grand-total");
+
+    $(document).ready(function () {
+
+
+        const newRow = document.createElement("tr");
+
+        newRow.innerHTML = `
+            <td class="px-0" style="width:20%">
+                <select name="itemId[]" id='productDropdown' class="form-control product-select rounded-3 p-1 mx-2"style="font-size: 12px;" >
+                    <option value="">Select Product</option>
+                    <!-- Dynamically populates -->
+                </select>
+            </td>
+            <td><input type="text" name="description[]" class="form-control  col-md-12  p-1 mx-2" style="font-size: 12px;"></td>
+            <td><input type="number" name="qty[]" class="form-control  col-md-12  p-1 mx-2"style="font-size: 12px;"></td>
+            <td ><input type="number" name="purchasePrice[]" step="0.01" class="form-control  col-md-12 p-1 mx-2 "style="font-size: 12px;" ></td>
+            <td ><input type="number" name="mrp[]" step="0.01" class="form-control  col-md-12 p-1 mx-2 " style="font-size: 12px;"></td>
+            <td ><input type="number" name="rate[]" step="0.01" class="form-control  col-md-12 p-1 mx-2 " style="font-size: 12px;"></td>
+            <td><input type="number" name="totalAmount[]" step="0.01" class="form-control  col-md-12 p-1 mx-2 " readonlystyle="font-size: 12px;"></td>
+            <td><i class="fa-solid fa-plus mr-3 fa-2xl add-new-btn"  ></i><i class="fa-solid fa-trash-arrow-up fa-xl delete-row-btn  text-danger ml-auto"style="font-size: 12px;"></i> </td>
+         `;
+        tablebody.appendChild(newRow);
+        addNewRowButton(newRow)
+        removeRow(newRow);
+
+        const productDropdown = $(newRow).find('select[name="itemId[]"]');
+        populateProducts(productDropdown);
+        productDropdown.change(function () {
+            const itemId = $(this).val();
+            const batchDropdown = $(this).closest('tr').find('select[name="batchNo[]"]');
+            
+            populateBatchNo(itemId, batchDropdown);
+          
+        });
+
+
+
+  const quantityInput = newRow.querySelector('input[name="qty[]"]');
+    const rateInput = newRow.querySelector('input[name="rate[]"]');
+    const totalAmountInput = newRow.querySelector('input[name="totalAmount[]"]');
+
+
+        quantityInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+    rateInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+
+
+         updateOriginalPrice.call(newRow);
+    updateGrandTotal();
+    });
+
+
+    // Calculation for original price, tax amount, total amount and grand total
+ function updateOriginalPrice() {
+    // Get the input fields for Quantity, Rate, and Total Amount
+    const quantityInput = this.querySelector('input[name="qty[]"]');
+    const rateInput = this.querySelector('input[name="rate[]"]');
+    const totalAmountInput = this.querySelector('input[name="totalAmount[]"]');
+
+    // Parse the values from input fields
+    const quantity = parseFloat(quantityInput.value) || 0;
+    const rate = parseFloat(rateInput.value) || 0;
+    const totalAmount = quantity * rate;
+
+    // Update the Total Amount field with the calculated value
+    totalAmountInput.value = totalAmount.toFixed(2);
+
+    // Update the Grand Total
+    updateGrandTotal();
+}
+    // Grand Total Calculation 
+
+// Grand Total Calculation
+function updateGrandTotal() {
+    let rows = tablebody.querySelectorAll("tr");
+    let total = 0;
+
+    rows.forEach(row => {
+        const totalAmountInput = row.querySelector('input[name="totalAmount[]"]');
+        const totalAmount = parseFloat(totalAmountInput.value) || 0;
+        total += totalAmount;
+    });
+
+    // Update the grand total in your HTML
+    grandTotal.value = total.toFixed(2);
+}
+    // function to remove row
+    function removeRow(row) {
+        const deleteBtn = row.querySelector(".delete-row-btn");
+        deleteBtn.addEventListener("click", function () {
+            row.remove();
+            updateGrandTotal()
+        });
+    }
+
+ // function for plus button to add new product row
+function addNewRowButton(row) {
+    const addBtn = row.querySelector(".add-new-btn");
+
+    addBtn.addEventListener("click", function () {
+        // Clone the current row
+        const newRow = row.cloneNode(true);
+
+        // Clear the values in the cloned row
+        const inputs = newRow.querySelectorAll('input');
+        for (const input of inputs) {
+            input.value = "";
+        }
+
+        // Append the cloned row to the table body
+        tablebody.appendChild(newRow);
+
+        const productDropdown = $(newRow).find('select[name="itemId[]"]');
+        populateProducts(productDropdown);
+        productDropdown.change(function () {
+            const itemId = $(this).val();
+            const batchDropdown = $(this).closest('tr').find('select[name="batchNo[]"]');
+            // Clear and populate the batchDropdown based on the selected itemId
+            populateBatchNo(itemId, batchDropdown);
+        });
+
+        // Attach event listeners for Quantity, Rate, and Total Amount
+        const quantityInput = newRow.querySelector('input[name="qty[]"]');
+        const rateInput = newRow.querySelector('input[name="rate[]"]');
+        const totalAmountInput = newRow.querySelector('input[name="totalAmount[]"]');
+
+        quantityInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        rateInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+
+        // Attach event listeners for the new row
+        updateOriginalPrice.call(newRow);
+        removeRow(newRow);
+        addNewRowButton(newRow);
+
+        // Update the grand total
+        updateGrandTotal();
+    });
+}
+
+    // function to populate ptoduct based on selected store
+    function populateProducts(productDropdown) {
+        let outletId = $('#storeDropdown').val();
+
+        // Clear the product dropdown before fetching new products
+        productDropdown.empty();
+        productDropdown.append('<option value="">Select Product</option>');
+
+        $.get(`/products/${outletId}`, function (products) {
+            products.forEach(function (product) {
+                productDropdown.append(`<option value="${product.itemId}">${product.itemName}</option>  `);
+            });
+        });
+    }
+
+    //function to populate batch no based on selected itemId
+    function populateBatchNo(itemId, batchDropdown) {
+        let outletId = $('#storeDropdown').val();
+        // const batchDropdown = $('#batchDropdown');
+
+        batchDropdown.empty();
+        batchDropdown.append('<option value="">Select Batch No</option>');
+
+        $.get(`/allBatchNo/${itemId}/${outletId}`, function (batchNo) {
+            batchNo.forEach(function (batchNo) {
+                batchDropdown.append(`<option value="${batchNo.batchNo}">${batchNo.batchNo}</option>`);
+            });
+        });
+
+        // Add an event listener to the batchDropdown for onchange
+        batchDropdown.change(function () {
+            // Store the selected batchNo
+            const selectedBatchNo = $(this).val();
+            // Call populateProductDetails with the selected itemId and batchNo
+            populateProductDetails(this, itemId, selectedBatchNo);
+        });
+    }
+
+
+    function populateProductDetails(selectElement, itemId, batchNo) {
+
+        const productName = selectElement.options[selectElement.selectedIndex].text;
+
+        fetch(`/getProductDetails/${itemId}/${batchNo}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(55, data[0])
+                const row = selectElement.closest('tr');
+                // Populate the corresponding fields in the row with fetched data
+                // Assuming data[0] contains other properties like 'mfgDate', 'expDate', etc.
+                // Update other fields based on the fetched data
+                row.querySelector('input[name="hsnCode[]"]').value = data[0].hsnCode;
+                row.querySelector('input[name="mfgDate[]"]').value = data[0].mfgDate;
+                row.querySelector('input[name="expDate[]"]').value = data[0].expDate;
+                row.querySelector('select[name="freeQty[]"]').value = data[0].freeQty;
+                row.querySelector('input[name="qty[]"]').value = '';
+                row.querySelector('input[name="purchasePrice[]"]').value = data[0].purchasePrice;
+                row.querySelector('input[name="discountType[]"]').value = data[0].discountType;
+                row.querySelector('input[name="discount[]"]').value = data[0].discount;
+                row.querySelector('input[name="originalPrice[]"]').value = data[0].originalPrice;
+                row.querySelector('input[name="mrp[]"]').value = data[0].mrp;
+                row.querySelector('input[name="salePriceInclTax[]"]').value = data[0].salePriceInclTax;
+                row.querySelector('input[name="salePriceExclTax[]"]').value = data[0].salePriceExclTax;
+                row.querySelector('input[name="costPriceWithoutTax[]"]').value = data[0].costPriceWithoutTax;
+                row.querySelector('input[name="taxPercentage[]"]').value = data[0].taxPercentage;
+                row.querySelector('input[name="taxAmount[]"]').value = '';
+                row.querySelector('input[name="packing[]"]').value = data[0].packingType;
+                row.querySelector('input[name="pack[]"]').value = data[0].pack;
+
+                // Attach event listeners for Quantity, Purchase Price, and Discount Percentage
+                const quantityInput = row.querySelector('input[name="qty[]"]');
+                /*  const purchasePriceInput = row.querySelector('input[name="purchasePrice[]"]');
+                  const originalPriceInput = row.querySelector('input[name="originalPrice[]"]'); */
+                const salePriceExclTaxInput = row.querySelector('input[name="salePriceExclTax[]"]');
+                const discountPercentageInput = row.querySelector('input[name="discount[]"]');
+                const taxPercentageInput = row.querySelector('input[name="taxPercentage[]"]');
+                const taxAmountInput = row.querySelector('input[name="taxAmount[]"]');
+                const totalAmountInput = row.querySelector('input[name="totalAmount[]"]');
+
+
+                quantityInput.addEventListener("input", () => updateOriginalPrice.call(row));
+                //  purchasePriceInput.addEventListener("input", () => updateOriginalPrice.call(row));
+                discountPercentageInput.addEventListener("input", () => updateOriginalPrice.call(row));
+                taxPercentageInput.addEventListener("input", () => updateOriginalPrice.call(row))
+
+
+                // Initial calculation when adding a new row
+                updateOriginalPrice.call(row);
+                updateGrandTotal();
+
+
+                /*      // Fetch tax percentage based on selected product 
+                      fetch(`/getTaxPercentage/${itemId}/`)
+                          .then(response => response.json())
+                          .then(data => {
+                              const row = selectElement.closest('tr');
+      
+                              // Update the tax percentage input field
+                             const taxPercentage = row.querySelector('input[name="taxPercentage[]"]').value = data.Tax_percentage;
+      
+                          })
+                          .catch(error => {
+                              console.error("Error fetching tax percentage", error);
+                          }); */
+
+
+
+                // Fetch stock in and out quantities based on selected product and batchNo
+                fetch(`/getStockQuantity/${itemId}/${batchNo}`)
+                    .then(response => response.json())
+                    .then(stockData => {
+                        const row = selectElement.closest('tr');
+
+                        const stockInQty = parseFloat(stockData.stockIn) || 0;
+                        const stockOutQty = parseFloat(stockData.stockOut) || 0;
+                        const stockQuantity = stockInQty - stockOutQty;
+
+                        // Update the stock quantity input field
+                        row.querySelector('input[name="stockQuantity"]').value = stockQuantity.toFixed(2);
+
+                        // Get the input field for Quantity
+                        const quantityInput = row.querySelector('input[name="qty[]"]');
+
+                        // add event listener for comparing the available stock quantity and enter quantity
+                        quantityInput.addEventListener("input", () => {
+                            const enteredQuantity = parseFloat(quantityInput.value) || 0;
+                            if (enteredQuantity > stockQuantity) {
+                                alert('Quantity cannot be greater than Available Stock Quantity');
+                                // Optionally, you can clear the input field or take other actions
+                                quantityInput.value = stockQuantity.toFixed(2);
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching stock quantity:", error);
+                    });
+
+            })
+            .catch(error => {
+                console.error("Error fetching product details:", error);
+            });
+    }
+
+</script>

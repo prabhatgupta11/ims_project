@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Order Approval</title>
+    <link rel="stylesheet" href="css/newStyle.css">
+    {{!--
+    <link rel="stylesheet" href="css/newStyle.css"> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+    <style>
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #3019fa;
+            text-decoration: none;
+        }
+
+        ul.breadcrumb li a:hover {
+
+            text-decoration: underline;
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 10px;
+            padding-left: 12px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+        ul.breadcrumb li:last-child a {
+            color: grey;
+            /* Change the color to the grey color you prefer */
+
+        }
+
+        @media (max-width: 430px) {
+            .dataTables_length {
+              margin-left: -86px;
+    margin-bottom: 10px;
+}
+.store-select{
+    min-width: 20vh !important;
+}
+        }
+
+                   form.over {
+                overflow-x: scroll;
+                overflow-y: scroll;
+            }
+
+           form.over {
+            overflow: hidden;
+        }
+
+        @media (max-width: 430px) {
+
+            form.over {
+                overflow-x: scroll;
+                overflow-y: scroll;
+            }
+        
+        }
+
+            @media (max-width: 1024px) {
+
+                form.over {
+                    overflow-x: scroll;
+                    overflow-y: scroll;
+                }
+            
+            }
+
+            @media (max-width:360px){
+                .dataTables_length{
+                        margin-left: -51px;
+                }
+                .flex-grow-1{
+                    font-size: 21px !important;
+                }
+ 
+            }
+
+            .fa-solid.fa-list {
+           margin-right: 4px;
+    width: 34px;
+    height: 30px;
+    position: relative;
+    bottom: 1px;
+        }
+
+         @media (min-width:360px) and (max-width:399px){
+            .flex-grow-1 {
+                font-size: 17px !important;
+            }
+        }
+
+        @media (min-width:400px) and (max-width:780px){
+            .flex-grow-1 {
+                font-size: 22px !important;
+            }
+        }
+
+           @media (min-width:300px) and (max-width: 400px) {
+            ul.breadcrumb li {
+                font-size: 11px !important;
+            }
+        }
+        ul.breadcrumb li+li:before {
+    padding: 3px;
+    color: black;
+    content: ">\00a0";
+        position: relative;
+    top: 1px;
+}
+
+  @media (max-width: 600px) {
+            ul.breadcrumb {
+                list-style: none;
+                padding-bottom: 5px;
+                padding-top: 3px;
+            }
+        }
+    </style>
+</head>
+
+<body id="body-pd">
+
+    {{>side}}
+
+    <div class="soon">
+{{>theme}}
+
+  <div class="col-md-12 row-md-5 mx-0 main_container " style="padding-right:0px; margin-top:70px">
+        <div class="row-md-4 subtitle d-flex justify-content-between align-items-center" style="margin-top: 60px;">
+            <div class="row-md-4 subtitle d-flex justify-content-start align-items-center w-95"
+                style="margin-top: 5px;">
+                <div class="block">
+                  
+     <div style="display: flex;">
+                        <img class="fa-solid fa-list" src="/images/approved.png" width="30px" alt="">
+                        <h4 class="flex-grow-1 " style="font-size: 24px; color: #1e293b;
+    font-weight:800;">Purchase Approval List </h4>
+                    </div>
+                </div>
+                <div id="line">
+                    <span id="line-content"></span> <!-- Content inside the div -->
+                </div>
+                <div class="breadcrumdiv">
+                    <ul class="breadcrumb">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Approval List</a></li>
+                        <li><a href="#">Purchase Order Approval</a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+            {{!-- <button type="button" class="btn btn-light btn-md  text-light h-25"
+                style="background-color: #ff9f43;font-weight:500"><a href="/supplierMaster"
+                    style="text-decoration: none;color:white">+ Add Supplier Master</a></button> --}}
+        </div>
+        {{#if message}}
+        <div class="alert alert-info">{{message}}</div>
+        {{/if}}
+
+
+
+
+        <div class="container col-md-12 me-class" style="padding-right:24px">
+            <div class="input-group py-2">
+                <div class="form-inline d-flex">
+
+                </div>
+
+            </div>
+            <div class="shub-class">
+                <label for="store">Approval Status</label>
+                <div class="cons" style="position: relative;">
+                    <div class="icon-context input-field" style="position: absolute; top:2px;left:10px ">
+                        <i class="fa-solid fa-store icons-icons" style="font-size: 15px;"></i>
+                    </div>
+                    <select name="approvalStatus" id="approvalStatus" class="store-select w-25 py-1 rounded-3"
+                        style="padding-left: 30px;font-size:14px">
+                        {{!-- <option value="">Select Status</option> --}}
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="container-table pt-2 p-0 mt-4 table-responsive">
+                <form class="over">
+                    <table class="table table-custom" id="product_table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th scope="col ">Reference Number</th>
+                                <th scope="col ">Date</th>
+                                <th scope="col ">Store Name</th>
+                                <th scope="col ">Supplier Name</th>
+                                <th scope="col ">Order Amount</th>
+                                <th scope="col ">Status </th>
+                                <th scope="col ">Select</th>
+                                <th scope="col ">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablebody">
+
+                        </tbody>
+
+                        {{!-- {{#each data}} --}}
+
+                        <tr>
+
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+  
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            const dataTable = $('#product_table').DataTable({
+                "language": {
+                    "lengthMenu": "Show _MENU_ Entries"
+                },
+                'processing': true,
+                'serverSide': true,
+                'ajax': {
+                    'url': 'updateNewStockInApprovalStatus',  // Change to the appropriate server-side route
+                    'type': 'POST',  // Change to POST request
+                    'data': function (d) {
+                        // Send the selected outletId to the server
+                        d.approvalStatus = $('#approvalStatus').val();
+                    }
+                },
+                'columns': [
+                    { data: 'referenceNumber' },
+                    { data: 'orderDate' },
+                    { data: 'storeName' },
+                    { data: 'customerName' },
+                    { data: 'totalAmount' },
+                    { data: 'status' },
+                    {
+                        data: 'orderId',
+                        render: function (data, type, row) {
+                            if (row.status === 'approved' || row.status === 'rejected') {
+                                return ''; // Hide the checkboxes for approved or rejected status
+                            }
+                            // Create a checkbox input for each row
+                            return '<input type="checkbox" name="selectedProducts" value="' + data + '">';
+                        }
+                    },
+                    {
+                        data: 'status',
+                        render: function (data, type, full, meta) {
+                            if (data === 'pending') {
+                                return '<button class="btn btn-success approve-btn">Approve</button>' +
+                                    '<button class="btn btn-danger reject-btn">Reject</button>';
+                            } else if (data === 'approved') {
+                                return '<button class="btn btn-success" type="button" disable>Approved</button>';
+                            } else if (data === 'rejected') {
+                                return '<button class="btn btn-danger" type="button" disable>Rejected</button>';
+                            }
+                        }
+                    }
+
+                ],
+            });
+
+            // // Update the DataTable when the store selection changes
+            $('#approvalStatus').on('change', function () {
+                dataTable.ajax.reload();
+            });
+        });
+
+
+
+        // Handle the "Approve" button click
+        $('#product_table').on('click', '.approve-btn', function () {
+            // Get the selected product names
+            const selectedProducts = [];
+            const checkboxes = $('#product_table input[name="selectedProducts"]:checked');
+            checkboxes.each(function () {
+                selectedProducts.push($(this).val());
+            });
+            console.log(123456, selectedProducts)
+            // Hide the "Approve" button for the selected items
+            checkboxes.each(function () {
+                $(this).closest('tr').find('.approve-btn').hide();
+            });
+
+            // You will need to implement this part on the server-side
+            $.post('updateApprovalStatusOfStockIn', { orders: selectedProducts, action: 'approved' }, function (response) {
+                // Check if the selected items are approved
+                console.log(response)
+                if (response) {
+                    // Hide the "Approve" button for the selected items
+                    checkboxes.each(function () {
+                        $(this).closest('tr').find('.approve-btn').hide();
+                    });
+                }
+            });
+        });
+
+
+
+        // Handle the "Reject" button click
+        $('#product_table').on('click', '.reject-btn', function () {
+            // Get the selected product names
+            const selectedProducts = [];
+            const checkboxes = $('#product_table input[name="selectedProducts"]:checked');
+            checkboxes.each(function () {
+                selectedProducts.push($(this).val());
+            });
+
+            // Hide the "Approve" button for the selected items
+            checkboxes.each(function () {
+                $(this).closest('tr').find('.reject-btn').hide();
+            });
+            // Send a request to update the selected products to "Rejected"
+            // You will need to implement this part on the server-side
+            $.post('updateApprovalStatusOfProduct', { products: selectedProducts, action: 'rejected' }, function (response) {
+                // Check if the selected items are approved
+                console.log(response)
+                if (response) {
+                    // Hide the "Approve" button for the selected items
+                    checkboxes.each(function () {
+                        $(this).closest('tr').find('.reject-btn').hide();
+                    });
+                }
+            });
+        });
+
+    </script>
+
+
+</body>
+
+</html>

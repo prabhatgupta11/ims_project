@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management System</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="main">
+
+        <div class="bg-layer">
+            {{#if message}}
+            <div class="alert alert-info" id="alert" style="width: 18%;margin-left: 13px;margin-top: 43px;"><i
+                    class="fa-solid fa-face-laugh-beam fa-bounce" style="color: #2906db;"></i>
+                {{message}}
+            </div>
+            {{/if}}
+            <form action="/login" method="post">
+                {{!-- <h1 class="text-center mt-5 text-light title text-uppercase ">ScaleEdge Solution</h1> --}}
+                <div class="form-container py-5 ">
+
+                    <div class="context-container ">
+                        {{!-- <h3 class="text-center mt-1 text-light title text-uppercase "
+                            style="margin-bottom: 30px;">Scaleedge Solution</h3> --}}
+                        {{!-- <img src="/images/scaleedge.png" alt="" style="width: 100px; height: 100px;"> --}}
+                        <div class="w-full text-center logo-container">
+                            <div class="justify-content-center mb-3">
+                                <img src="/images/Infinity-3.1s-215px.gif" class="main-logo" width="60px" alt=""
+                                    style="margin-left: 13px;">
+                            </div>
+                            <div class="row justify-content-center text-light">
+                                <div class="col-md-12 mt-3">
+                                    <h3
+                                        style="font-family: 'Brush Script MT', cursive;font-style:italic;font-size: 35px;">
+                                        ScaleEdge Solution</h3>
+                                </div>
+
+
+                            </div>
+                            <!-- <i class="fa-brands fa-glide-g main-logo  "></i> -->
+                        </div>
+                        <div
+                            class="input-fields position-relative my-3 mt-5 d-flex justify-content-center align-content-center align-content-center">
+                            <i class="fa-solid fa-user iconval"></i>
+                            <input type="email" id="email" name="email" placeholder="Email Address"
+                                class="border-0 w-75">
+                        </div>
+                        <div
+                            class="input-fields position-relative  my-3 mt-4 d-flex justify-content-center align-content-center align-content-center">
+
+                            <input type="password" id="password" name="password" placeholder="Password"
+                                class="border-0 w-75 pass-field">
+                            <i class="fa-solid fa-lock iconval"></i>
+                            <span id="eye" class="form-group"><i class="fa-solid fa-eye-slash" id="hoja" style="margin-left: 32vh;"></i></span>
+                        </div>
+
+                        {{#if error}}
+                        <div class="alert alert-info " style=" width: 75%;margin-left: 46px; color:red"><i
+                                class="fa-solid fa-face-flushed fa-bounce fa-xl" style="color: #ed5140;"></i>
+                            {{error}}</div>
+                        {{/if}}
+                        <div class="forget-link container offset-1">
+                            <a href="/emailValidate" class=" font-weight-semibold">Forget Password?</a>
+                        </div>
+                        <div
+                            class="button-container d-flex justify-content-center my-4 align-content-center align-content-center">
+                            <button type="submit" class="btn w-75 bg-primary container text-light ">Sign in</button>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+            </form>
+
+            <div class="text-container col-md-12 col-12 position-absolute text-center ">
+                <a href="https://ims.scaleedge.in/" class="text-decoration-none text-white cursor-pointer">© 2023 Admin
+                    Login Form . All rights reserved | Design by <span class="hover">Scaleedge Solution</span></a>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/a7d20ff54b.js" crossorigin="anonymous"></script>
+
+</html>
+
+<script>
+    const EyeButton = () => {
+        const eye = document.getElementById('eye')
+        const eyeinput = document.querySelector('.pass-field')
+        eye.addEventListener('click', () => {
+            if (eyeinput.value !== '') {
+                if (eyeinput.getAttribute('type') === 'password') {
+                    eyeinput.setAttribute('type', 'text')
+                    eye.childNodes[0].classList.remove("fa-eye-slash")
+                    eye.childNodes[0].classList.add("fa-eye")
+                    eyeinput.style.padding = "10px"
+                    eyeinput.style.paddingLeft = "30px"
+                }
+                else {
+                    eyeinput.setAttribute('type', 'password');
+                    eye.childNodes[0].classList.add("fa-eye-slash")
+                    eye.childNodes[0].classList.remove("fa-eye")
+                }
+
+            }
+
+        })
+    }
+    EyeButton()
+</script>
+<style>
+    @media (max-width:430px) {
+        .fas.fa-times {
+            position: relative !important;
+            top: 15px !important;
+        }
+
+        .fas.fa-check {
+            position: relative;
+            top: 15px;
+        }
+
+        .fas.fa-times.same {
+            position: relative !important;
+            top: 40px !important;
+        }
+
+        .fas.fa-check.same {
+            position: relative !important;
+            top: 40px !important;
+        }
+    }
+
+    @media (max-width:412px) {
+        .fas.fa-times {
+            position: relative !important;
+            top: 42px !important;
+            left: 4px;
+        }
+
+        .fas.fa-check {
+            position: relative;
+            top: 15px;
+        }
+
+        .fas.fa-times.same {
+            position: relative !important;
+            top: 40px !important;
+        }
+
+        .fas.fa-check.same {
+            position: relative !important;
+            top: 40px !important;
+        }
+    }
+
+    @media (max-width:360px) {
+        .requirements {
+            font-size: 13px !important;
+        }
+
+        .fas.fa-times {
+            margin-top: 15px !important;
+        }
+
+        .fas.fa-check {
+            margin-top: 15px !important;
+        }
+
+        .fas.fa-times.same {
+            margin-top: -8px !important;
+        }
+
+        .fas.fa-check.same {
+            margin-top: -8px !important;
+        }
+    }
+
+
+    @media (max-width:768px) {
+        #alert {
+            width: 70% !important;
+            margin-top: 5px !important;
+            margin-left: 2px !important;
+
+        }
+
+    }
+
+    .hover:hover {
+        font-size: 20px;
+    }
+
+    @media (min-width:300px) and (max-width:790px) {
+        #hoja {
+            margin-left: 35vh !important;
+        }
+    }
+</style>

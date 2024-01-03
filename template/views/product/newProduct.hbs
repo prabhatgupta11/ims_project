@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Add Product</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+    <style>
+        .color-container {
+            position: absolute;
+            z-index: 0;
+            top: 0;
+            height: 200px;
+            width: 100%;
+            background-color: #9096de;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:../../partials/_navbar.html -->
+        {{>navbar}}
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:../../partials/_settings-panel.html -->
+            {{>setting}}
+            <!-- partial -->
+            <!-- partial:../../partials/_sidebar.html -->
+            {{>side}}
+            <!-- partial -->
+
+            <div class="main-panel">
+                <div class="color-container"></div>
+                <div class="content-wrapper">
+
+                    <div class="row">
+                        <div class="d-flex mt-2 mb-3">
+                            <a href="/newProductList" class="text-white" style="z-index: 3;"><i
+                                    class="fa-solid fa-angle-left "></i></a>
+                            <h3 class="card-title ml-4 my-0 font-weight-semibold text-white" style="z-index: 3;">Add
+                                Product</h3>
+
+
+                        </div>
+                        {{#if message}}
+                        <div class="alert alert-info">{{message}}</div>
+                        {{/if}}
+                        <div id="flash-message" class="alert alert-danger" style="display: none;"></div>
+                        <form id="imageForm" action="/createNewProduct" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card col-md-12 wrapper">
+                                        <div class="card-body p-0">
+                                            <div class="row justify-content-around mx-auto ">
+                                                <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+                                                        <label for="exampleInputEmail1">Category <span
+                                                                class="text-danger">*</span></label>
+                                                        <select class="form-control input-field" id="categoryDropdown"
+                                                            name="category" aria-label="Default select example"
+                                                            required>
+                                                            <option value="" disabled selected>Select Category</option>
+                                                            {{#each category}}
+                                                            <option value="{{id}}"> {{ code_name }} </option>
+                                                            {{/each}}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+                                                        <label for="exampleInputEmail1">Department <span
+                                                                class="text-danger">*</span></label>
+                                                        <select class="form-control input-field" id="departmentDropdown"
+                                                            name="department" aria-label="Default select example"
+                                                            required>
+                                                            <option value="" disabled selected>Select Department
+                                                            </option>
+                                                            {{#each department}}
+                                                            <option value="{{id}}"> {{ code_name }} </option>
+                                                            {{/each}}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-around mx-auto ">
+                                                <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+                                                        <label for="exampleInputEmail1">Group <span
+                                                                class="text-danger">*</span></label>
+                                                        <select class="form-control input-field" id="groupDropdown"
+                                                            name="group" aria-label="Default select example" required>
+                                                            <option value="" disabled selected>Select Group</option>
+                                                            {{#each group}}
+                                                            <option value="{{id}}"> {{ code_name }} </option>
+                                                            {{/each}}
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group mb-2 ">
+                                                        <label for="exampleInputEmail1">Brand <span
+                                                                class="text-danger">*</span></label>
+                                                        <select class="form-control input-field" name="brand"
+                                                            aria-label="Default select example" required>
+                                                            <option value="" disabled selected>Select Brand</option>
+                                                            {{#each manufacturer}}
+                                                            <option value="{{manufacturerId}}"> {{ shortDescription }}
+                                                            </option>
+                                                            {{/each}}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+                                                        <label for="exampleInputEmail1">Item Code</label>
+                                                        <input type="text" class="form-control input-field-three"
+                                                            id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                            name="itemCode" placeholder="Enter Item Code " readonly />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+                                                        <label for="exampleInputEmail1">Item Name <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control input-field-three"
+                                                            id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                            name="itemName" placeholder="Enter Item Name" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+
+                                                        <label for="exampleInputEmail1">Bar Code</label>
+                                                        <input type="text" class="form-control input-field-three"
+                                                            id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                            name="barCode" placeholder="Enter Bar Code " />
+                                                    </div>
+                                                </div>
+                                            
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card col-md-12 wrapper">
+                                        <div class="card-body p-0">
+                                            <div class="row justify-content-around mx-auto ">
+                                                    <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+                                                        <label for="exampleInputEmail1">HSN Code<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control input-field-three"
+                                                            id="hsnCode" aria-describedby="emailHelp" name="hsnCode"
+                                                            placeholder="Enter HSN Code" required />
+                                                        <div class="sup-icon">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+                                                        <div id="uploaded-image-container upload">
+                                                            <div class="hv-centered flex">
+                                                                <div for="" class="formlabel text-start"><label
+                                                                        for="">Images</label></div>
+                                                                <input type="file" name="imageUrl" accept="image/*"
+                                                                    id="fileI" class="pl-1" style="float: left;">
+                                                            </div>
+                                                            <button id="uploadButton" disabled class="button-15 d-none"
+                                                                type="button">Upload Image</button>
+
+                                                            <div id="popupMessage"
+                                                                class="popup-message fw-semibold text-white rounded-3">
+                                                                <p id="popupText">Image uploaded successfully</p>
+                                                            </div>
+
+                                                            <div class="col-md-12 ">
+                                                                <table class="table">
+                                                                    <thead class="d-none">
+                                                                        <tr class="d-none">
+                                                                            <th scope="col" class="fw-bold ">Image Url
+                                                                            </th>
+                                                                            <th scope="col" class="fw-bold">Image</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody id="imageTableBody">
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+                                                        <label for="exampleInputEmail1">Status</label>
+                                                        <select class="form-control input-field " name="status"
+                                                            aria-label="Default select example">
+                                                            <option value="Active">Active</option>
+                                                            <option value="Inactive">Inactive</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+                                                        <label for="exampleInputEmail1">Weight <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control input-field-three"
+                                                            id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                            name="weight" placeholder="Enter Weight in kg" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+                                                        <label for="exampleInputEmail1">Description</label>
+                                                        <div class="form-outline">
+                                                            <textarea class="form-control input-field"
+                                                                placeholder="Enter Description Here" name="description"
+                                                                id="textAreaExample1" rows="1"></textarea>
+                                                            {{!-- <label class="form-label"
+                                                                for="textAreaExample">Description</label>
+                                                            --}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group mb-2 ">
+                                                        <label for="exampleInputEmail1">Tax Percentage <span
+                                                                class="text-danger">*</span></label>
+                                                        <select class="form-control input-field " name="tax"
+                                                            aria-label="Default select example" required />
+                                                        <option value="" disabled selected>Select Tax</option>
+                                                        {{#each tax}}
+                                                        <option value="{{id}}"> {{ Tax_percentage }} </option>
+                                                        {{/each}}
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                              <div class="inner-cont p-0 col-md-11 col-lg-11 flex-column  flex-wrap col-12 d-flex  justify-content-between align-content-start">
+                         <div class="d-flex align-items-center justify-content-start my-2  col-md-12 p-0" >
+                         <button class="btn btn-primary mr-2 " role="button" type="submit" style="padding: 9px 20px;
+    border-radius: 6px;">Save</button>
+                    <button class="btn btn-light" role="button" type="reset" style=" padding: 9px 20px;
+    border-radius: 6px;">Reset</button>
+    </div>
+                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="../../vendors/select2/select2.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/template.js"></script>
+    <script src="../../js/settings.js"></script>
+    <script src="../../js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="../../js/file-upload.js"></script>
+    <script src="../../js/typeahead.js"></script>
+    <script src="../../js/select2.js"></script>
+    <!-- End custom js for this page-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+
+</html>
+
+ <script>
+   $.get(`/productCode`, function (reffnum) {
+    function generateUniqueIdentifier(response) {
+      if (response && response.length === 1) {
+        const item = response[0];
+        const { id, prefix, lastNo, suffix } = item;
+        
+        // Increment the lastno value and pad it to 6 digits
+        const newLastNo = (parseInt(lastNo) + 1).toString().padStart(6, '0');
+        
+        // Construct the unique identifier string
+        const uniqueIdentifier = `${prefix}/${newLastNo}/${suffix}`;
+        
+        // Update the lastno value in the response
+        item.lastNo = newLastNo;
+        
+       
+         // Update the input field value with the uniqueIdentifier
+        $('#exampleInputEmail1').val(uniqueIdentifier);
+        
+        
+        return uniqueIdentifier;
+      } else {
+        return null; // Handle invalid response
+      }
+    }
+
+    const uniqueIdentifier = generateUniqueIdentifier(reffnum);
+    console.log('Generated Unique Identifier:', uniqueIdentifier);
+   });
+</script>
+<script>
+    // Function to populate the department dropdown based on the selected category
+    function populateDepartments() {
+        const categoryId = $('#categoryDropdown').val();
+        $.get(`/departments/${categoryId}`, function (departments) {
+            const departmentDropdown = $('#departmentDropdown');
+            departmentDropdown.empty();
+            departmentDropdown.append('<option value="">Select Department</option>');
+            departments.forEach(function (department) {
+                departmentDropdown.append(`<option value="${department.id}">${department.code_name}</option>`);
+            });
+        });
+    }
+
+    // Event listener for category dropdown
+    $('#categoryDropdown').change(populateDepartments);
+
+    // Function to populate the group dropdown based on the selected department
+    function populateGroups() {
+        const departmentId = $('#departmentDropdown').val();
+        $.get(`/groups/${departmentId}`, function (groups) {
+            const groupDropdown = $('#groupDropdown');
+            groupDropdown.empty();
+            groupDropdown.append('<option value="">Select Group</option>');
+            groups.forEach(function (group) {
+                groupDropdown.append(`<option value="${group.id}">${group.code_name}</option>`);
+            });
+        });
+    }
+
+    // Event listener for department dropdown
+    $('#departmentDropdown').change(populateGroups);
+
+    // Function to populate the item type dropdown based on the selected group
+    function populateItemTypes() {
+        const groupId = $('#groupDropdown').val();
+        $.get(`/itemTypes/${groupId}`, function (itemTypes) {
+            const itemTypeDropdown = $('#itemTypeDropdown');
+            itemTypeDropdown.empty();
+            itemTypeDropdown.append('<option value="">Select Item Type</option>');
+            itemTypes.forEach(function (itemType) {
+                itemTypeDropdown.append(`<option value="${itemType.id}">${itemType.code_name}</option>`);
+            });
+        });
+    }
+
+    // Event listener for group dropdown
+    $('#groupDropdown').change(populateItemTypes);
+</script>
+
+    <script>
+    const fileInput = document.getElementById('fileI');
+    const popupMessage = document.getElementById('popupMessage');
+    const popupText = document.getElementById('popupText');
+    const imageTable = document.querySelector('#imageTableBody');
+    const arr = [];
+
+    let isFileSelected = false;
+
+    // Function to hide the popup message after 2 seconds
+    function hidePopupMessage() {
+        setTimeout(() => {
+            popupMessage.style.display = 'none';
+        }, 2000); // 2000 milliseconds (2 seconds)
+    }
+
+    fileInput.addEventListener('change', function (event) {
+        const files = event.target.files;
+        for (const file of files) {
+            let filen = file.name;
+            filen = `${new Date().getTime()}_${filen}`;
+            console.log(789,filen)
+            localStorage.setItem("newImageName", filen);
+            console.log(456, filen);
+           const img = localStorage.getItem("newImageName")
+            const imageUr = URL.createObjectURL(file);
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${filen}</td>
+                <td>
+                    <img src="${imageUr}" name="${filen}" width="100px">
+                    <i class="fa-regular fa-circle-xmark  right-0 delete-row ml-2" style="position:absolute !important"></i>
+                </td>
+            `; 
+
+            imageTable.appendChild(row);
+            arr.push({
+                imageName: filen,
+                imageUrl: imageUr
+            });
+            removeRow(row, arr); // Pass the 'arr' array as a parameter
+        }
+        console.log(arr);
+    });
+
+    function removeRow(row, arr) {
+        const deleteBtn = row.querySelector(".delete-row");
+        deleteBtn.addEventListener("click", function () {
+            const index = Array.from(row.parentNode.children).indexOf(row);
+            const image = row.querySelector('img').getAttribute('name');
+            deleteImage(image, row);
+            if (index !== -1) {
+                // Remove the item from the array at the specified index
+                arr.splice(index, 1);
+                row.remove()
+                console.log("Item removed from array");
+            } else {
+                console.log("Item not found in array.");
+            }
+        });
+    }
+
+     // Enable the file input after the user selects a file and trigger upload
+    fileInput.addEventListener('change', () => {
+        const imageName = localStorage.getItem("newImageName")
+        console.log(imageName,123)
+        const file = fileInput.files[0];
+
+        if (file) {
+            // Create a new File object with the same data but a different name (imageName)
+            const modifiedFile = new File([file], imageName, { type: file.type });
+
+            const formData = new FormData();
+            formData.append('imageUrl', modifiedFile);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(123456, data);
+                    popupText.textContent = 'Image uploaded successfully';
+                    popupMessage.style.display = 'block'; // Show the popup
+                    fileInput.disabled = false;
+                    hidePopupMessage();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    popupText.textContent = 'Error storing image in public folder';
+                    popupMessage.style.display = 'block'; // Show the popup
+                    hidePopupMessage();
+                });
+        } else {
+            console.log('No file selected.');
+            popupText.textContent = 'No file selected';
+            popupMessage.style.display = 'block'; // Show the popup
+            hidePopupMessage();
+        }
+    });
+
+
+    function deleteImage(image, row) {
+        $.post(`/deleteImageWithoutItemId/${image}`, function (data) {
+            if (data.success == true) {
+                row.remove(); // Remove the row from the frontend
+            } else {
+                // Handle error
+            }
+        });
+    }
+
+    document.getElementById('imageForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        // Append the image data from the 'arr' array to the FormData
+        arr.forEach((image, index) => {
+            console.log(image.imageUrl)
+            formData.append('imageUrl[]', image.imageName);
+        });
+        try {
+            const response = await fetch('/createNewProduct', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                window.location.href = '/newProductList';
+                // Handle a successful response from the server
+                console.log('Images uploaded successfully.');
+            } else {
+                // Handle errors
+                console.error('Failed to upload images.');
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    });
+</script>

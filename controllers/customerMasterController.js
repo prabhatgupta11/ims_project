@@ -1,7 +1,22 @@
 const db = require("../models")
 const CustomerMaster =db.customer;
+const AutoGenerateNumber = db.autoGenerateNumber
 
+ 
 const createCustomer = async (req, res) => {
+  const code=req.body.Code.split("/")
+  const lastNo=code[1]
+
+   // Update the lastno value in the database
+   const updatedRefNum = await AutoGenerateNumber.update(
+    { lastNo },
+    { where: { prefix: code[0] }}
+  );
+
+     
+//   const refNUM = await AutoGenerateNumber.findAll({ where: { prefix: code[0] } })
+//  // res.status(201).json(refNUM)
+
 try {
     const newCustomer = await CustomerMaster.create(req.body);
 

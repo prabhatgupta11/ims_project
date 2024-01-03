@@ -12,11 +12,17 @@ module.exports = (sequelize, DataTypes) => {
         },
         shortDescription : {
             type : DataTypes.TEXT,
-          
         },
         longDescription : {
             type : DataTypes.TEXT,
-            
+        },
+        isDeleted : {
+            type : DataTypes.STRING,
+            defaultValue:'0'
+        },
+        status : {
+            type : DataTypes.STRING,
+            defaultValue:'Active'
         },
         approve_b : {
             type : DataTypes.STRING,

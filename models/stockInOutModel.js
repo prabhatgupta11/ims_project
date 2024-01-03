@@ -10,24 +10,20 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement : true
         },
+        productPriceFk : {
+            type : DataTypes.STRING(20),
+        },
         itemId : {
-            type : DataTypes.STRING(255),
+            type : DataTypes.STRING(50),
         },
         outletId : {
-            type : DataTypes.STRING(255),
+            type : DataTypes.STRING(50),
         },
         type : {
             type : DataTypes.STRING,
         },
-        qty : {
-            type : DataTypes.STRING,
-        },
-        remarks : {
-            type : DataTypes.STRING,
-        },
-        created_on: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW
+        productHsnCode: {
+            type: DataTypes.STRING,
         },
         batchNo: {
             type: DataTypes.STRING,
@@ -35,8 +31,24 @@ module.exports = (sequelize, DataTypes) => {
         expDate: {
             type: DataTypes.STRING,
         },
-        productHsnCode: {
+        qty : {
+            type : DataTypes.STRING,
+        },
+        purchasePrice : {
+            type : DataTypes.STRING,
+        },
+        salePriceInclTax: {
             type: DataTypes.STRING,
+        },
+        salePriceExclTax: {
+            type: DataTypes.STRING,
+        },
+        remarks : {
+            type : DataTypes.STRING,
+        },
+        created_on: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
         },
         created_by: {
             type: DataTypes.STRING,
